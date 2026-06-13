@@ -1,0 +1,2206 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diego Román | Portafolio Ingeniero Informático</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Orbitron, Rajdhani e Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@400;600;800;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome para Iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        orbitron: ['Orbitron', 'sans-serif'],
+                        rajdhani: ['Rajdhani', 'sans-serif'],
+                    },
+                    colors: {
+                        cyber: {
+                            dark: '#030712',
+                            darker: '#020617',
+                            lightDark: '#0f172a',
+                            cyan: '#06b6d4',
+                            purple: '#a855f7',
+                            emerald: '#10b981',
+                            cardBg: 'rgba(15, 23, 42, 0.45)'
+                        }
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'glow': 'glow 2s ease-in-out infinite alternate',
+                        'scroll-sim': 'scrollSim 12s infinite linear',
+                        'cursor-sim': 'cursorSim 6s infinite ease-in-out',
+                    },
+                    keyframes: {
+                        glow: {
+                            '0%': { boxShadow: '0 0 5px rgba(6, 182, 212, 0.2), 0 0 10px rgba(6, 182, 212, 0.2)' },
+                            '100%': { boxShadow: '0 0 15px rgba(6, 182, 212, 0.6), 0 0 20px rgba(168, 85, 247, 0.6)' }
+                        },
+                        scrollSim: {
+                            '0%, 10%': { transform: 'translateY(0)' },
+                            '45%, 55%': { transform: 'translateY(-40%)' },
+                            '90%, 100%': { transform: 'translateY(0)' }
+                        },
+                        cursorSim: {
+                            '0%': { top: '30%', left: '20%' },
+                            '20%': { top: '45%', left: '75%' },
+                            '40%': { top: '65%', left: '15%' },
+                            '60%': { top: '25%', left: '85%' },
+                            '80%': { top: '80%', left: '50%' },
+                            '100%': { top: '30%', left: '20%' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass {
+            background: rgba(15, 23, 42, 0.55);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .neon-border-cyan:hover {
+            border-color: rgba(6, 182, 212, 0.8);
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.3);
+        }
+        .neon-border-purple:hover {
+            border-color: rgba(168, 85, 247, 0.8);
+            box-shadow: 0 0 15px rgba(168, 85, 247, 0.3);
+        }
+        .neon-text-cyan {
+            text-shadow: 0 0 8px rgba(6, 182, 212, 0.6);
+        }
+        .neon-text-purple {
+            text-shadow: 0 0 8px rgba(168, 85, 247, 0.6);
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #020617;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #06b6d4;
+        }
+        
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .caret {
+            animation: blink 1s step-end infinite;
+        }
+        @keyframes blink {
+            from, to { border-color: transparent }
+            50% { border-color: #06b6d4; }
+        }
+        
+        /* Efecto de líneas de escaneo CRT sutil */
+        .scanlines {
+            background: linear-gradient(
+                rgba(18, 16, 16, 0) 50%, 
+                rgba(0, 0, 0, 0.25) 50%
+            );
+            background-size: 100% 4px;
+            z-index: 20;
+        }
+    </style>
+</head>
+<body class="bg-cyber-darker text-slate-100 font-sans selection:bg-cyber-cyan/30 selection:text-cyber-cyan overflow-x-hidden">
+
+    <!-- CANVAS INTERACTIVO (Fondo animado y reactivo al scroll) -->
+    <canvas id="bg-canvas" class="fixed top-0 left-0 w-full h-full -z-10 pointer-events-none"></canvas>
+
+    <!-- HEADER / NAVEGACIÓN -->
+    <header class="fixed top-0 left-0 w-full z-40 transition-all duration-300 glass border-b border-white/5 py-4 px-6 md:px-12">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <!-- Logo -->
+            <a href="#hero" class="flex items-center space-x-2 group">
+                <div class="w-10 h-10 rounded-lg bg-gradient-to-tr from-cyber-cyan to-cyber-purple p-[1.5px] group-hover:rotate-12 transition-transform duration-300">
+                    <div class="w-full h-full bg-cyber-darker rounded-lg flex items-center justify-center font-orbitron font-black text-cyber-cyan text-lg">
+                        DR
+                    </div>
+                </div>
+                <span class="font-orbitron font-bold text-lg tracking-wider bg-gradient-to-r from-white via-slate-100 to-cyber-cyan bg-clip-text text-transparent group-hover:opacity-90">
+                    DIEGO ROMÁN
+                </span>
+            </a>
+
+            <!-- Navegación Desktop -->
+            <nav class="hidden md:flex items-center space-x-8 font-rajdhani text-lg font-semibold tracking-wider">
+                <a href="#sobre-mi" class="text-slate-300 hover:text-cyber-cyan transition-colors duration-200">SOBRE MÍ</a>
+                <a href="#habilidades" class="text-slate-300 hover:text-cyber-cyan transition-colors duration-200">HABILIDADES</a>
+                <a href="#perfil" class="text-slate-300 hover:text-cyber-cyan transition-colors duration-200">PERFIL PROFESIONAL</a>
+                <a href="#proyectos" class="text-slate-300 hover:text-cyber-cyan transition-colors duration-200">PROYECTOS</a>
+                <a href="#cursos" class="text-slate-300 hover:text-cyber-cyan transition-colors duration-200">CURSOS</a>
+                <a href="#trayectoria" class="text-slate-300 hover:text-cyber-cyan transition-colors duration-200">TRAYECTORIA</a>
+                <a href="#contacto" class="px-5 py-1.5 rounded bg-gradient-to-r from-cyber-cyan/10 to-cyber-purple/10 border border-cyber-cyan/40 hover:border-cyber-cyan hover:shadow-[0_0_15px_rgba(6,182,212,0.4)] text-cyber-cyan hover:text-white transition-all duration-300">
+                    CONTACTAR
+                </a>
+            </nav>
+
+            <!-- Botón Menú Móvil -->
+            <button id="mobile-menu-btn" class="md:hidden text-slate-300 hover:text-cyber-cyan focus:outline-none" aria-label="Abrir Menú">
+                <i class="fa-solid fa-bars-staggered text-2xl"></i>
+            </button>
+        </div>
+
+        <!-- Menú Móvil Desplegable -->
+        <div id="mobile-menu" class="hidden md:hidden absolute top-full left-0 w-full glass border-b border-white/5 py-6 px-8 flex flex-col space-y-4 font-rajdhani text-xl font-medium tracking-wide">
+            <a href="#sobre-mi" class="mobile-link text-slate-300 hover:text-cyber-cyan">SOBRE MÍ</a>
+            <a href="#habilidades" class="mobile-link text-slate-300 hover:text-cyber-cyan">HABILIDADES</a>
+            <a href="#perfil" class="mobile-link text-slate-300 hover:text-cyber-cyan">PERFIL PROFESIONAL</a>
+            <a href="#proyectos" class="mobile-link text-slate-300 hover:text-cyber-cyan">PROYECTOS</a>
+            <a href="#cursos" class="mobile-link text-slate-300 hover:text-cyber-cyan">CURSOS</a>
+            <a href="#trayectoria" class="mobile-link text-slate-300 hover:text-cyber-cyan">TRAYECTORIA</a>
+            <a href="#contacto" class="mobile-link inline-block text-center py-2 rounded bg-gradient-to-r from-cyber-cyan/20 to-cyber-purple/20 border border-cyber-cyan/40 text-cyber-cyan">
+                CONTACTAR
+            </a>
+        </div>
+    </header>
+
+    <!-- SECCIÓN HERO -->
+    <section id="hero" class="min-h-screen flex items-center justify-center pt-24 px-6 md:px-12 relative overflow-hidden">
+        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-cyber-cyan/10 rounded-full blur-[100px] animate-pulse-slow animate-pulse"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-cyber-purple/10 rounded-full blur-[100px] animate-pulse-slow animate-pulse"></div>
+
+        <div class="max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center z-10">
+            <!-- Textos Principales -->
+            <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-cyber-cyan/10 border border-cyber-cyan/30 text-cyber-cyan font-mono text-sm tracking-widest">
+                    <span class="w-2 h-2 rounded-full bg-cyber-cyan animate-ping"></span>
+                    <span>SISTEMA INTEGRAL EN LÍNEA</span>
+                </div>
+                
+                <h1 class="font-orbitron font-extrabold text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-none">
+                    Hola, soy <br class="hidden sm:inline">
+                    <span class="bg-gradient-to-r from-cyber-cyan via-slate-100 to-cyber-purple bg-clip-text text-transparent">
+                        Diego Román
+                    </span>
+                </h1>
+
+                <!-- Subtítulo Animado tipo Terminal -->
+                <div class="font-mono text-lg sm:text-xl md:text-2xl text-slate-300 h-12 flex items-center justify-center lg:justify-start">
+                    <span class="text-cyber-cyan mr-2">&gt;</span>
+                    <span id="typed-text"></span><span class="border-r-2 border-cyber-cyan caret ml-1 h-6"></span>
+                </div>
+
+                <p class="text-slate-400 max-w-xl mx-auto lg:mx-0 text-sm sm:text-base leading-relaxed">
+                    Ingeniero Informático especializado en desarrollo de software de alta escala, arquitectura cloud e innovación en inteligencia artificial. Diseñando el backend de mañana hoy.
+                </p>
+
+                <!-- Botones de Acción -->
+                <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4">
+                    <a href="#proyectos" class="w-full sm:w-auto px-8 py-3.5 rounded bg-gradient-to-r from-cyber-cyan to-cyber-purple font-rajdhani font-bold text-lg tracking-wider hover:opacity-95 transition-all duration-300 shadow-[0_0_20px_rgba(6,182,212,0.4)] hover:shadow-[0_0_30px_rgba(168,85,247,0.6)] flex items-center justify-center space-x-2 group">
+                        <span>Ver Proyectos</span>
+                        <i class="fa-solid fa-arrow-right group-hover:translate-x-1.5 transition-transform duration-200"></i>
+                    </a>
+                    <a href="#contacto" class="w-full sm:w-auto px-8 py-3.5 rounded glass border border-slate-700/50 font-rajdhani font-bold text-lg tracking-wider hover:border-cyber-cyan hover:text-cyber-cyan transition-all duration-300 flex items-center justify-center space-x-2">
+                        <i class="fa-regular fa-envelope"></i>
+                        <span>Contactar</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Interfaz Tecnológica (HUD Widget Mockup) -->
+            <div class="lg:col-span-5 flex justify-center">
+                <div class="w-full max-w-sm glass border border-white/10 rounded-2xl p-6 relative shadow-2xl overflow-hidden group">
+                    <div class="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-cyber-cyan to-cyber-purple"></div>
+                    
+                    <div class="flex justify-between items-center mb-6 border-b border-white/5 pb-4 font-mono text-xs text-slate-500">
+                        <span>SYS.STATUS: ONLINE</span>
+                        <span>LATENCY: 12ms</span>
+                    </div>
+
+                    <div class="relative flex justify-center items-center mb-6">
+                        <svg class="w-48 h-48 transform -rotate-90">
+                            <circle cx="96" cy="96" r="80" stroke="rgba(255,255,255,0.03)" stroke-width="6" fill="transparent" />
+                            <circle cx="96" cy="96" r="80" stroke="#06b6d4" stroke-width="6" fill="transparent"
+                                stroke-dasharray="502" stroke-dashoffset="125" class="transition-all duration-1000 group-hover:stroke-dashoffset-[80]" />
+                            <circle cx="96" cy="96" r="64" stroke="#a855f7" stroke-width="4" fill="transparent"
+                                stroke-dasharray="402" stroke-dashoffset="220" class="transition-all duration-1000 group-hover:stroke-dashoffset-[150]" />
+                        </svg>
+                        <div class="absolute flex flex-col items-center justify-center text-center">
+                            <span class="font-orbitron font-bold text-3xl text-white group-hover:text-cyber-cyan transition-colors duration-300">92%</span>
+                            <span class="font-mono text-[10px] text-slate-400 tracking-wider">EFICIENCIA</span>
+                        </div>
+                    </div>
+
+                    <div class="space-y-3 font-mono text-xs">
+                        <div class="flex justify-between text-slate-300">
+                            <span>ALGORITMOS OPTIMIZADOS</span>
+                            <span class="text-cyber-cyan">98.4%</span>
+                        </div>
+                        <div class="w-full bg-slate-950 rounded-full h-1.5 overflow-hidden">
+                            <div class="bg-cyber-cyan h-full w-[98.4%]"></div>
+                        </div>
+                        <div class="flex justify-between text-slate-300">
+                            <span>ARQUITECTURA DE DATOS</span>
+                            <span class="text-cyber-purple">89.1%</span>
+                        </div>
+                        <div class="w-full bg-slate-950 rounded-full h-1.5 overflow-hidden">
+                            <div class="bg-cyber-purple h-full w-[89.1%]"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center space-y-2 opacity-50 hover:opacity-100 transition-opacity">
+            <span class="font-rajdhani text-sm tracking-widest text-slate-400">SCROLL DOWN</span>
+            <div class="w-6 h-10 border-2 border-slate-500 rounded-full flex justify-center p-1">
+                <div class="w-1.5 h-1.5 bg-cyber-cyan rounded-full animate-bounce"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN SOBRE MÍ -->
+    <section id="sobre-mi" class="py-24 px-6 md:px-12 relative reveal">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 border-b border-white/5 pb-6">
+                <div>
+                    <span class="text-cyber-cyan font-mono text-sm tracking-wider uppercase">// INGENIERÍA Y VISIÓN</span>
+                    <h2 class="font-orbitron font-extrabold text-3xl md:text-5xl mt-1">SOBRE MÍ</h2>
+                </div>
+                <p class="text-slate-400 max-w-md mt-4 md:mt-0 font-light">
+                    Fusionando metodologías de ingeniería avanzada con desarrollo ágil para crear sistemas de software indestructibles.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                <div class="lg:col-span-5 flex justify-center">
+                    <div class="relative w-72 h-72 md:w-80 md:h-80 group">
+                        <div class="absolute -top-3 -left-3 w-6 h-6 border-t-2 border-l-2 border-cyber-cyan"></div>
+                        <div class="absolute -bottom-3 -right-3 w-6 h-6 border-b-2 border-r-2 border-cyber-purple"></div>
+                        
+                        <div class="w-full h-full glass rounded-2xl overflow-hidden p-3 flex items-center justify-center relative shadow-xl">
+                            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-cyber-cyan to-transparent animate-pulse" style="animation-duration: 2s;"></div>
+                            
+                            <div class="w-full h-full bg-slate-900/60 rounded-xl flex flex-col items-center justify-center space-y-4 text-center p-6 border border-white/5">
+                                <div class="w-20 h-20 rounded-full bg-gradient-to-br from-cyber-cyan/20 to-cyber-purple/20 flex items-center justify-center border border-cyber-cyan/30">
+                                    <i class="fa-solid fa-code-branch text-4xl text-cyber-cyan group-hover:scale-110 transition-transform"></i>
+                                </div>
+                                <h3 class="font-orbitron font-bold text-lg text-white">Ingeniero Informático</h3>
+                                <p class="text-xs text-slate-400 font-mono">DR_ROMAN_CORE_V1.9.sh</p>
+                                <span class="text-xs px-2.5 py-1 bg-cyber-emerald/10 text-cyber-emerald border border-cyber-emerald/20 rounded font-mono">SYSTEM: ACTIVE</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-7 space-y-6">
+                    <h3 class="font-orbitron font-bold text-2xl text-slate-200">
+                        Construyendo soluciones de software de extremo a extremo
+                    </h3>
+                    <p class="text-slate-300 leading-relaxed text-sm sm:text-base">
+                        Como Ingeniero Informático, mi enfoque no se limita a escribir código limpio; se trata de estructurar soluciones robustas y escalables capaces de resolver problemas reales. Diseñando arquitecturas optimizadas para la nube y aplicando automatización de procesos mediante tecnologías punteras de CI/CD e IA.
+                    </p>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
+                        <div class="glass p-4 rounded-xl border border-white/5 hover:border-cyber-cyan/30 transition-all duration-300 flex space-x-3">
+                            <div class="text-cyber-cyan mt-1"><i class="fa-solid fa-layer-group text-lg"></i></div>
+                            <div>
+                                <h4 class="font-bold text-slate-200 text-sm md:text-base">Arquitectura Limpia</h4>
+                                <p class="text-xs text-slate-400">Diseño sólido basado en principios SOLID y patrones de arquitectura limpia.</p>
+                            </div>
+                        </div>
+                        <div class="glass p-4 rounded-xl border border-white/5 hover:border-cyber-purple/30 transition-all duration-300 flex space-x-3">
+                            <div class="text-cyber-purple mt-1"><i class="fa-solid fa-cloud-bolt text-lg"></i></div>
+                            <div>
+                                <h4 class="font-bold text-slate-200 text-sm md:text-base">Enfoque Cloud Native</h4>
+                                <p class="text-xs text-slate-400">Soluciones optimizadas e implementadas en contenedores y entornos cloud.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN HABILIDADES -->
+    <section id="habilidades" class="py-24 px-6 md:px-12 relative bg-slate-950/40 reveal">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 border-b border-white/5 pb-6">
+                <div>
+                    <span class="text-cyber-cyan font-mono text-sm tracking-wider uppercase">// TECNOLOGÍAS MÁSTER</span>
+                    <h2 class="font-orbitron font-extrabold text-3xl md:text-5xl mt-1">HABILIDADES</h2>
+                </div>
+                <p class="text-slate-400 max-w-md mt-4 md:mt-0 font-light">
+                    Mi ecosistema de herramientas tecnológicas, optimizado constantemente con las últimas demandas de la industria informática.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Frontend & UI -->
+                <div class="glass p-6 rounded-2xl border border-white/5 hover:border-cyber-cyan/30 transition-all duration-300 group">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-10 h-10 rounded-lg bg-cyber-cyan/10 flex items-center justify-center text-cyber-cyan">
+                            <i class="fa-solid fa-display text-xl"></i>
+                        </div>
+                        <h3 class="font-orbitron font-bold text-lg">Frontend & Interfaces</h3>
+                    </div>
+                    <div class="space-y-4 font-rajdhani text-lg">
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="font-semibold">HTML5 / CSS3 / JavaScript (ES6+)</span>
+                                <span class="text-cyber-cyan">95%</span>
+                            </div>
+                            <div class="w-full bg-slate-900 rounded-full h-1.5"><div class="bg-cyber-cyan h-full w-[95%] rounded-full"></div></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="font-semibold">React.js / Next.js / TypeScript</span>
+                                <span class="text-cyber-cyan">90%</span>
+                            </div>
+                            <div class="w-full bg-slate-900 rounded-full h-1.5"><div class="bg-cyber-cyan h-full w-[90%] rounded-full"></div></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="font-semibold">Tailwind CSS / UI Animations</span>
+                                <span class="text-cyber-cyan">95%</span>
+                            </div>
+                            <div class="w-full bg-slate-900 rounded-full h-1.5"><div class="bg-cyber-cyan h-full w-[95%] rounded-full"></div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Backend & DB -->
+                <div class="glass p-6 rounded-2xl border border-white/5 hover:border-cyber-purple/30 transition-all duration-300 group">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-10 h-10 rounded-lg bg-cyber-purple/10 flex items-center justify-center text-cyber-purple">
+                            <i class="fa-solid fa-server text-xl"></i>
+                        </div>
+                        <h3 class="font-orbitron font-bold text-lg">Backend & Datos</h3>
+                    </div>
+                    <div class="space-y-4 font-rajdhani text-lg">
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="font-semibold">Node.js (Express / NestJS)</span>
+                                <span class="text-cyber-purple">92%</span>
+                            </div>
+                            <div class="w-full bg-slate-900 rounded-full h-1.5"><div class="bg-cyber-purple h-full w-[92%] rounded-full"></div></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="font-semibold">Python (FastAPI / Django)</span>
+                                <span class="text-cyber-purple">88%</span>
+                            </div>
+                            <div class="w-full bg-slate-900 rounded-full h-1.5"><div class="bg-cyber-purple h-full w-[88%] rounded-full"></div></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="font-semibold">PostgreSQL / MongoDB / Redis</span>
+                                <span class="text-cyber-purple">85%</span>
+                            </div>
+                            <div class="w-full bg-slate-900 rounded-full h-1.5"><div class="bg-cyber-purple h-full w-[85%] rounded-full"></div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DevOps & Cloud -->
+                <div class="glass p-6 rounded-2xl border border-white/5 hover:border-cyber-emerald/30 transition-all duration-300 group">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-10 h-10 rounded-lg bg-cyber-emerald/10 flex items-center justify-center text-cyber-emerald">
+                            <i class="fa-solid fa-cubes text-xl"></i>
+                        </div>
+                        <h3 class="font-orbitron font-bold text-lg">DevOps & Cloud</h3>
+                    </div>
+                    <div class="space-y-4 font-rajdhani text-lg">
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="font-semibold">Docker / Kubernetes</span>
+                                <span class="text-cyber-emerald">85%</span>
+                            </div>
+                            <div class="w-full bg-slate-900 rounded-full h-1.5"><div class="bg-cyber-emerald h-full w-[85%] rounded-full"></div></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="font-semibold">AWS (EC2, S3, RDS, Lambda)</span>
+                                <span class="text-cyber-emerald">80%</span>
+                            </div>
+                            <div class="w-full bg-slate-900 rounded-full h-1.5"><div class="bg-cyber-emerald h-full w-[80%] rounded-full"></div></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="font-semibold">CI/CD (GitHub Actions / GitLab)</span>
+                                <span class="text-cyber-emerald">88%</span>
+                            </div>
+                            <div class="w-full bg-slate-900 rounded-full h-1.5"><div class="bg-cyber-emerald h-full w-[88%] rounded-full"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN PERFIL PROFESIONAL DE DESARROLLADOR -->
+    <section id="perfil" class="py-24 px-6 md:px-12 relative reveal">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 border-b border-white/5 pb-6">
+                <div>
+                    <span class="text-cyber-cyan font-mono text-sm tracking-wider uppercase">// ANÁLISIS BASADO EN DATOS REALES DE GITHUB & NETLIFY</span>
+                    <h2 class="font-orbitron font-extrabold text-3xl md:text-5xl mt-1">PERFIL PROFESIONAL</h2>
+                </div>
+                <p class="text-slate-400 max-w-md mt-4 md:mt-0 font-light">
+                    Diagnóstico honesto basado en 29 repositorios públicos y 27 proyectos desplegados en producción.
+                </p>
+            </div>
+
+            <!-- Stats Row -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
+                <div class="glass p-5 rounded-2xl border border-white/5 text-center group hover:border-cyber-cyan/30 transition-all duration-300">
+                    <div class="text-3xl font-orbitron font-bold text-cyber-cyan group-hover:scale-110 transition-transform duration-300">29</div>
+                    <div class="text-[11px] font-mono text-slate-400 mt-1 tracking-wider">REPOS GITHUB</div>
+                    <div class="text-[10px] text-slate-600 mt-0.5 font-mono">diegoroman666</div>
+                </div>
+                <div class="glass p-5 rounded-2xl border border-white/5 text-center group hover:border-cyber-purple/30 transition-all duration-300">
+                    <div class="text-3xl font-orbitron font-bold text-cyber-purple group-hover:scale-110 transition-transform duration-300">27</div>
+                    <div class="text-[11px] font-mono text-slate-400 mt-1 tracking-wider">DEPLOYS NETLIFY</div>
+                    <div class="text-[10px] text-slate-600 mt-0.5 font-mono">100% en producción</div>
+                </div>
+                <div class="glass p-5 rounded-2xl border border-white/5 text-center group hover:border-cyber-emerald/30 transition-all duration-300">
+                    <div class="text-3xl font-orbitron font-bold text-cyber-emerald group-hover:scale-110 transition-transform duration-300">2+</div>
+                    <div class="text-[11px] font-mono text-slate-400 mt-1 tracking-wider">AÑOS ACTIVO</div>
+                    <div class="text-[10px] text-slate-600 mt-0.5 font-mono">desde jun 2024</div>
+                </div>
+                <div class="glass p-5 rounded-2xl border border-white/5 text-center group hover:border-amber-400/30 transition-all duration-300">
+                    <div class="text-3xl font-orbitron font-bold text-amber-400 group-hover:scale-110 transition-transform duration-300">3+</div>
+                    <div class="text-[11px] font-mono text-slate-400 mt-1 tracking-wider">APPS MÓVILES</div>
+                    <div class="text-[10px] text-slate-600 mt-0.5 font-mono">Capacitor + Flutter</div>
+                </div>
+            </div>
+
+            <!-- Nivel Badge -->
+            <div class="glass p-6 rounded-2xl border border-cyber-cyan/30 mb-10 flex flex-col md:flex-row items-center md:items-start gap-6 relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-cyber-cyan to-cyber-purple"></div>
+                <div class="shrink-0 w-24 h-24 rounded-2xl bg-gradient-to-br from-cyber-cyan/20 to-cyber-purple/20 border border-cyber-cyan/40 flex flex-col items-center justify-center shadow-[0_0_20px_rgba(6,182,212,0.2)]">
+                    <span class="font-orbitron font-black text-2xl text-cyber-cyan leading-none">JR+</span>
+                    <span class="text-[9px] font-mono text-slate-400 mt-1 tracking-widest">NIVEL REAL</span>
+                </div>
+                <div class="flex-1 text-center md:text-left">
+                    <h3 class="font-orbitron font-bold text-xl text-white mb-2">Junior Avanzado <span class="text-cyber-cyan">(Junior+)</span></h3>
+                    <p class="text-slate-300 text-sm leading-relaxed mb-4 max-w-2xl">
+                        Con <strong class="text-white">29 repositorios en GitHub</strong> y <strong class="text-white">27 proyectos en producción en Netlify</strong> (cuenta activa desde junio 2024), el nivel corresponde a <strong class="text-cyber-cyan">Junior Avanzado</strong>. Se domina el stack frontend completo — HTML/CSS/Tailwind/JavaScript — con integración de backend-as-a-service mediante <strong class="text-white">Supabase</strong>, construcción de aplicaciones con propósito real (educación, gestión, GIS, e-commerce), y desarrollo móvil con <strong class="text-white">Capacitor + Flutter/Dart</strong>. El salto a Mid requiere profundizar en backend propio y testing.
+                    </p>
+                    <div class="flex flex-wrap gap-2 justify-center md:justify-start">
+                        <span class="px-2.5 py-1 bg-cyber-cyan/10 text-cyber-cyan border border-cyber-cyan/20 rounded-full text-[11px] font-mono">✓ Frontend sólido</span>
+                        <span class="px-2.5 py-1 bg-cyber-cyan/10 text-cyber-cyan border border-cyber-cyan/20 rounded-full text-[11px] font-mono">✓ 27 deploys en producción</span>
+                        <span class="px-2.5 py-1 bg-cyber-cyan/10 text-cyber-cyan border border-cyber-cyan/20 rounded-full text-[11px] font-mono">✓ Supabase / PostgreSQL</span>
+                        <span class="px-2.5 py-1 bg-cyber-cyan/10 text-cyber-cyan border border-cyber-cyan/20 rounded-full text-[11px] font-mono">✓ Proyectos con impacto real</span>
+                        <span class="px-2.5 py-1 bg-amber-500/10 text-amber-400 border border-amber-500/20 rounded-full text-[11px] font-mono">→ Creciendo en TypeScript</span>
+                        <span class="px-2.5 py-1 bg-amber-500/10 text-amber-400 border border-amber-500/20 rounded-full text-[11px] font-mono">→ Backend propio en progreso</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
+                <!-- Languages Chart -->
+                <div class="glass p-6 rounded-2xl border border-white/5">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-9 h-9 rounded-lg bg-cyber-cyan/10 flex items-center justify-center text-cyber-cyan">
+                            <i class="fa-solid fa-code text-lg"></i>
+                        </div>
+                        <h3 class="font-orbitron font-bold text-base">Distribución de Lenguajes</h3>
+                        <span class="ml-auto text-[10px] font-mono text-slate-500 bg-slate-900/60 px-2 py-0.5 rounded">GitHub · 29 repos</span>
+                    </div>
+                    <div class="space-y-4 font-rajdhani text-base">
+                        <div>
+                            <div class="flex justify-between mb-1.5 items-center">
+                                <span class="flex items-center space-x-2 text-slate-300"><i class="fa-brands fa-html5 text-orange-400 text-sm"></i><span>HTML5 / CSS3</span></span>
+                                <span class="text-orange-400 font-bold text-sm">44% · 12 repos</span>
+                            </div>
+                            <div class="w-full bg-slate-900 rounded-full h-2.5"><div class="bg-gradient-to-r from-orange-500 to-orange-400 h-full rounded-full transition-all duration-1000" style="width:44%"></div></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1.5 items-center">
+                                <span class="flex items-center space-x-2 text-slate-300"><i class="fa-brands fa-js text-yellow-400 text-sm"></i><span>JavaScript (ES6+)</span></span>
+                                <span class="text-yellow-400 font-bold text-sm">33% · 9 repos</span>
+                            </div>
+                            <div class="w-full bg-slate-900 rounded-full h-2.5"><div class="bg-yellow-400 h-full rounded-full" style="width:33%"></div></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1.5 items-center">
+                                <span class="flex items-center space-x-2 text-slate-300"><i class="fa-solid fa-t text-blue-400 text-sm"></i><span>TypeScript</span></span>
+                                <span class="text-blue-400 font-bold text-sm">7% · 2 repos</span>
+                            </div>
+                            <div class="w-full bg-slate-900 rounded-full h-2.5"><div class="bg-blue-400 h-full rounded-full" style="width:7%"></div></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1.5 items-center">
+                                <span class="flex items-center space-x-2 text-slate-300"><i class="fa-brands fa-python text-green-400 text-sm"></i><span>Python</span></span>
+                                <span class="text-green-400 font-bold text-sm">7% · 2 repos</span>
+                            </div>
+                            <div class="w-full bg-slate-900 rounded-full h-2.5"><div class="bg-green-400 h-full rounded-full" style="width:7%"></div></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1.5 items-center">
+                                <span class="flex items-center space-x-2 text-slate-300"><i class="fa-solid fa-mobile-screen text-cyan-300 text-sm"></i><span>Dart (Flutter)</span></span>
+                                <span class="text-cyan-300 font-bold text-sm">4% · 1 repo</span>
+                            </div>
+                            <div class="w-full bg-slate-900 rounded-full h-2.5"><div class="bg-cyan-300 h-full rounded-full" style="width:4%"></div></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1.5 items-center">
+                                <span class="flex items-center space-x-2 text-slate-300"><i class="fa-solid fa-c text-purple-300 text-sm"></i><span>C++</span></span>
+                                <span class="text-purple-300 font-bold text-sm">4% · 1 repo</span>
+                            </div>
+                            <div class="w-full bg-slate-900 rounded-full h-2.5"><div class="bg-purple-300 h-full rounded-full" style="width:4%"></div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stack & Tools -->
+                <div class="glass p-6 rounded-2xl border border-white/5">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-9 h-9 rounded-lg bg-cyber-purple/10 flex items-center justify-center text-cyber-purple">
+                            <i class="fa-solid fa-layer-group text-lg"></i>
+                        </div>
+                        <h3 class="font-orbitron font-bold text-base">Stack & Frameworks</h3>
+                    </div>
+                    <div class="space-y-3 text-sm">
+                        <div class="flex items-start space-x-3 p-3 bg-slate-900/50 rounded-xl border border-white/5">
+                            <i class="fa-solid fa-palette text-orange-400 mt-0.5 shrink-0 w-4"></i>
+                            <div>
+                                <div class="font-semibold text-slate-200">CSS & Estilos</div>
+                                <div class="text-slate-400 text-xs mt-0.5">Tailwind CSS (dominante), CSS3 puro, glassmorphism, animaciones neon, efectos CRT, keyframes custom</div>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-3 p-3 bg-slate-900/50 rounded-xl border border-white/5">
+                            <i class="fa-brands fa-react text-cyan-400 mt-0.5 shrink-0 w-4"></i>
+                            <div>
+                                <div class="font-semibold text-slate-200">Frontend Frameworks</div>
+                                <div class="text-slate-400 text-xs mt-0.5">React + Vite (creador de CV), TypeScript (sci-quest, dragon-fire), JavaScript vanilla avanzado, Canvas API</div>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-3 p-3 bg-slate-900/50 rounded-xl border border-white/5">
+                            <i class="fa-brands fa-python text-green-400 mt-0.5 shrink-0 w-4"></i>
+                            <div>
+                                <div class="font-semibold text-slate-200">Backend</div>
+                                <div class="text-slate-400 text-xs mt-0.5">Python + Django (projecto_django_sgc), Supabase BaaS, scripts de importación Excel → PDF, APIs REST</div>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-3 p-3 bg-slate-900/50 rounded-xl border border-white/5">
+                            <i class="fa-solid fa-mobile-screen-button text-cyber-emerald mt-0.5 shrink-0 w-4"></i>
+                            <div>
+                                <div class="font-semibold text-slate-200">Mobile Development</div>
+                                <div class="text-slate-400 text-xs mt-0.5">Capacitor — convierte apps web (HTML/JS) en APK Android · Flutter/Dart — app nativa paesmathmobile iOS/Android</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Infraestructura Row -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+                <!-- Netlify -->
+                <div class="glass p-5 rounded-2xl border border-cyber-emerald/20 hover:border-cyber-emerald/40 transition-all duration-300">
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="w-8 h-8 rounded-lg bg-cyber-emerald/10 flex items-center justify-center">
+                            <i class="fa-solid fa-rocket text-cyber-emerald text-sm"></i>
+                        </div>
+                        <h4 class="font-orbitron font-bold text-sm">Netlify Deploy</h4>
+                        <span class="ml-auto text-xs font-mono text-cyber-emerald font-bold bg-cyber-emerald/10 px-2 py-0.5 rounded">27 sitios</span>
+                    </div>
+                    <div class="space-y-2.5 text-xs">
+                        <div class="flex justify-between items-center">
+                            <span class="text-slate-500">Tasa de despliegue</span>
+                            <span class="text-cyber-emerald font-bold">100%</span>
+                        </div>
+                        <div class="w-full bg-slate-900 rounded-full h-1.5"><div class="bg-cyber-emerald h-full rounded-full w-full"></div></div>
+                        <div class="flex justify-between"><span class="text-slate-500">SSL / HTTPS</span><span class="text-cyber-emerald">✓ Todos activos</span></div>
+                        <div class="flex justify-between"><span class="text-slate-500">CDN Global</span><span class="text-cyber-emerald">✓ Cloudflare Edge</span></div>
+                        <div class="flex justify-between"><span class="text-slate-500">CI/CD</span><span class="text-cyber-emerald">✓ Auto desde GitHub</span></div>
+                        <p class="text-slate-400 text-[11px] pt-1 leading-relaxed">Todos los proyectos públicos están desplegados y activos en Netlify con CI/CD automático conectado a GitHub.</p>
+                    </div>
+                </div>
+
+                <!-- Supabase -->
+                <div class="glass p-5 rounded-2xl border border-cyber-purple/20 hover:border-cyber-purple/40 transition-all duration-300">
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="w-8 h-8 rounded-lg bg-cyber-purple/10 flex items-center justify-center">
+                            <i class="fa-solid fa-database text-cyber-purple text-sm"></i>
+                        </div>
+                        <h4 class="font-orbitron font-bold text-sm">Supabase DB</h4>
+                        <span class="ml-auto text-xs font-mono text-cyber-purple font-bold bg-cyber-purple/10 px-2 py-0.5 rounded">BaaS</span>
+                    </div>
+                    <div class="space-y-2.5 text-xs">
+                        <div class="flex justify-between"><span class="text-slate-500">Motor</span><span class="text-cyber-purple font-semibold">PostgreSQL</span></div>
+                        <div class="flex justify-between"><span class="text-slate-500">Auth integrada</span><span class="text-cyber-purple">✓ Row Level Security</span></div>
+                        <div class="flex justify-between"><span class="text-slate-500">Tiempo real</span><span class="text-cyber-purple">✓ WebSockets</span></div>
+                        <div class="flex justify-between"><span class="text-slate-500">Storage</span><span class="text-cyber-purple">✓ Archivos & media</span></div>
+                        <div class="flex justify-between"><span class="text-slate-500">APIs REST</span><span class="text-cyber-purple">✓ Auto-generadas</span></div>
+                        <p class="text-slate-400 text-[11px] pt-1 leading-relaxed">Apps como hostelapp, surgitaskpro y agenda-quirúrgica usan Supabase como base de datos en tiempo real con autenticación y RLS.</p>
+                    </div>
+                </div>
+
+                <!-- Mobile: Capacitor + Flutter -->
+                <div class="glass p-5 rounded-2xl border border-amber-500/20 hover:border-amber-500/40 transition-all duration-300">
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="w-8 h-8 rounded-lg bg-amber-500/10 flex items-center justify-center">
+                            <i class="fa-solid fa-mobile-screen-button text-amber-400 text-sm"></i>
+                        </div>
+                        <h4 class="font-orbitron font-bold text-sm">Mobile Dev</h4>
+                        <span class="ml-auto text-xs font-mono text-amber-400 font-bold bg-amber-500/10 px-2 py-0.5 rounded">Cap + Flutter</span>
+                    </div>
+                    <div class="space-y-2.5 text-xs">
+                        <div class="flex justify-between"><span class="text-slate-500">Capacitor</span><span class="text-amber-400 font-semibold">Web → APK Android</span></div>
+                        <div class="flex justify-between"><span class="text-slate-500">Flutter / Dart</span><span class="text-amber-400">App nativa iOS/Android</span></div>
+                        <div class="flex justify-between"><span class="text-slate-500">paesmathmobile</span><span class="text-amber-400">✓ App matemáticas</span></div>
+                        <div class="flex justify-between"><span class="text-slate-500">Publicadas</span><span class="text-amber-400">3+ apps móviles</span></div>
+                        <p class="text-slate-400 text-[11px] pt-1 leading-relaxed">Las aplicaciones web se convierten en APK para Android usando Capacitor, y se desarrollan apps nativas con Flutter/Dart.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tipos de Proyectos -->
+            <div class="glass p-6 rounded-2xl border border-white/5">
+                <div class="flex items-center space-x-3 mb-6">
+                    <div class="w-9 h-9 rounded-lg bg-cyber-cyan/10 flex items-center justify-center text-cyber-cyan">
+                        <i class="fa-solid fa-briefcase text-lg"></i>
+                    </div>
+                    <h3 class="font-orbitron font-bold text-base">Tipos de Proyectos Construidos</h3>
+                    <span class="ml-auto text-[10px] font-mono text-slate-500">27 proyectos reales</span>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 text-sm">
+                    <div class="flex items-start space-x-3 p-3 bg-slate-900/40 rounded-xl border border-white/5">
+                        <i class="fa-solid fa-graduation-cap text-cyber-cyan mt-0.5 shrink-0"></i>
+                        <div>
+                            <div class="font-semibold text-slate-200 text-xs mb-0.5">Apps Educativas</div>
+                            <div class="text-slate-500 text-[11px]">PAES Lenguaje, matemáticas, gramática, ciencias, pizarra virtual</div>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-3 p-3 bg-slate-900/40 rounded-xl border border-white/5">
+                        <i class="fa-solid fa-calendar-check text-cyber-purple mt-0.5 shrink-0"></i>
+                        <div>
+                            <div class="font-semibold text-slate-200 text-xs mb-0.5">Sistemas de Gestión</div>
+                            <div class="text-slate-500 text-[11px]">Agenda quirúrgica, hostel/reservas, tareas, planner 10 días</div>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-3 p-3 bg-slate-900/40 rounded-xl border border-white/5">
+                        <i class="fa-solid fa-map text-cyber-emerald mt-0.5 shrink-0"></i>
+                        <div>
+                            <div class="font-semibold text-slate-200 text-xs mb-0.5">GIS & Mapeo</div>
+                            <div class="text-slate-500 text-[11px]">Temapeo GIS, tmapeopro, cotizador territorial</div>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-3 p-3 bg-slate-900/40 rounded-xl border border-white/5">
+                        <i class="fa-solid fa-book-open text-amber-400 mt-0.5 shrink-0"></i>
+                        <div>
+                            <div class="font-semibold text-slate-200 text-xs mb-0.5">Herramientas TI</div>
+                            <div class="text-slate-500 text-[11px]">Diccionario SW, config redes, mantención, simulador instalación ISO Windows</div>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-3 p-3 bg-slate-900/40 rounded-xl border border-white/5">
+                        <i class="fa-solid fa-shop text-pink-400 mt-0.5 shrink-0"></i>
+                        <div>
+                            <div class="font-semibold text-slate-200 text-xs mb-0.5">E-commerce & CV</div>
+                            <div class="text-slate-500 text-[11px]">DesbordadoStore, creador de CV con React/Vite, import Excel→PDF</div>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-3 p-3 bg-slate-900/40 rounded-xl border border-white/5">
+                        <i class="fa-solid fa-gamepad text-cyber-cyan mt-0.5 shrink-0"></i>
+                        <div>
+                            <div class="font-semibold text-slate-200 text-xs mb-0.5">Juegos & Interactivos</div>
+                            <div class="text-slate-500 text-[11px]">Dragon Fire (vocabulario TypeScript), sci-quest (desafíos), fotos LPR</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN PROYECTOS -->
+    <section id="proyectos" class="py-24 px-6 md:px-12 relative reveal">
+        <div class="max-w-6xl mx-auto">
+            <!-- Título de Sección -->
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 border-b border-white/5 pb-6">
+                <div>
+                    <span class="text-cyber-cyan font-mono text-sm tracking-wider uppercase">// DESARROLLO REALIZADO</span>
+                    <h2 class="font-orbitron font-extrabold text-3xl md:text-5xl mt-1">PROYECTOS</h2>
+                </div>
+                <!-- Filtros Interactivos -->
+                <div class="flex flex-wrap gap-2 mt-6 md:mt-0 font-rajdhani font-semibold text-sm">
+                    <button class="filter-btn active px-4 py-1.5 rounded-full bg-cyber-cyan text-cyber-darker border border-cyber-cyan transition-all duration-300" data-filter="all">TODOS</button>
+                    <button class="filter-btn px-4 py-1.5 rounded-full border border-white/10 hover:border-cyber-cyan text-slate-300 hover:text-cyber-cyan transition-all duration-300" data-filter="web">WEB & APPS</button>
+                    <button class="filter-btn px-4 py-1.5 rounded-full border border-white/10 hover:border-cyber-cyan text-slate-300 hover:text-cyber-cyan transition-all duration-300" data-filter="edu">EDUCACIÓN</button>
+                </div>
+            </div>
+
+            <!-- Grilla de Tarjetas de Proyectos (renderizada dinámicamente desde netlifyProjects) -->
+            <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN CURSOS -->
+    <section id="cursos" class="py-24 px-6 md:px-12 relative bg-slate-950/40 reveal">
+        <div class="max-w-6xl mx-auto">
+            <!-- Título de Sección -->
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 border-b border-white/5 pb-6">
+                <div>
+                    <span class="text-cyber-cyan font-mono text-sm tracking-wider uppercase">// FORMACIÓN CERTIFICADA</span>
+                    <h2 class="font-orbitron font-extrabold text-3xl md:text-5xl mt-1">CURSOS</h2>
+                </div>
+                <p class="text-slate-400 text-sm max-w-md mt-4 md:mt-0 md:text-right leading-relaxed">
+                    Certificaciones y programas completados en plataformas oficiales de la industria.
+                </p>
+            </div>
+
+            <!-- PARTE 1 — AWS ACADEMY -->
+            <div class="mb-16">
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="w-9 h-9 rounded-lg bg-cyber-cyan/10 border border-cyber-cyan/30 flex items-center justify-center shrink-0">
+                        <i class="fa-brands fa-aws text-cyber-cyan text-lg"></i>
+                    </span>
+                    <div>
+                        <span class="text-[10px] font-mono text-slate-500 uppercase tracking-wider">// Parte 1</span>
+                        <h3 class="font-orbitron font-bold text-xl text-slate-100 leading-none">AWS Academy</h3>
+                    </div>
+                    <span id="count-aws" class="ml-auto text-[10px] font-mono text-slate-500"></span>
+                </div>
+                <div id="courses-aws" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+            </div>
+
+            <!-- PARTE 2 — CISCO -->
+            <div class="mb-16">
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="w-9 h-9 rounded-lg bg-cyber-purple/10 border border-cyber-purple/30 flex items-center justify-center shrink-0">
+                        <i class="fa-solid fa-network-wired text-cyber-purple text-lg"></i>
+                    </span>
+                    <div>
+                        <span class="text-[10px] font-mono text-slate-500 uppercase tracking-wider">// Parte 2</span>
+                        <h3 class="font-orbitron font-bold text-xl text-slate-100 leading-none">Cisco Networking Academy</h3>
+                    </div>
+                    <span id="count-cisco" class="ml-auto text-[10px] font-mono text-slate-500"></span>
+                </div>
+                <div id="courses-cisco" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+            </div>
+
+            <!-- PARTE 3 — BOOTCAMP -->
+            <div>
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="w-9 h-9 rounded-lg bg-cyber-emerald/10 border border-cyber-emerald/30 flex items-center justify-center shrink-0">
+                        <i class="fa-solid fa-rocket text-cyber-emerald text-lg"></i>
+                    </span>
+                    <div>
+                        <span class="text-[10px] font-mono text-slate-500 uppercase tracking-wider">// Parte 3</span>
+                        <h3 class="font-orbitron font-bold text-xl text-slate-100 leading-none">Bootcamps & Talleres</h3>
+                    </div>
+                    <span id="count-bootcamp" class="ml-auto text-[10px] font-mono text-slate-500"></span>
+                </div>
+                <div id="courses-bootcamp" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- EXPLORADOR DE PROYECTOS TIPO IDE / CARPETAS (Modal Interactivo) -->
+    <div id="explorer-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/90 backdrop-blur-md hidden opacity-0 transition-all duration-300 p-4 sm:p-6 md:p-10">
+        <div class="w-full max-w-6xl h-[85vh] glass rounded-2xl border border-white/10 flex flex-col overflow-hidden relative shadow-2xl">
+            <!-- Header Ventana IDE -->
+            <div class="px-4 py-3 bg-slate-950/80 border-b border-white/5 flex justify-between items-center">
+                <!-- Botones tipo Mac -->
+                <div class="flex items-center space-x-2">
+                    <button onclick="closeExplorer()" class="w-3.5 h-3.5 rounded-full bg-red-500 hover:bg-red-600 transition-colors flex items-center justify-center text-[8px] text-slate-950 font-bold"><i class="fa-solid fa-xmark"></i></button>
+                    <div class="w-3.5 h-3.5 rounded-full bg-yellow-500"></div>
+                    <div class="w-3.5 h-3.5 rounded-full bg-green-500"></div>
+                </div>
+                <!-- Título -->
+                <div class="font-mono text-xs text-slate-400 flex items-center space-x-2">
+                    <i class="fa-solid fa-terminal text-cyber-cyan"></i>
+                    <span id="ide-window-title">diego-roman-workspace</span>
+                </div>
+                <!-- Rama Git activa -->
+                <div class="font-mono text-[10px] text-cyber-purple flex items-center space-x-1.5 bg-cyber-purple/10 px-2.5 py-0.5 rounded border border-cyber-purple/20">
+                    <i class="fa-solid fa-code-branch"></i>
+                    <span>main</span>
+                </div>
+            </div>
+
+            <!-- Cuerpo del IDE -->
+            <div class="flex flex-1 flex-col md:flex-row overflow-hidden">
+                <!-- Sidebar: Explorador de Carpetas -->
+                <aside class="w-full md:w-64 bg-slate-950/60 border-b md:border-b-0 md:border-r border-white/5 p-4 overflow-y-auto flex flex-col space-y-4">
+                    <div class="text-[10px] font-mono text-slate-500 tracking-wider font-semibold uppercase">EXPLORADOR DE ARCHIVOS</div>
+                    
+                    <!-- Carpeta Raíz -->
+                    <div class="space-y-1 font-mono text-sm">
+                        <div class="flex items-center space-x-2 text-slate-300">
+                            <i class="fa-solid fa-chevron-down text-[10px]"></i>
+                            <i class="fa-solid fa-folder-open text-amber-500"></i>
+                            <span class="font-semibold text-white">project-core</span>
+                        </div>
+                        
+                        <!-- Subcarpetas y Archivos -->
+                        <div class="pl-4 space-y-1.5 pt-1">
+                            <!-- Carpeta src -->
+                            <div>
+                                <div class="flex items-center space-x-2 text-slate-400">
+                                    <i class="fa-solid fa-chevron-down text-[8px]"></i>
+                                    <i class="fa-solid fa-folder text-cyan-500"></i>
+                                    <span>src</span>
+                                </div>
+                                <div class="pl-4 space-y-1.5 pt-1">
+                                    <button onclick="selectFile('app.js')" class="file-item w-full text-left flex items-center space-x-2 text-slate-400 hover:text-cyber-cyan transition-colors py-0.5 active-file" id="file-app-js">
+                                        <i class="fa-brands fa-js text-yellow-400 text-xs"></i>
+                                        <span>app.js</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Carpeta assets -->
+                            <div>
+                                <div class="flex items-center space-x-2 text-slate-400">
+                                    <i class="fa-solid fa-chevron-down text-[8px]"></i>
+                                    <i class="fa-solid fa-folder text-purple-500"></i>
+                                    <span>assets</span>
+                                </div>
+                                <div class="pl-4 space-y-1.5 pt-1">
+                                    <button onclick="selectFile('preview_navigation.mp4')" class="file-item w-full text-left flex items-center space-x-2 text-slate-400 hover:text-cyber-cyan transition-colors py-0.5" id="file-preview">
+                                        <i class="fa-regular fa-file-video text-pink-400 text-xs"></i>
+                                        <span class="font-semibold text-cyber-cyan">preview_navigation.mp4</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Archivo README.md -->
+                            <button onclick="selectFile('readme.md')" class="file-item w-full text-left flex items-center space-x-2 text-slate-400 hover:text-cyber-cyan transition-colors py-0.5" id="file-readme">
+                                <i class="fa-solid fa-circle-info text-blue-400 text-xs"></i>
+                                <span>README.md</span>
+                            </button>
+
+                            <!-- Archivo Deployment Config (Netlify Link) -->
+                            <button onclick="selectFile('netlify.toml')" class="file-item w-full text-left flex items-center space-x-2 text-slate-400 hover:text-cyber-cyan transition-colors py-0.5" id="file-netlify">
+                                <i class="fa-solid fa-network-wired text-cyber-emerald text-xs"></i>
+                                <span class="font-semibold text-cyber-emerald">netlify.toml</span>
+                            </button>
+                        </div>
+                    </div>
+                </aside>
+
+                <!-- Panel Principal: Visor de Archivo -->
+                <main class="flex-1 bg-slate-900/40 p-4 sm:p-6 overflow-y-auto flex flex-col relative">
+                    <!-- Editor de código o previsualización -->
+                    <div id="file-content-editor" class="font-mono text-sm flex-1 flex flex-col">
+                        <!-- El contenido dinámico de archivos se inyectará aquí -->
+                    </div>
+                </main>
+            </div>
+            
+            <!-- Barra de Estado Inferior -->
+            <div class="px-4 py-2 bg-slate-950 border-t border-white/5 flex justify-between items-center text-xs font-mono text-slate-500">
+                <div class="flex items-center space-x-4">
+                    <span class="text-cyber-cyan">UTF-8</span>
+                    <span>Spaces: 4</span>
+                </div>
+                <div>
+                    <span>Diego_Workspace V1.9</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL VISTA PREVIA: Browser embebido con iframe -->
+    <div id="preview-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/95 backdrop-blur-md hidden opacity-0 transition-all duration-300 p-3 sm:p-6 md:p-8">
+        <div class="w-full max-w-5xl h-[88vh] flex flex-col glass rounded-2xl border border-white/10 overflow-hidden shadow-2xl">
+
+            <!-- Barra del navegador -->
+            <div class="bg-slate-950/95 px-3 sm:px-4 py-2.5 flex items-center space-x-2 sm:space-x-3 border-b border-white/5 shrink-0">
+                <!-- Botones tipo Mac -->
+                <div class="flex items-center space-x-1.5">
+                    <button onclick="closePreview()" class="w-3.5 h-3.5 rounded-full bg-red-500 hover:bg-red-600 transition-colors flex items-center justify-center group" title="Cerrar">
+                        <i class="fa-solid fa-xmark text-[8px] text-red-900 opacity-0 group-hover:opacity-100"></i>
+                    </button>
+                    <div class="w-3.5 h-3.5 rounded-full bg-yellow-500"></div>
+                    <div class="w-3.5 h-3.5 rounded-full bg-green-500"></div>
+                </div>
+                <!-- Controles del browser -->
+                <div class="flex items-center space-x-0.5 text-slate-600">
+                    <button class="w-7 h-7 flex items-center justify-center rounded cursor-not-allowed" disabled title="Atrás">
+                        <i class="fa-solid fa-chevron-left text-xs"></i>
+                    </button>
+                    <button class="w-7 h-7 flex items-center justify-center rounded cursor-not-allowed" disabled title="Adelante">
+                        <i class="fa-solid fa-chevron-right text-xs"></i>
+                    </button>
+                    <button onclick="reloadPreviewFrame()" class="w-7 h-7 flex items-center justify-center rounded hover:bg-white/5 text-slate-400 hover:text-slate-200 transition-colors" title="Recargar">
+                        <i class="fa-solid fa-rotate-right text-xs"></i>
+                    </button>
+                </div>
+                <!-- Barra de dirección -->
+                <div class="flex-1 bg-slate-900/80 border border-white/10 rounded-lg px-3 py-1.5 flex items-center space-x-2 min-w-0 font-mono text-xs">
+                    <i class="fa-solid fa-lock text-cyber-emerald text-[10px] shrink-0"></i>
+                    <span id="preview-url-bar" class="text-slate-300 truncate">...</span>
+                </div>
+                <!-- Botón abrir en la web -->
+                <a id="preview-open-btn" href="#" target="_blank" rel="noopener noreferrer"
+                   class="shrink-0 px-2.5 sm:px-4 py-1.5 bg-cyber-cyan/15 hover:bg-cyber-cyan text-cyber-cyan hover:text-cyber-darker border border-cyber-cyan/30 font-rajdhani font-bold text-xs sm:text-sm rounded-lg transition-all duration-300 flex items-center space-x-1.5">
+                    <i class="fa-solid fa-up-right-from-square text-xs"></i>
+                    <span class="hidden sm:inline">ABRIR EN LA WEB</span>
+                    <span class="sm:hidden">ABRIR</span>
+                </a>
+            </div>
+
+            <!-- Contenedor del iframe -->
+            <div class="flex-1 relative bg-white overflow-hidden">
+                <iframe id="preview-iframe"
+                        src="about:blank"
+                        class="w-full h-full border-0 absolute inset-0"
+                        loading="lazy"
+                        title="Vista previa del proyecto"
+                        allow="fullscreen">
+                </iframe>
+
+                <!-- Overlay de carga -->
+                <div id="preview-loading" class="absolute inset-0 bg-cyber-darker flex flex-col items-center justify-center space-y-5 z-10">
+                    <div class="relative w-16 h-16">
+                        <div class="absolute inset-0 w-16 h-16 border-4 border-slate-800 rounded-full"></div>
+                        <div class="absolute inset-0 w-16 h-16 border-4 border-t-cyber-cyan border-r-transparent border-b-transparent border-l-transparent rounded-full animate-spin"></div>
+                    </div>
+                    <div class="text-center space-y-1.5">
+                        <p class="font-rajdhani font-bold text-slate-200 tracking-wider text-base">Cargando sitio</p>
+                        <p id="preview-loading-url" class="font-mono text-xs text-slate-500 truncate max-w-xs px-4">...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Barra de estado inferior -->
+            <div class="bg-cyber-cyan/5 border-t border-cyber-cyan/10 px-4 py-1.5 flex justify-between items-center text-[10px] font-mono text-slate-500 shrink-0">
+                <div class="flex items-center space-x-3">
+                    <span class="flex items-center space-x-1.5 text-cyber-emerald">
+                        <span class="w-1.5 h-1.5 rounded-full bg-cyber-emerald animate-pulse"></span>
+                        <span>Netlify Deploy</span>
+                    </span>
+                    <span>SSL / TLS Activo</span>
+                </div>
+                <span id="preview-site-name" class="text-slate-400 font-semibold tracking-wider truncate"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECCIÓN TRAYECTORIA (Timeline) -->
+    <section id="trayectoria" class="py-24 px-6 md:px-12 relative bg-slate-950/40 reveal">
+        <div class="max-w-4xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 border-b border-white/5 pb-6">
+                <div>
+                    <span class="text-cyber-cyan font-mono text-sm tracking-wider uppercase">// EVOLUCIÓN PROFESIONAL</span>
+                    <h2 class="font-orbitron font-extrabold text-3xl md:text-5xl mt-1">TRAYECTORIA</h2>
+                </div>
+            </div>
+
+            <!-- Línea de Tiempo Vertical -->
+            <div class="relative border-l-2 border-slate-800 space-y-12 pl-6 sm:pl-8">
+                
+                <!-- Hito 1 -->
+                <div class="relative group">
+                    <div class="absolute -left-[35px] sm:-left-[43px] top-1.5 w-6 h-6 rounded-full bg-cyber-darker border-4 border-cyber-cyan flex items-center justify-center shadow-[0_0_10px_rgba(6,182,212,0.8)] group-hover:scale-125 transition-transform duration-300">
+                        <div class="w-1.5 h-1.5 bg-cyber-cyan rounded-full"></div>
+                    </div>
+                    <div class="glass p-6 rounded-2xl border border-white/5 hover:border-cyber-cyan/20 transition-all duration-300">
+                        <div class="flex flex-col sm:flex-row sm:justify-between items-start sm:items-center mb-3">
+                            <span class="text-xs font-mono text-cyber-cyan tracking-wider">2024 - PRESENTE</span>
+                            <span class="text-xs px-2.5 py-0.5 bg-cyber-cyan/10 text-cyber-cyan rounded-full border border-cyber-cyan/20 font-semibold mt-1 sm:mt-0">ACTUAL</span>
+                        </div>
+                        <h3 class="font-orbitron font-bold text-xl text-slate-100">Ingeniero de Software Senior</h3>
+                        <p class="text-slate-400 font-semibold text-sm mb-4">TechInnova Solutions</p>
+                        <p class="text-slate-300 text-sm leading-relaxed">
+                            Liderazgo técnico en el diseño e implementación de arquitecturas backend Cloud-Native y microservicios. Integración de pipelines CI/CD y despliegue automatizado con cero caídas del sistema.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Hito 2 -->
+                <div class="relative group">
+                    <div class="absolute -left-[35px] sm:-left-[43px] top-1.5 w-6 h-6 rounded-full bg-cyber-darker border-4 border-cyber-purple flex items-center justify-center shadow-[0_0_10px_rgba(168,85,247,0.8)] group-hover:scale-125 transition-transform duration-300">
+                        <div class="w-1.5 h-1.5 bg-cyber-purple rounded-full"></div>
+                    </div>
+                    <div class="glass p-6 rounded-2xl border border-white/5 hover:border-cyber-purple/20 transition-all duration-300">
+                        <div class="flex flex-col sm:flex-row sm:justify-between items-start sm:items-center mb-3">
+                            <span class="text-xs font-mono text-cyber-purple tracking-wider">2021 - 2024</span>
+                        </div>
+                        <h3 class="font-orbitron font-bold text-xl text-slate-100">Desarrollador Full Stack</h3>
+                        <p class="text-slate-400 font-semibold text-sm mb-4">CoreSystems Ltd.</p>
+                        <p class="text-slate-300 text-sm leading-relaxed">
+                            Desarrollo de portales web interactivos y paneles de analítica utilizando el stack MERN y AWS. Optimización de bases de datos logrando reducir tiempos de consulta en un 40%.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Hito 3 -->
+                <div class="relative group">
+                    <div class="absolute -left-[35px] sm:-left-[43px] top-1.5 w-6 h-6 rounded-full bg-cyber-darker border-4 border-slate-700 flex items-center justify-center group-hover:scale-125 transition-transform duration-300">
+                        <div class="w-1.5 h-1.5 bg-slate-500 rounded-full"></div>
+                    </div>
+                    <div class="glass p-6 rounded-2xl border border-white/5 hover:border-slate-700/55 transition-all duration-300">
+                        <div class="flex flex-col sm:flex-row sm:justify-between items-start sm:items-center mb-3">
+                            <span class="text-xs font-mono text-slate-500 tracking-wider">2017 - 2021</span>
+                        </div>
+                        <h3 class="font-orbitron font-bold text-xl text-slate-100">Ingeniería Informática</h3>
+                        <p class="text-slate-400 font-semibold text-sm mb-4">Universidad Tecnológica</p>
+                        <p class="text-slate-300 text-sm leading-relaxed">
+                            Formación integral en ciencias de la computación, ingeniería de software, arquitectura de sistemas, gestión de bases de datos, redes y metodologías ágiles.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN CONTACTO -->
+    <section id="contacto" class="py-24 px-6 md:px-12 relative reveal">
+        <div class="absolute bottom-1/4 left-10 w-80 h-80 bg-cyber-cyan/10 rounded-full blur-[120px] pointer-events-none"></div>
+
+        <div class="max-w-4xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 border-b border-white/5 pb-6">
+                <div>
+                    <span class="text-cyber-cyan font-mono text-sm tracking-wider uppercase">// INTERFAZ DE COMUNICACIÓN</span>
+                    <h2 class="font-orbitron font-extrabold text-3xl md:text-5xl mt-1">CONTACTAR</h2>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
+                <div class="md:col-span-4 space-y-6">
+                    <h3 class="font-orbitron font-bold text-xl text-slate-200">¿Tienes un proyecto en mente?</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Estoy disponible para consultorías, proyectos de desarrollo de software y colaboraciones de alta ingeniería.
+                    </p>
+                    <div class="space-y-4 font-rajdhani text-lg">
+                        <a href="mailto:diego.roman@gmail.com" class="flex items-center space-x-3 text-slate-300 hover:text-cyber-cyan transition-colors">
+                            <i class="fa-regular fa-envelope text-cyber-cyan"></i>
+                            <span>diego.roman@gmail.com</span>
+                        </a>
+                        <div class="flex items-center space-x-3 text-slate-300">
+                            <i class="fa-solid fa-location-dot text-cyber-cyan"></i>
+                            <span>Santiago, Chile</span>
+                        </div>
+                    </div>
+                    <div class="flex space-x-4 pt-4">
+                        <a href="#" class="w-10 h-10 rounded-lg glass flex items-center justify-center text-slate-300 hover:text-cyber-cyan border border-white/5 hover:border-cyber-cyan/50 hover:scale-110 transition-all" aria-label="Github">
+                            <i class="fa-brands fa-github text-xl"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-lg glass flex items-center justify-center text-slate-300 hover:text-cyber-cyan border border-white/5 hover:border-cyber-cyan/50 hover:scale-110 transition-all" aria-label="LinkedIn">
+                            <i class="fa-brands fa-linkedin text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="md:col-span-8 glass p-6 sm:p-8 rounded-2xl border border-white/10 relative">
+                    <form id="contact-form" class="space-y-6">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <div>
+                                <label for="nombre" class="block font-mono text-xs text-slate-400 mb-2 uppercase">Nombre Completo</label>
+                                <input type="text" id="nombre" required
+                                    class="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-cyber-cyan text-slate-100 transition-colors">
+                            </div>
+                            <div>
+                                <label for="email" class="block font-mono text-xs text-slate-400 mb-2 uppercase">Correo Electrónico</label>
+                                <input type="email" id="email" required
+                                    class="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-cyber-cyan text-slate-100 transition-colors">
+                            </div>
+                        </div>
+                        <div>
+                            <label for="asunto" class="block font-mono text-xs text-slate-400 mb-2 uppercase">Asunto</label>
+                            <input type="text" id="asunto" required
+                                class="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-cyber-cyan text-slate-100 transition-colors">
+                        </div>
+                        <div>
+                            <label for="mensaje" class="block font-mono text-xs text-slate-400 mb-2 uppercase">Mensaje</label>
+                            <textarea id="mensaje" rows="4" required
+                                class="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-cyber-cyan text-slate-100 transition-colors resize-none"></textarea>
+                        </div>
+                        <button type="submit"
+                            class="w-full py-4 rounded-lg bg-gradient-to-r from-cyber-cyan to-cyber-purple font-rajdhani font-bold text-lg tracking-wider hover:opacity-95 transition-all shadow-[0_0_15px_rgba(6,182,212,0.3)] hover:shadow-[0_0_25px_rgba(168,85,247,0.5)]">
+                            ENVIAR TRANSMISIÓN
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="py-8 border-t border-white/5 bg-slate-950/80 text-center font-mono text-xs text-slate-500 px-6">
+        <div class="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
+            <p>© 2026 DIEGO ROMÁN. TODOS LOS DERECHOS RESERVADOS.</p>
+            <p class="text-cyber-cyan">DESIGNED FOR THE FUTURE</p>
+        </div>
+    </footer>
+
+    <!-- NOTIFICACIÓN DE ENVÍO DE FORMULARIO -->
+    <div id="modal-notificacion" class="fixed inset-0 z-50 flex items-center justify-center px-4 bg-cyber-darker/80 backdrop-blur-md hidden opacity-0 transition-opacity duration-300">
+        <div class="glass p-8 rounded-2xl border border-cyber-cyan/30 max-w-sm w-full text-center space-y-6">
+            <div class="w-16 h-16 rounded-full bg-cyber-cyan/15 flex items-center justify-center text-cyber-cyan text-3xl mx-auto animate-pulse">
+                <i class="fa-solid fa-satellite-dish"></i>
+            </div>
+            <div class="space-y-2">
+                <h3 class="font-orbitron font-bold text-xl text-white">Transmisión Exitosa</h3>
+                <p class="text-slate-300 text-sm">Tu mensaje ha sido enviado a la órbita de Diego. Responderé en un abrir y cerrar de ojos.</p>
+            </div>
+            <button id="cerrar-modal" class="w-full py-2.5 rounded bg-cyber-cyan text-cyber-darker font-rajdhani font-bold text-md tracking-wider hover:bg-white transition-colors duration-300">
+                ENTENDIDO
+            </button>
+        </div>
+    </div>
+
+
+    <!-- JAVASCRIPT: Lógica de Partículas, Filtros e IDE Interactivo -->
+    <script>
+        // ----------------------------------------------------
+        // PROYECTOS REALES DE NETLIFY (18 sitios desplegados)
+        // ----------------------------------------------------
+        const netlifyProjects = [
+            { id: 'hostelapp1',                  name: 'Hostel App',               url: 'https://hostelapp1.netlify.app',                  screenshot: 'https://d33wubrfki0l68.cloudfront.net/6a20a70d713115e6ef8bb80a/screenshot_2026-06-03-22-13-35-0000.webp', category: 'web', updated: '03 Jun 2026', desc: 'Aplicación de gestión para hostel o alojamiento con control de reservas y administración.' },
+            { id: 'matepro4u',                   name: 'MatePro 4U',               url: 'https://matepro4u.netlify.app',                   screenshot: 'https://d33wubrfki0l68.cloudfront.net/6a1a3f7059fbdf54fd8c6a4d/screenshot_2026-05-30-01-37-57-0000.webp', category: 'edu', updated: '30 May 2026', desc: 'Plataforma interactiva de matemáticas con ejercicios y práctica para estudiantes.' },
+            { id: 'probabia',                    name: 'Probabia',                 url: 'https://probabia.netlify.app',                    screenshot: 'https://d33wubrfki0l68.cloudfront.net/6a0f64d28aa9df000866ee76/screenshot_2026-05-21-20-02-38-0000.webp', category: 'edu', updated: '21 May 2026', desc: 'Herramienta educativa de estadística y probabilidad para análisis y aprendizaje.' },
+            { id: 'phonky-4-u',                  name: 'Phonky 4U',                url: 'https://phonky-4-u.netlify.app',                  screenshot: 'https://image.thum.io/get/width/800/crop/600/https://phonky-4-u.netlify.app', category: 'web', updated: '23 May 2026', desc: 'Aplicación musical para descubrir y compartir sonidos y playlists personalizadas.' },
+            { id: 'temapeo-gis',                 name: 'Temapeo GIS',              url: 'https://temapeo-gis.netlify.app',                 screenshot: 'https://d33wubrfki0l68.cloudfront.net/6a180810e5e9911f1f09e0ea/screenshot_2026-05-28-09-17-10-0000.webp', category: 'web', updated: '28 May 2026', desc: 'Sistema GIS para visualización y análisis de datos geoespaciales en el territorio.' },
+            { id: 'cvcreatorr',                  name: 'CV Creator',               url: 'https://cvcreatorr.netlify.app',                  screenshot: 'https://d33wubrfki0l68.cloudfront.net/686875e129134600080b9314/screenshot_2025-07-05-00-46-42-0000.webp', category: 'web', updated: '05 Jul 2025', desc: 'Creador de currículum vitae interactivo construido con React + Vite, con vista previa en tiempo real y exportación.' },
+            { id: 'agenda-school',               name: 'Agenda School',            url: 'https://agenda-school.netlify.app',               screenshot: 'https://d33wubrfki0l68.cloudfront.net/6a01dc2f2ef64d000817f5ec/screenshot_2026-05-11-13-41-12-0000.webp', category: 'edu', updated: '11 May 2026', desc: 'Agenda escolar digital para organizar tareas, eventos y el calendario académico.' },
+            { id: 'pizarra-virtual-matematico',  name: 'Pizarra Virtual Mat.',     url: 'https://pizarra-virtual-matematico.netlify.app',  screenshot: 'https://d33wubrfki0l68.cloudfront.net/69fc149e4e55a50008cdff1e/screenshot_2026-05-07-04-27-18-0000.webp', category: 'edu', updated: '07 May 2026', desc: 'Pizarra virtual interactiva para resolver y visualizar problemas matemáticos paso a paso.' },
+            { id: 'photos-lpr-media',            name: 'Photos LPR Media',         url: 'https://photos-lpr-media.netlify.app',            screenshot: 'https://d33wubrfki0l68.cloudfront.net/69f3a8c751da6c0008979c0d/screenshot_2026-04-30-19-09-28-0000.webp', category: 'web', updated: '30 Abr 2026', desc: 'Galería multimedia con reconocimiento de placas (LPR) y gestión de imágenes.' },
+            { id: 'diccionario-sw',              name: 'Diccionario SW',           url: 'https://diccionario-sw.netlify.app',              screenshot: 'https://d33wubrfki0l68.cloudfront.net/69ef82ba12418e000834c42e/screenshot_2026-04-27-15-37-40-0000.webp', category: 'web', updated: '27 Abr 2026', desc: 'Diccionario de términos de software y tecnología con búsqueda rápida y definiciones.' },
+            { id: 'insta-sw',                    name: 'Insta SW',                 url: 'https://insta-sw.netlify.app',                    screenshot: 'https://d33wubrfki0l68.cloudfront.net/69e9241c57659244c1922dec/screenshot_2026-04-22-19-40-14-0000.webp', category: 'web', updated: '22 Abr 2026', desc: 'Simulador didáctico del proceso de instalación paso a paso de una ISO de Windows, con guía visual de cada etapa del sistema.' },
+            { id: 'mantencion-sw',               name: 'Mantención SW',            url: 'https://mantencion-sw.netlify.app',               screenshot: 'https://d33wubrfki0l68.cloudfront.net/69e84c8a0e1bd33583e91847/screenshot_2026-04-22-04-20-28-0000.webp', category: 'web', updated: '22 Abr 2026', desc: 'Sistema de gestión y seguimiento de mantenciones de software y equipos TI.' },
+            { id: 'config-redes',                name: 'Config Redes',             url: 'https://config-redes.netlify.app',                screenshot: 'https://d33wubrfki0l68.cloudfront.net/69e84d40213401389273fef7/screenshot_2026-04-22-04-23-32-0000.webp', category: 'web', updated: '22 Abr 2026', desc: 'Configurador visual de redes informáticas y topologías de infraestructura TI.' },
+            { id: 'planner4tendaysit',           name: 'Planner 4 Ten Days',       url: 'https://planner4tendaysit.netlify.app',           screenshot: 'https://d33wubrfki0l68.cloudfront.net/69e58c54aaf3e858d5e4c56a/screenshot_2026-04-20-02-15-50-0000.webp', category: 'web', updated: '20 Abr 2026', desc: 'Planificador de tareas y objetivos para gestionar proyectos en 10 días.' },
+            { id: 'paeslen',                     name: 'PAES LEN',                 url: 'https://paeslen.netlify.app',                     screenshot: 'https://d33wubrfki0l68.cloudfront.net/69951f2ffbd8900008bbad74/screenshot_2026-02-18-02-09-07-0000.webp', category: 'edu', updated: '05 Abr 2026', desc: 'Preparación interactiva para la PAES de Lenguaje con ejercicios y simulacros.' },
+            { id: 'dragonfiree',                 name: 'Dragon Fire',              url: 'https://dragonfiree.netlify.app',                 screenshot: 'https://d33wubrfki0l68.cloudfront.net/6987c5b743e2bb0008e77a36/screenshot_2026-02-07-23-07-48-0000.webp', category: 'web', updated: '05 Abr 2026', desc: 'Juego interactivo de vocabulario y lenguaje en TypeScript: practica cientos de palabras contra el reloj.' },
+            { id: 'surgitaskpro',                name: 'SurgiTask Pro',            url: 'https://surgitaskpro.netlify.app',                screenshot: 'https://d33wubrfki0l68.cloudfront.net/6a1e4a12defd43b4c804fa57/screenshot_2026-06-02-03-13-06-0000.webp', category: 'web', updated: '02 Jun 2026', desc: 'Sistema profesional de gestión de tareas y agenda quirúrgica para pabellones, con seguimiento de procedimientos en tiempo real.' },
+            { id: 'grammanual',                  name: 'Grammanual',               url: 'https://grammanual.netlify.app',                  screenshot: 'https://d33wubrfki0l68.cloudfront.net/69b3613ad489c3000873688d/screenshot_2026-03-13-00-58-54-0000.webp', category: 'edu', updated: '13 Mar 2026', desc: 'Manual interactivo de gramática y ortografía en español con ejercicios prácticos, reglas y guías de estudio.' },
+            { id: 'datamathapp',                 name: 'DataMath',                 url: 'https://datamathapp.netlify.app',                 screenshot: 'https://d33wubrfki0l68.cloudfront.net/6979594b8c5d130007ce366a/screenshot_2026-01-28-00-33-39-0000.webp', category: 'edu', updated: '05 Abr 2026', desc: 'Aplicación educativa de matemáticas con análisis de datos, visualizaciones estadísticas y ejercicios de cálculo interactivos.' }
+        ];
+
+        // --------------------------------------------------
+        // RENDERIZAR TARJETAS REALES DE NETLIFY
+        // --------------------------------------------------
+        function handleImgError(img) {
+            img.style.display = 'none';
+        }
+
+        function renderProjectCards() {
+            const grid = document.getElementById('projects-grid');
+            if (!grid) return;
+
+            grid.innerHTML = netlifyProjects.map(proj => {
+                const isEdu   = proj.category === 'edu';
+                const accentHover   = isEdu ? 'hover:border-cyber-purple/40' : 'hover:border-cyber-cyan/40';
+                const btnClass      = isEdu
+                    ? 'bg-cyber-purple/15 hover:bg-cyber-purple text-cyber-purple hover:text-cyber-darker border-cyber-purple/30'
+                    : 'bg-cyber-cyan/15 hover:bg-cyber-cyan text-cyber-cyan hover:text-cyber-darker border-cyber-cyan/30';
+                const badgeClass    = isEdu
+                    ? 'bg-cyber-purple/20 text-cyber-purple border-cyber-purple/40'
+                    : 'bg-cyber-cyan/20 text-cyber-cyan border-cyber-cyan/40';
+                const badgeLabel    = isEdu ? 'EDUCACIÓN' : 'WEB APP';
+                const titleHover    = isEdu ? 'group-hover:text-cyber-purple' : 'group-hover:text-cyber-cyan';
+                const playRing      = isEdu ? 'bg-cyber-purple/90 border-cyber-purple' : 'bg-cyber-cyan/90 border-cyber-cyan';
+                const imgTag        = proj.screenshot
+                    ? `<img src="${proj.screenshot}" alt="${proj.name}" class="absolute inset-0 w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700" loading="lazy" onerror="handleImgError(this)">`
+                    : '';
+
+                return `<div class="project-card glass rounded-2xl overflow-hidden border border-white/5 ${accentHover} transition-all duration-300 flex flex-col h-full group" data-category="${proj.category}">
+                    <div class="relative h-44 overflow-hidden cursor-pointer bg-slate-900 shrink-0" onclick="openPreview('${proj.id}')">
+                        <div class="absolute inset-0 bg-gradient-to-tr from-slate-800 to-slate-900 flex items-center justify-center pointer-events-none">
+                            <i class="fa-solid fa-globe text-5xl text-slate-700"></i>
+                        </div>
+                        ${imgTag}
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/10 to-transparent pointer-events-none"></div>
+                        <span class="absolute top-3 right-3 px-2.5 py-1 ${badgeClass} text-[10px] font-mono rounded-full border backdrop-blur-sm">${badgeLabel}</span>
+                        <div class="absolute inset-0 bg-slate-950/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <div class="w-14 h-14 rounded-full ${playRing} border-2 flex items-center justify-center transform scale-90 group-hover:scale-100 transition-transform duration-300 shadow-lg">
+                                <i class="fa-solid fa-eye text-cyber-darker text-lg"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-5 flex flex-col flex-grow space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="text-[10px] font-mono text-slate-500 truncate max-w-[70%]">${proj.id}.netlify.app</span>
+                            <span class="text-[10px] text-cyber-emerald flex items-center shrink-0">
+                                <span class="w-1.5 h-1.5 bg-cyber-emerald rounded-full animate-ping mr-1"></span>LIVE
+                            </span>
+                        </div>
+                        <h3 class="font-orbitron font-bold text-base text-slate-100 ${titleHover} transition-colors duration-300 leading-snug">${proj.name}</h3>
+                        <p class="text-slate-400 text-xs leading-relaxed flex-grow">${proj.desc}</p>
+                        <div class="text-[10px] font-mono text-slate-600 flex items-center space-x-1">
+                            <i class="fa-regular fa-clock text-[9px]"></i>
+                            <span>Actualizado: ${proj.updated}</span>
+                        </div>
+                        <div class="flex gap-2 pt-3 border-t border-white/5">
+                            <button onclick="openPreview('${proj.id}')" class="flex-1 py-2 ${btnClass} border font-rajdhani font-bold rounded-lg text-xs transition-all duration-300 flex items-center justify-center space-x-1.5">
+                                <i class="fa-solid fa-eye text-xs"></i>
+                                <span>VISTA PREVIA</span>
+                            </button>
+                            <a href="${proj.url}" target="_blank" rel="noopener noreferrer"
+                               class="py-2 px-3 bg-slate-800/60 hover:bg-slate-700 text-slate-400 hover:text-white border border-white/10 hover:border-white/20 rounded-lg text-sm transition-all duration-300 flex items-center justify-center"
+                               title="Abrir en nueva pestaña">
+                                <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>`;
+            }).join('');
+        }
+
+        // --------------------------------------------------
+        // CURSOS / CERTIFICACIONES (AWS · CISCO · BOOTCAMP)
+        // --------------------------------------------------
+        const coursesData = {
+            aws: {
+                accent: 'cyan',
+                provider: 'AWS Academy',
+                items: [
+                    { name: 'Desarrollo en la nube de AWS Academy',                 icon: 'fa-solid fa-code',          tag: 'Graduado', desc: 'Objetivo: diseñar, construir y desplegar aplicaciones nativas en la nube usando los servicios de AWS, aplicando buenas prácticas de desarrollo, automatización y escalabilidad.' },
+                    { name: 'Fundamentos de seguridad en la nube de AWS Academy',    icon: 'fa-solid fa-shield-halved', tag: 'Graduado', desc: 'Objetivo: dominar los principios de seguridad en la nube —gestión de identidades (IAM), cifrado, modelo de responsabilidad compartida y protección de datos— para entornos AWS seguros.' },
+                    { name: 'Fundamentos de aprendizaje automático de AWS Academy',  icon: 'fa-solid fa-robot',         tag: 'Graduado', desc: 'Objetivo: comprender los conceptos esenciales de Machine Learning e implementar modelos predictivos con los servicios de IA de AWS, desde el procesamiento de datos hasta la inferencia.' },
+                    { name: 'Arquitectura de la nube de AWS Academy',                icon: 'fa-solid fa-sitemap',       tag: 'Graduado', desc: 'Objetivo: diseñar arquitecturas en la nube resilientes, eficientes y de alta disponibilidad siguiendo el AWS Well-Architected Framework y optimizando costos.' }
+                ]
+            },
+            cisco: {
+                accent: 'purple',
+                provider: 'Cisco Networking Academy',
+                items: [
+                    { name: 'Trayectoria profesional de Analista de Ciberseguridad Júnior', icon: 'fa-solid fa-user-shield', tag: 'Insignia', desc: 'Objetivo: consolidar las competencias completas de un analista de ciberseguridad júnior —detección, análisis y respuesta a amenazas— integrando todos los cursos de la ruta profesional de Cisco.' },
+                    { name: 'CCNA: Introducción a las redes',                  icon: 'fa-solid fa-ethernet',         tag: 'Curso', desc: 'Objetivo: comprender el funcionamiento de las redes, los modelos OSI/TCP-IP, el direccionamiento IP y la configuración básica de routers y switches Cisco.' },
+                    { name: 'Introducción a la ciberseguridad',                icon: 'fa-solid fa-lock',             tag: 'Curso', desc: 'Objetivo: reconocer las principales amenazas, vulnerabilidades y ataques, y aplicar prácticas fundamentales para proteger información, dispositivos y redes.' },
+                    { name: 'Conceptos básicos de redes',                      icon: 'fa-solid fa-network-wired',    tag: 'Curso', desc: 'Objetivo: dominar los fundamentos de conectividad, protocolos, topologías y servicios de red necesarios para administrar infraestructura TI.' },
+                    { name: 'Dispositivos de red y configuración inicial',     icon: 'fa-solid fa-server',           tag: 'Curso', desc: 'Objetivo: instalar y realizar la configuración inicial de dispositivos de red (routers y switches), dejándolos operativos y seguros en un entorno real.' },
+                    { name: 'Linux Unhatched',                                 icon: 'fa-brands fa-linux',           tag: 'Curso', desc: 'Objetivo: adquirir las habilidades básicas del sistema operativo Linux —línea de comandos, archivos y permisos— como base para administración y ciberseguridad.' },
+                    { name: 'Introducción a IoT',                              icon: 'fa-solid fa-microchip',        tag: 'Curso', desc: 'Objetivo: entender cómo el Internet de las Cosas conecta dispositivos, datos y procesos, y su impacto en la transformación digital y la seguridad.' },
+                    { name: 'Fundamentos de JavaScript 1',                     icon: 'fa-brands fa-js',              tag: 'Curso', desc: 'Objetivo: aprender la sintaxis, variables, estructuras de control y funciones de JavaScript para crear lógica interactiva en aplicaciones web.' },
+                    { name: 'Inglés para TI 1',                                icon: 'fa-solid fa-language',         tag: 'Curso', desc: 'Objetivo: desarrollar vocabulario técnico y comprensión del inglés aplicado al área de tecnología en un nivel inicial.' },
+                    { name: 'Inglés para TI 2',                                icon: 'fa-solid fa-language',         tag: 'Curso', desc: 'Objetivo: ampliar la competencia comunicativa en inglés técnico para documentación, soporte y entornos profesionales de TI.' }
+                ]
+            },
+            bootcamp: {
+                accent: 'emerald',
+                provider: 'INACAP · i+e',
+                items: [
+                    { name: 'Talleres, Bootcamps y Webinars de Formación en i+e para Estudiantes', icon: 'fa-solid fa-chalkboard-user', tag: 'Programa', desc: 'Objetivo: desarrollar habilidades de innovación y emprendimiento mediante talleres y bootcamps prácticos, aplicando métodos y herramientas i+e a proyectos reales.' },
+                    { name: 'I+E+TT — Programa Fortalecimiento del Aprendizaje',                   icon: 'fa-solid fa-lightbulb',       tag: 'Programa', desc: 'Objetivo: instalar actitudes, habilidades y competencias de innovación, emprendimiento y transferencia tecnológica, fortaleciendo el aprendizaje a lo largo del año académico.' }
+                ]
+            }
+        };
+
+        function renderCourseCards() {
+            const accentMap = {
+                cyan:    { border: 'hover:border-cyber-cyan/40',    icon: 'text-cyber-cyan',    iconBg: 'bg-cyber-cyan/10 border-cyber-cyan/30',    badge: 'bg-cyber-cyan/20 text-cyber-cyan border-cyber-cyan/40',    title: 'group-hover:text-cyber-cyan' },
+                purple:  { border: 'hover:border-cyber-purple/40',  icon: 'text-cyber-purple',  iconBg: 'bg-cyber-purple/10 border-cyber-purple/30',  badge: 'bg-cyber-purple/20 text-cyber-purple border-cyber-purple/40',  title: 'group-hover:text-cyber-purple' },
+                emerald: { border: 'hover:border-cyber-emerald/40', icon: 'text-cyber-emerald', iconBg: 'bg-cyber-emerald/10 border-cyber-emerald/30', badge: 'bg-cyber-emerald/20 text-cyber-emerald border-cyber-emerald/40', title: 'group-hover:text-cyber-emerald' }
+            };
+
+            Object.entries(coursesData).forEach(([key, group]) => {
+                const grid = document.getElementById('courses-' + key);
+                const counter = document.getElementById('count-' + key);
+                if (!grid) return;
+                const a = accentMap[group.accent];
+
+                grid.innerHTML = group.items.map(course => `
+                    <div class="glass rounded-2xl p-5 border border-white/5 ${a.border} transition-all duration-300 flex flex-col h-full group">
+                        <div class="flex items-start justify-between mb-4">
+                            <span class="w-11 h-11 rounded-xl border ${a.iconBg} flex items-center justify-center shrink-0">
+                                <i class="${course.icon} ${a.icon} text-lg"></i>
+                            </span>
+                            <span class="px-2.5 py-1 ${a.badge} text-[10px] font-mono rounded-full border">${course.tag}</span>
+                        </div>
+                        <h4 class="font-orbitron font-bold text-sm text-slate-100 ${a.title} transition-colors duration-300 leading-snug mb-2">${course.name}</h4>
+                        <p class="text-slate-400 text-xs leading-relaxed flex-grow">${course.desc}</p>
+                        <div class="flex items-center justify-between pt-4 mt-4 border-t border-white/5">
+                            <span class="text-[10px] font-mono text-slate-500 truncate max-w-[70%]">${group.provider}</span>
+                            <span class="text-[10px] text-cyber-emerald flex items-center shrink-0">
+                                <i class="fa-solid fa-circle-check mr-1 text-[9px]"></i>COMPLETADO
+                            </span>
+                        </div>
+                    </div>
+                `).join('');
+
+                if (counter) counter.textContent = group.items.length + (group.items.length === 1 ? ' curso' : ' cursos');
+            });
+        }
+
+        // --------------------------------------------------
+        // FUNCIONES DEL MODAL VISTA PREVIA (IFRAME BROWSER)
+        // --------------------------------------------------
+        let _activePreview = null;
+
+        function _resetLoadingDiv(loadingDiv, proj) {
+            loadingDiv.style.display = 'flex';
+            loadingDiv.innerHTML = `
+                <div class="relative w-16 h-16">
+                    <div class="absolute inset-0 w-16 h-16 border-4 border-slate-800 rounded-full"></div>
+                    <div class="absolute inset-0 w-16 h-16 border-4 border-t-cyber-cyan border-r-transparent border-b-transparent border-l-transparent rounded-full animate-spin"></div>
+                </div>
+                <div class="text-center space-y-1.5">
+                    <p class="font-rajdhani font-bold text-slate-200 tracking-wider text-base">Cargando sitio</p>
+                    <p class="font-mono text-xs text-slate-500 truncate max-w-xs px-4">${proj.url}</p>
+                </div>
+            `;
+        }
+
+        function _showFallback(proj, loadingDiv, iframe) {
+            iframe.style.display = 'none';
+            loadingDiv.style.display = 'flex';
+            loadingDiv.innerHTML = `
+                <div class="text-center space-y-4 p-4 max-w-xs mx-auto">
+                    ${proj.screenshot
+                        ? `<img src="${proj.screenshot}" alt="${proj.name}" class="w-full rounded-xl border border-white/10 shadow-xl" style="max-height:170px;object-fit:cover;object-position:top">`
+                        : `<div class="w-20 h-20 mx-auto rounded-full border-2 border-slate-700 flex items-center justify-center"><i class="fa-solid fa-globe text-4xl text-slate-600"></i></div>`}
+                    <div class="space-y-1">
+                        <p class="font-orbitron font-bold text-slate-200 text-sm">${proj.name}</p>
+                        <p class="text-slate-500 text-xs font-mono">Este sitio restringe la vista previa<br>embebida por política de seguridad.</p>
+                    </div>
+                    <a href="${proj.url}" target="_blank" rel="noopener noreferrer"
+                       class="inline-flex items-center space-x-2 px-5 py-2.5 bg-cyber-cyan text-cyber-darker font-rajdhani font-bold text-sm rounded-lg hover:bg-white transition-colors">
+                        <i class="fa-solid fa-up-right-from-square"></i>
+                        <span>ABRIR EN EL NAVEGADOR</span>
+                    </a>
+                </div>
+            `;
+        }
+
+        function openPreview(projectId) {
+            const proj = netlifyProjects.find(p => p.id === projectId);
+            if (!proj) return;
+            _activePreview = proj;
+
+            const modal      = document.getElementById('preview-modal');
+            const iframe     = document.getElementById('preview-iframe');
+            const loadingDiv = document.getElementById('preview-loading');
+            const urlBar     = document.getElementById('preview-url-bar');
+            const openBtn    = document.getElementById('preview-open-btn');
+            const siteName   = document.getElementById('preview-site-name');
+
+            urlBar.textContent   = proj.url.replace('https://', '');
+            openBtn.href         = proj.url;
+            siteName.textContent = proj.name.toUpperCase();
+
+            iframe.style.display = 'block';
+            iframe.src = 'about:blank';
+            _resetLoadingDiv(loadingDiv, proj);
+
+            modal.classList.remove('hidden');
+            requestAnimationFrame(() => requestAnimationFrame(() => modal.classList.add('opacity-100')));
+
+            let _handled = false;
+            function accept() { if (_handled) return; _handled = true; loadingDiv.style.display = 'none'; iframe.style.display = 'block'; }
+            function reject() { if (_handled) return; _handled = true; _showFallback(proj, loadingDiv, iframe); }
+
+            const absoluteTimer = setTimeout(reject, 11000);
+
+            setTimeout(() => {
+                iframe.onload = () => {
+                    clearTimeout(absoluteTimer);
+                    setTimeout(() => {
+                        try {
+                            const doc = iframe.contentDocument || iframe.contentWindow.document;
+                            if (doc && doc.body && doc.body.childElementCount > 0) { accept(); }
+                            else { reject(); }
+                        } catch(e) {
+                            accept();
+                        }
+                    }, 400);
+                };
+                iframe.src = proj.url;
+            }, 120);
+        }
+
+        function closePreview() {
+            const modal  = document.getElementById('preview-modal');
+            const iframe = document.getElementById('preview-iframe');
+            modal.classList.remove('opacity-100');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                iframe.src = 'about:blank';
+                iframe.style.display = 'block';
+                _activePreview = null;
+            }, 300);
+        }
+
+        function reloadPreviewFrame() {
+            if (!_activePreview) return;
+            const iframe     = document.getElementById('preview-iframe');
+            const loadingDiv = document.getElementById('preview-loading');
+            iframe.style.display = 'block';
+            _resetLoadingDiv(loadingDiv, _activePreview);
+
+            let _handled = false;
+            function accept() { if (_handled) return; _handled = true; loadingDiv.style.display = 'none'; }
+            function reject() { if (_handled) return; _handled = true; _showFallback(_activePreview, loadingDiv, iframe); }
+
+            setTimeout(reject, 11000);
+            iframe.onload = () => {
+                setTimeout(() => {
+                    try {
+                        const doc = iframe.contentDocument || iframe.contentWindow.document;
+                        if (doc && doc.body && doc.body.childElementCount > 0) { accept(); }
+                        else { reject(); }
+                    } catch(e) { accept(); }
+                }, 400);
+            };
+            iframe.src = _activePreview.url;
+        }
+
+        // --------------------------------------------------
+        // Base de Datos legado de Proyectos (IDE Explorer)
+        // --------------------------------------------------
+        const projectsData = {
+            'ai-agent': {
+                name: "Agente IA Predictivo",
+                tech: "Python, LangChain, PostgreSQL",
+                logo: "fa-brain text-cyber-cyan",
+                url: "https://ai-predictive-agent.netlify.app",
+                repo: "https://github.com/droman-dev/ai-predictive-agent",
+                status: "Production Active",
+                build: "v2.0.4 - Succeeded",
+                readme: `
+# Agente IA Predictivo v2.0.4
+
+Este agente autónomo monitorea continuamente logs de bases de datos relacionales para identificar anomalías mediante procesamiento de lenguaje natural (NLP) y modelos de lenguaje a gran escala (LLM).
+
+### Características Clave:
+- **Detección Temprana:** Alertas predictivas con un margen de hasta 4 horas de anticipación.
+- **Auto-sanación:** Generación automatizada de parches preventivos y optimización de índices de base de datos.
+- **Integración DevOps:** Notificaciones integradas por Slack, Discord y Webhooks.
+                `,
+                appCode: `
+import os
+from langchain.agents import initialize_agent, Tool
+from langchain.chat_models import ChatOpenAI
+from database_monitor import LogAnalyzer
+
+# Inicialización de la Inteligencia Predictiva
+class AIPredictiveAgent:
+    def __init__(self):
+        self.model = ChatOpenAI(temperature=0.1, model="gpt-4")
+        self.analyzer = LogAnalyzer()
+        
+    def execute_monitoring(self):
+        logs = self.analyzer.fetch_live_logs()
+        for log in logs:
+            if self.analyzer.detect_anomaly(log):
+                self.trigger_remediation(log)
+                
+    def trigger_remediation(self, alert):
+        print(f"[!] Anomalía detectada: {alert.source}")
+        # Generar sugerencia de solución
+        remediation_script = self.model.predict(
+            f"Solve index issues in: {alert.details}"
+        )
+        return remediation_script
+                `,
+                simulatedNav: {
+                    title: "Terminal de Monitoreo - AI Predictive Agent",
+                    sidebar: [
+                        { name: "Live Logs Analysis", icon: "fa-terminal" },
+                        { name: "System Metrics", icon: "fa-chart-area" },
+                        { name: "Database Nodes", icon: "fa-database" }
+                    ],
+                    contentHTML: `
+                        <div class="p-4 space-y-4 font-mono text-xs">
+                            <div class="flex justify-between items-center bg-slate-900 p-2.5 rounded border border-cyber-cyan/20">
+                                <span class="text-cyber-cyan">AGENTE ACTIVO: monitoreando_nodo_01</span>
+                                <span class="px-2 py-0.5 bg-emerald-500/20 text-emerald-400 rounded">CPU: 42%</span>
+                            </div>
+                            <div class="bg-black/80 rounded p-4 h-48 overflow-hidden relative">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent pointer-events-none"></div>
+                                <div class="space-y-1.5 animate-scroll-sim text-[11px]">
+                                    <p class="text-slate-500">[13:30:11] FETCHING: logs de conexion desde db_primary</p>
+                                    <p class="text-slate-500">[13:30:15] ANALYZING: Patrón de consultas concurrentes...</p>
+                                    <p class="text-cyber-purple">[13:30:20] WARNING: Incremento inusual en consultas de tabla 'users'</p>
+                                    <p class="text-cyber-cyan">[13:30:25] AI_AGENT: Ejecutando análisis heurístico de índices...</p>
+                                    <p class="text-emerald-400 font-bold">[13:30:30] RESOLVED: Índice temporal creado en users(email). Reducción del 82% en tiempo de respuesta.</p>
+                                    <p class="text-slate-500">[13:30:35] STANDBY: Esperando siguiente intervalo de logs...</p>
+                                    <p class="text-slate-500">[13:30:40] METRICS: Buffer Cache Hit Ratio = 99.4%</p>
+                                </div>
+                            </div>
+                        </div>
+                    `
+                }
+            },
+            'nexus-dashboard': {
+                name: "Nexus Dashboard Real-time",
+                tech: "React, Node.js, WebSockets",
+                logo: "fa-chart-line text-cyber-purple",
+                url: "https://nexus-realtime-dashboard.netlify.app",
+                repo: "https://github.com/droman-dev/nexus-realtime-dashboard",
+                status: "Production Active",
+                build: "v4.1.2 - Succeeded",
+                readme: `
+# Nexus Dashboard v4.1.2
+
+Plataforma de visualización en tiempo real optimizada para centros de datos distribuidos y redes de servidores empresariales.
+
+### Tecnologías:
+- **Frontend:** React, Tailwind CSS, Chart.js.
+- **Comunicación:** Socket.io para distribución fluida de telemetría a baja latencia.
+- **Backend:** Node.js con clustering multinúcleo nativo.
+                `,
+                appCode: `
+import React, { useEffect, useState } from 'react';
+import io from 'socket.io-client';
+import { MetricsGrid } from './components/MetricsGrid';
+
+const socket = io('https://nexus-api.internal');
+
+export default function NexusDashboard() {
+    const [metrics, setMetrics] = useState({});
+
+    useEffect(() => {
+        socket.on('telemetry_stream', (data) => {
+            setMetrics(prev => ({ ...prev, ...data }));
+        });
+        return () => socket.off('telemetry_stream');
+    }, []);
+
+    return (
+        <div className="min-h-screen bg-slate-950 p-6">
+            <header className="mb-6 flex justify-between">
+                <h1 className="text-2xl font-bold">NEXUS TELEMETRY</h1>
+                <span className="text-emerald-400">● LIVE CONNECTION</span>
+            </header>
+            <MetricsGrid data={metrics} />
+        </div>
+    );
+}
+                `,
+                simulatedNav: {
+                    title: "Live Nexus Analytics - Browser View",
+                    sidebar: [
+                        { name: "Overview", icon: "fa-chart-pie" },
+                        { name: "Server Nodes", icon: "fa-server" },
+                        { name: "Settings", icon: "fa-gears" }
+                    ],
+                    contentHTML: `
+                        <div class="p-4 space-y-4">
+                            <!-- Grilla de métricas simuladas -->
+                            <div class="grid grid-cols-2 gap-3">
+                                <div class="bg-slate-900/80 p-3 rounded border border-cyber-purple/20">
+                                    <p class="text-[10px] text-slate-500 font-mono">RED LATENCIA</p>
+                                    <p class="text-xl font-bold text-cyber-purple font-orbitron">11 ms</p>
+                                </div>
+                                <div class="bg-slate-900/80 p-3 rounded border border-cyber-purple/20">
+                                    <p class="text-[10px] text-slate-500 font-mono">SOLICITUDES / SEG</p>
+                                    <p class="text-xl font-bold text-cyber-cyan font-orbitron">2.45K</p>
+                                </div>
+                            </div>
+                            <!-- Gráfico simulado con barras interactivas -->
+                            <div class="bg-slate-950/90 rounded p-3 border border-white/5">
+                                <p class="text-[10px] text-slate-400 mb-2 font-mono">CARGA DE SERVIDORES (NODO CENTRAL)</p>
+                                <div class="flex items-end justify-between h-20 pt-2 px-4">
+                                    <div class="w-4 bg-cyber-purple rounded-t" style="height: 40%"></div>
+                                    <div class="w-4 bg-cyber-cyan rounded-t animate-pulse" style="height: 75%"></div>
+                                    <div class="w-4 bg-cyber-purple rounded-t" style="height: 60%"></div>
+                                    <div class="w-4 bg-cyber-cyan rounded-t animate-pulse" style="height: 90%"></div>
+                                    <div class="w-4 bg-cyber-purple rounded-t" style="height: 45%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    `
+                }
+            },
+            'cloud-orquestador': {
+                name: "Orquestador Multinube",
+                tech: "Go, Kubernetes, Docker, AWS",
+                logo: "fa-cloud-arrow-up text-cyber-emerald",
+                url: "https://multi-cloud-orchestrator.netlify.app",
+                repo: "https://github.com/droman-dev/multi-cloud-orchestrator",
+                status: "Production Active",
+                build: "v1.1.0 - Succeeded",
+                readme: `
+# Multi-Cloud Orchestrator v1.1.0
+
+Orquestador nativo escrito en Golang para balanceo inteligente de contenedores Docker a través de servidores ubicados en AWS, Azure y Google Cloud Platform de forma concurrente y transparente.
+
+### Destacado Técnico:
+- **Golang Concurrency:** Uso de Goroutines y Canales para gestionar estados distribuidos velozmente.
+- **Failover Automatizado:** Desplazamiento automático de microservicios si un nodo cloud falla.
+                `,
+                appCode: `
+package main
+
+import (
+	"fmt"
+	"sync"
+	"time"
+)
+
+type CloudNode struct {
+	Name     string
+	Active   bool
+	Capacity int
+}
+
+func main() {
+	nodes := []CloudNode{
+		{"AWS-East-1", true, 100},
+		{"Azure-West", true, 80},
+		{"GCP-Central", false, 50},
+	}
+
+	var wg sync.WaitGroup
+	for _, node := range nodes {
+		wg.Add(1)
+		go func(n CloudNode) {
+			defer wg.Done()
+			if n.Active {
+				fmt.Printf("[+] Nodo %s activo. Balanceando cargas...\\n", n.Name)
+				time.Sleep(1 * time.Second)
+			}
+		}(node)
+	}
+	wg.Wait()
+}
+                `,
+                simulatedNav: {
+                    title: "Cloud Orchestrator Dashboard",
+                    sidebar: [
+                        { name: "Cluster Map", icon: "fa-map" },
+                        { name: "Deployments", icon: "fa-box-open" },
+                        { name: "Audit Trail", icon: "fa-shield-halved" }
+                    ],
+                    contentHTML: `
+                        <div class="p-4 space-y-4">
+                            <!-- Nodos interactivos -->
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center bg-slate-900/60 p-2 rounded border border-emerald-500/20 text-xs">
+                                    <div class="flex items-center space-x-2">
+                                        <span class="w-2.5 h-2.5 bg-emerald-500 rounded-full animate-ping"></span>
+                                        <span class="font-mono">AWS-EAST-1 (CENTRAL)</span>
+                                    </div>
+                                    <span class="text-emerald-400 font-bold">100% ONLINE</span>
+                                </div>
+                                <div class="flex justify-between items-center bg-slate-900/60 p-2 rounded border border-emerald-500/20 text-xs">
+                                    <div class="flex items-center space-x-2">
+                                        <span class="w-2.5 h-2.5 bg-emerald-500 rounded-full animate-ping"></span>
+                                        <span class="font-mono">AZURE-WEST-US</span>
+                                    </div>
+                                    <span class="text-emerald-400 font-bold">100% ONLINE</span>
+                                </div>
+                                <div class="flex justify-between items-center bg-slate-900/60 p-2 rounded border-red-500/20 text-xs opacity-50">
+                                    <div class="flex items-center space-x-2">
+                                        <span class="w-2.5 h-2.5 bg-red-500 rounded-full"></span>
+                                        <span class="font-mono">GCP-CENTRAL-EU</span>
+                                    </div>
+                                    <span class="text-red-500 font-bold">OFFLINE</span>
+                                </div>
+                            </div>
+                        </div>
+                    `
+                }
+            }
+        };
+
+        let currentActiveProjectId = 'ai-agent';
+        let currentActiveFileName = 'app.js';
+
+        // ----------------------------------------------------
+        // LÓGICA DE CONTROL DEL EXPLORADOR/IDE DE PROYECTOS
+        // ----------------------------------------------------
+        function openExplorer(projectId) {
+            currentActiveProjectId = projectId;
+            currentActiveFileName = 'app.js'; // Default file
+            
+            const pData = projectsData[projectId];
+            document.getElementById('ide-window-title').textContent = `diego-roman-workspace // ${pData.name}`;
+            
+            // Forzar renderizado del archivo inicial
+            renderFileContent();
+
+            // Abrir modal con animaciones
+            const modal = document.getElementById('explorer-modal');
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.add('opacity-100');
+            }, 50);
+        }
+
+        function closeExplorer() {
+            const modal = document.getElementById('explorer-modal');
+            modal.classList.remove('opacity-100');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        function selectFile(fileName) {
+            currentActiveFileName = fileName;
+            
+            // Actualizar estilo visual activo de los botones en la barra de exploración
+            document.querySelectorAll('.file-item').forEach(item => {
+                item.classList.remove('text-cyber-cyan', 'bg-white/5', 'font-semibold');
+            });
+
+            let activeId = 'file-app-js';
+            if (fileName === 'preview_navigation.mp4') activeId = 'file-preview';
+            else if (fileName === 'readme.md') activeId = 'file-readme';
+            else if (fileName === 'netlify.toml') activeId = 'file-netlify';
+
+            document.getElementById(activeId).classList.add('text-cyber-cyan', 'bg-white/5', 'font-semibold');
+            
+            renderFileContent();
+        }
+
+        // Renderizador dinámico del visor de archivos del IDE
+        function renderFileContent() {
+            const container = document.getElementById('file-content-editor');
+            const data = projectsData[currentActiveProjectId];
+            
+            if (currentActiveFileName === 'app.js') {
+                container.innerHTML = `
+                    <div class="flex justify-between items-center border-b border-white/5 pb-2 mb-4 text-xs text-slate-500 font-mono">
+                        <span>📄 SOURCE CODE - main.js</span>
+                        <span>Language: JavaScript / Python / Go</span>
+                    </div>
+                    <pre class="overflow-x-auto text-xs sm:text-sm text-cyan-400 bg-slate-950 p-4 rounded-xl border border-white/5 leading-relaxed"><code>${escapeHTML(data.appCode.trim())}</code></pre>
+                `;
+            } else if (currentActiveFileName === 'readme.md') {
+                container.innerHTML = `
+                    <div class="flex justify-between items-center border-b border-white/5 pb-2 mb-4 text-xs text-slate-500 font-mono">
+                        <span>📖 DOCUMENTACIÓN - README.md</span>
+                        <span>MARKDOWN VIEW</span>
+                    </div>
+                    <div class="bg-slate-950/60 p-6 rounded-xl border border-white/5 text-slate-300 space-y-4 max-w-full overflow-x-hidden text-sm sm:text-base">
+                        <div class="font-orbitron font-bold text-cyber-cyan text-lg md:text-xl border-b border-white/10 pb-2 flex items-center space-x-2">
+                            <i class="fa-solid fa-file-invoice"></i>
+                            <span>${data.name}</span>
+                        </div>
+                        <p class="font-light leading-relaxed">${data.readme.replace(/# .+/g, '').replace(/###/g, '■').trim().replace(/\n/g, '<br>')}</p>
+                    </div>
+                `;
+            } else if (currentActiveFileName === 'netlify.toml') {
+                // Tarjeta estilo visualización Netlify de despliegue
+                container.innerHTML = `
+                    <div class="flex justify-between items-center border-b border-white/5 pb-2 mb-4 text-xs text-slate-500 font-mono">
+                        <span>🌐 NETLIFY DEPLOYMENT INFRASTRUCTURE</span>
+                        <span>STATUS: ACTIVE</span>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 gap-6">
+                        <!-- Tarjeta principal inspirada en la interfaz de despliegue de Netlify -->
+                        <div class="bg-gradient-to-br from-slate-900 to-slate-950 rounded-xl p-6 border border-cyber-cyan/30 shadow-lg relative overflow-hidden">
+                            <div class="absolute top-0 right-0 w-32 h-32 bg-cyber-cyan/5 rounded-full blur-3xl"></div>
+                            
+                            <!-- Header de Despliegue -->
+                            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-12 h-12 rounded-lg bg-cyber-cyan/10 flex items-center justify-center text-cyber-cyan text-2xl border border-cyber-cyan/30">
+                                        <i class="fa-solid fa-rocket"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-orbitron font-bold text-lg text-white">${data.name}</h4>
+                                        <p class="text-xs font-mono text-slate-400">Deployed automatically from master branch</p>
+                                    </div>
+                                </div>
+                                <span class="px-3 py-1 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-mono rounded-full font-semibold">
+                                    ✓ ${data.status}
+                                </span>
+                            </div>
+                            
+                            <!-- Atributos del deploy -->
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 border-t border-b border-white/5 py-4 my-4 font-mono text-xs">
+                                <div class="space-y-1">
+                                    <span class="text-slate-500 block">SITE DOMAIN</span>
+                                    <a href="${data.url}" target="_blank" class="text-cyber-cyan hover:underline flex items-center space-x-1 font-semibold">
+                                        <span>${data.url.replace("https://", "")}</span>
+                                        <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                                    </a>
+                                </div>
+                                <div class="space-y-1">
+                                    <span class="text-slate-500 block">LAST BUILD STATUS</span>
+                                    <span class="text-emerald-400 font-semibold">${data.build}</span>
+                                </div>
+                                <div class="space-y-1">
+                                    <span class="text-slate-500 block">SSL SECURITY</span>
+                                    <span class="text-cyber-cyan flex items-center">
+                                        <i class="fa-solid fa-lock text-xs mr-1"></i> HTTPS / TLS Active
+                                    </span>
+                                </div>
+                                <div class="space-y-1">
+                                    <span class="text-slate-500 block">SOURCE CONTROL</span>
+                                    <a href="${data.repo}" target="_blank" class="text-slate-300 hover:text-white flex items-center space-x-1">
+                                        <i class="fa-brands fa-github text-xs mr-1"></i> Ver Repositorio
+                                    </a>
+                                </div>
+                            </div>
+                            
+                            <!-- Acción de visita -->
+                            <div class="pt-2 flex justify-end">
+                                <a href="${data.url}" target="_blank" class="px-5 py-2.5 rounded bg-gradient-to-r from-cyber-cyan/20 to-cyber-purple/20 border border-cyber-cyan/40 hover:border-cyber-cyan text-cyber-cyan hover:text-white font-rajdhani font-bold tracking-wider text-sm transition-all duration-300 flex items-center space-x-2">
+                                    <i class="fa-solid fa-globe"></i>
+                                    <span>ABRIR SITIO WEB EN VIVO</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else if (currentActiveFileName === 'preview_navigation.mp4') {
+                // Vista previa simulada de navegación en video/interfaz
+                container.innerHTML = `
+                    <div class="flex justify-between items-center border-b border-white/5 pb-2 mb-4 text-xs text-slate-500 font-mono">
+                        <span>🎥 ARCHIVO MULTIMEDIA - preview_navigation.mp4</span>
+                        <span class="text-cyber-cyan">SIMULADOR EN TIEMPO REAL - LOOPING</span>
+                    </div>
+                    
+                    <!-- Simulador de Navegador Web Interactivo -->
+                    <div class="w-full bg-slate-950 border border-cyber-cyan/30 rounded-xl overflow-hidden shadow-2xl flex flex-col relative">
+                        <!-- Barra de Dirección de Navegador -->
+                        <div class="bg-slate-900 px-4 py-2 flex items-center space-x-3 border-b border-white/5">
+                            <div class="flex space-x-1.5">
+                                <span class="w-2.5 h-2.5 rounded-full bg-red-500/60"></span>
+                                <span class="w-2.5 h-2.5 rounded-full bg-yellow-500/60"></span>
+                                <span class="w-2.5 h-2.5 rounded-full bg-green-500/60"></span>
+                            </div>
+                            <div class="flex-1 bg-slate-950 px-3 py-1 rounded text-xs text-slate-400 font-mono flex items-center justify-between border border-white/5">
+                                <span class="flex items-center text-cyber-cyan">
+                                    <i class="fa-solid fa-lock text-[10px] mr-1.5 text-cyber-emerald"></i>
+                                    ${data.url}
+                                </span>
+                                <i class="fa-solid fa-rotate-right text-[10px] text-slate-600"></i>
+                            </div>
+                        </div>
+                        
+                        <!-- Contenedor del Simulador de la Aplicación -->
+                        <div class="relative bg-slate-950 overflow-hidden h-72 flex flex-col justify-between">
+                            <!-- Cursor Simulador de Navegación -->
+                            <div class="absolute w-4 h-4 text-cyber-cyan pointer-events-none animate-cursor-sim z-30">
+                                <i class="fa-solid fa-arrow-pointer text-xl filter drop-shadow-[0_0_5px_rgba(6,182,212,0.8)]"></i>
+                            </div>
+
+                            <!-- Barra de navegación del software ficticio -->
+                            <div class="bg-slate-900 border-b border-white/5 px-4 py-3 flex justify-between items-center">
+                                <span class="font-orbitron font-bold text-xs tracking-widest text-white">${data.simulatedNav.title}</span>
+                                <div class="flex space-x-2">
+                                    <span class="w-2 h-2 rounded-full bg-cyber-cyan animate-pulse"></span>
+                                    <span class="w-2 h-2 rounded-full bg-cyber-purple"></span>
+                                </div>
+                            </div>
+                            
+                            <!-- Cuerpo del Software Ficticio -->
+                            <div class="flex-1 flex overflow-hidden">
+                                <!-- Sidebar del Software Ficticio -->
+                                <div class="w-24 bg-slate-900/40 border-r border-white/5 p-2 flex flex-col space-y-2">
+                                    ${data.simulatedNav.sidebar.map(item => `
+                                        <div class="flex items-center space-x-1 text-[8px] text-slate-400 font-mono py-1 px-1 rounded hover:bg-white/5">
+                                            <i class="fa-solid ${item.icon} text-cyber-cyan"></i>
+                                            <span>${item.name}</span>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                                <!-- Visualizador de contenido simulado -->
+                                <div class="flex-1 overflow-hidden relative">
+                                    ${data.simulatedNav.contentHTML}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <p class="text-[11px] font-mono text-slate-500 mt-2 text-center">
+                        <i class="fa-solid fa-circle-info"></i> Esta vista previa emula interacciones reales del usuario navegando en la interfaz de la aplicación de forma autónoma.
+                    </p>
+                `;
+            }
+        }
+
+        function escapeHTML(str) {
+            return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        }
+
+
+        // ----------------------------------------------------
+        // 1. SISTEMA DE PARTÍCULAS REACTIVO AL SCROLL (CANVAS)
+        // ----------------------------------------------------
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+
+        let particles = [];
+        let numParticles = 80;
+        let lastScrollY = window.scrollY;
+        let scrollDelta = 0;
+        let mouse = { x: null, y: null, radius: 140 };
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            numParticles = window.innerWidth < 768 ? 40 : 85;
+            initParticles();
+        }
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.baseSize = Math.random() * 2 + 1;
+                this.size = this.baseSize;
+                this.vx = (Math.random() - 0.5) * 0.4;
+                this.vy = (Math.random() - 0.5) * 0.4;
+                this.color = Math.random() > 0.5 ? '#06b6d4' : '#a855f7';
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                this.y -= scrollDelta * 0.25;
+
+                if (mouse.x !== null && mouse.y !== null) {
+                    let dx = this.x - mouse.x;
+                    let dy = this.y - mouse.y;
+                    let distance = Math.sqrt(dx * dx + dy * dy);
+                    if (distance < mouse.radius) {
+                        let force = (mouse.radius - distance) / mouse.radius;
+                        let directionX = dx / distance;
+                        let directionY = dy / distance;
+                        this.x += directionX * force * 2;
+                        this.y += directionY * force * 2;
+                    }
+                }
+
+                if (this.x < 0) this.x = canvas.width;
+                else if (this.x > canvas.width) this.x = 0;
+                
+                if (this.y < 0) this.y = canvas.height;
+                else if (this.y > canvas.height) this.y = 0;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = this.color;
+                ctx.fill();
+                ctx.shadowBlur = 0;
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            for (let i = 0; i < numParticles; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function drawConnections() {
+            let maxDistance = 120;
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    let dx = particles[i].x - particles[j].x;
+                    let dy = particles[i].y - particles[j].y;
+                    let dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist < maxDistance) {
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        let alpha = (maxDistance - dist) / maxDistance * 0.15;
+                        ctx.strokeStyle = `rgba(168, 85, 247, ${alpha})`;
+                        ctx.lineWidth = 0.8;
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            scrollDelta *= 0.9; 
+
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+            }
+            drawConnections();
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        window.addEventListener('scroll', () => {
+            let currentScrollY = window.scrollY;
+            scrollDelta = currentScrollY - lastScrollY;
+            lastScrollY = currentScrollY;
+        });
+
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+        });
+
+        window.addEventListener('mouseleave', () => {
+            mouse.x = null;
+            mouse.y = null;
+        });
+
+        window.addEventListener('touchmove', (e) => {
+            if(e.touches.length > 0) {
+                mouse.x = e.touches[0].clientX;
+                mouse.y = e.touches[0].clientY;
+            }
+        });
+        window.addEventListener('touchend', () => {
+            mouse.x = null;
+            mouse.y = null;
+        });
+
+
+        // ----------------------------------------------------
+        // 2. EFECTO DE ESCRITURA EN HERO (TYPING EFFECT)
+        // ----------------------------------------------------
+        const texts = ["Ingeniero Informático", "Desarrollador Full Stack", "Especialista Cloud & DevOps", "Innovador en I.A."];
+        let textIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        const typedTextSpan = document.getElementById("typed-text");
+
+        function typeEffect() {
+            const currentFullText = texts[textIndex];
+            
+            if (isDeleting) {
+                typedTextSpan.textContent = currentFullText.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                typedTextSpan.textContent = currentFullText.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            let typingSpeed = isDeleting ? 40 : 100;
+
+            if (!isDeleting && charIndex === currentFullText.length) {
+                typingSpeed = 2000;
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                textIndex = (textIndex + 1) % texts.length;
+                typingSpeed = 500;
+            }
+
+            setTimeout(typeEffect, typingSpeed);
+        }
+
+
+        // ----------------------------------------------------
+        // 3. MENÚ DE NAVEGACIÓN MÓVIL
+        // ----------------------------------------------------
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+
+        // ----------------------------------------------------
+        // 4. ANIMACIONES AL HACER SCROLL (INTERSECTION OBSERVER)
+        // ----------------------------------------------------
+        const reveals = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, {
+            threshold: 0.15
+        });
+
+        reveals.forEach(reveal => revealObserver.observe(reveal));
+
+
+        // ----------------------------------------------------
+        // 5. FILTRO DE PROYECTOS (consulta tarjetas dinámicamente)
+        // ----------------------------------------------------
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => {
+                    b.classList.remove('active', 'bg-cyber-cyan', 'text-cyber-darker');
+                    b.classList.add('text-slate-300', 'border-white/10');
+                });
+                btn.classList.add('active', 'bg-cyber-cyan', 'text-cyber-darker');
+                btn.classList.remove('text-slate-300', 'border-white/10');
+
+                const filterValue = btn.getAttribute('data-filter');
+                document.querySelectorAll('.project-card').forEach(card => {
+                    const category = card.getAttribute('data-category');
+                    if (filterValue === 'all' || category === filterValue) {
+                        card.style.display = 'flex';
+                        setTimeout(() => card.style.opacity = '1', 50);
+                    } else {
+                        card.style.opacity = '0';
+                        setTimeout(() => card.style.display = 'none', 300);
+                    }
+                });
+            });
+        });
+
+
+        // ----------------------------------------------------
+        // 6. ENVIAR FORMULARIO CON POPUP MODERNO
+        // ----------------------------------------------------
+        const contactForm = document.getElementById('contact-form');
+        const modalNotificacion = document.getElementById('modal-notificacion');
+        const cerrarModal = document.getElementById('cerrar-modal');
+
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            modalNotificacion.classList.remove('hidden');
+            setTimeout(() => {
+                modalNotificacion.classList.add('opacity-100');
+            }, 50);
+            contactForm.reset();
+        });
+
+        cerrarModal.addEventListener('click', () => {
+            modalNotificacion.classList.remove('opacity-100');
+            setTimeout(() => {
+                modalNotificacion.classList.add('hidden');
+            }, 300);
+        });
+
+
+        // ----------------------------------------------------
+        // INICIO GLOBAL
+        // ----------------------------------------------------
+        window.onload = function () {
+            resizeCanvas();
+            animate();
+            setTimeout(typeEffect, 1000);
+            renderProjectCards();
+            renderCourseCards();
+
+            // Cerrar modal preview con clic en backdrop o tecla Escape
+            document.getElementById('preview-modal').addEventListener('click', (e) => {
+                if (e.target === e.currentTarget) closePreview();
+            });
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    if (!document.getElementById('preview-modal').classList.contains('hidden')) closePreview();
+                    if (!document.getElementById('explorer-modal').classList.contains('hidden')) closeExplorer();
+                }
+            });
+        }
+    </script>
+</body>
+</html>
