@@ -791,7 +791,7 @@
             </div>
 
             <!-- PARTE 3 — BOOTCAMP -->
-            <div>
+            <div class="mb-16">
                 <div class="flex items-center gap-3 mb-6">
                     <span class="w-9 h-9 rounded-lg bg-cyber-emerald/10 border border-cyber-emerald/30 flex items-center justify-center shrink-0">
                         <i class="fa-solid fa-rocket text-cyber-emerald text-lg"></i>
@@ -803,6 +803,21 @@
                     <span id="count-bootcamp" class="ml-auto text-[10px] font-mono text-slate-500"></span>
                 </div>
                 <div id="courses-bootcamp" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+            </div>
+
+            <!-- PARTE 4 — INACAP -->
+            <div>
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="w-9 h-9 rounded-lg bg-amber-400/10 border border-amber-400/30 flex items-center justify-center shrink-0">
+                        <i class="fa-solid fa-graduation-cap text-amber-400 text-lg"></i>
+                    </span>
+                    <div>
+                        <span class="text-[10px] font-mono text-slate-500 uppercase tracking-wider">// Parte 4</span>
+                        <h3 class="font-orbitron font-bold text-xl text-slate-100 leading-none">Programa Técnico INACAP</h3>
+                    </div>
+                    <span id="count-inacap" class="ml-auto text-[10px] font-mono text-slate-500"></span>
+                </div>
+                <div id="courses-inacap" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
             </div>
         </div>
     </section>
@@ -990,6 +1005,72 @@
         </div>
     </div>
 
+    <!-- MODAL CERTIFICADO: Visor de PDF de evidencia de curso (estilo navegador, igual a vista previa de proyectos) -->
+    <div id="certificate-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/95 backdrop-blur-md hidden opacity-0 transition-all duration-300 p-3 sm:p-6 md:p-8">
+        <div class="w-full max-w-4xl h-[88vh] flex flex-col glass rounded-2xl border border-white/10 overflow-hidden shadow-2xl">
+
+            <!-- Barra del navegador -->
+            <div class="bg-slate-950/95 px-3 sm:px-4 py-2.5 flex items-center space-x-2 sm:space-x-3 border-b border-white/5 shrink-0">
+                <!-- Botones tipo Mac -->
+                <div class="flex items-center space-x-1.5">
+                    <button onclick="closeCertificate()" class="w-3.5 h-3.5 rounded-full bg-red-500 hover:bg-red-600 transition-colors flex items-center justify-center group" title="Cerrar">
+                        <i class="fa-solid fa-xmark text-[8px] text-red-900 opacity-0 group-hover:opacity-100"></i>
+                    </button>
+                    <div class="w-3.5 h-3.5 rounded-full bg-yellow-500"></div>
+                    <div class="w-3.5 h-3.5 rounded-full bg-green-500"></div>
+                </div>
+                <!-- Icono de certificado -->
+                <div class="flex items-center space-x-0.5 text-amber-400 shrink-0">
+                    <i class="fa-solid fa-certificate text-sm"></i>
+                </div>
+                <!-- Barra de dirección -->
+                <div class="flex-1 bg-slate-900/80 border border-white/10 rounded-lg px-3 py-1.5 flex items-center space-x-2 min-w-0 font-mono text-xs">
+                    <i class="fa-solid fa-file-pdf text-amber-400 text-[10px] shrink-0"></i>
+                    <span id="certificate-title" class="text-slate-300 truncate"></span>
+                </div>
+                <!-- Botón abrir en pestaña nueva -->
+                <a id="certificate-open-btn" href="#" target="_blank" rel="noopener noreferrer"
+                   class="shrink-0 px-2.5 sm:px-4 py-1.5 bg-amber-400/15 hover:bg-amber-400 text-amber-400 hover:text-cyber-darker border border-amber-400/30 font-rajdhani font-bold text-xs sm:text-sm rounded-lg transition-all duration-300 flex items-center space-x-1.5">
+                    <i class="fa-solid fa-up-right-from-square text-xs"></i>
+                    <span class="hidden sm:inline">ABRIR PDF</span>
+                    <span class="sm:hidden">ABRIR</span>
+                </a>
+            </div>
+
+            <!-- Contenedor del visor PDF -->
+            <div class="flex-1 relative bg-slate-200 overflow-hidden">
+                <iframe id="certificate-iframe"
+                        src="about:blank"
+                        class="w-full h-full border-0 absolute inset-0 transition-opacity duration-300"
+                        title="Certificado del curso">
+                </iframe>
+
+                <!-- Overlay de carga -->
+                <div id="certificate-loading" class="absolute inset-0 bg-cyber-darker flex flex-col items-center justify-center space-y-5 z-10">
+                    <div class="relative w-16 h-16">
+                        <div class="absolute inset-0 w-16 h-16 border-4 border-slate-800 rounded-full"></div>
+                        <div class="absolute inset-0 w-16 h-16 border-4 border-t-amber-400 border-r-transparent border-b-transparent border-l-transparent rounded-full animate-spin"></div>
+                    </div>
+                    <div class="text-center space-y-1.5">
+                        <p class="font-rajdhani font-bold text-slate-200 tracking-wider text-base">Cargando certificado</p>
+                        <p id="certificate-loading-name" class="font-mono text-xs text-slate-500 truncate max-w-xs px-4">...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Barra de estado inferior -->
+            <div class="bg-amber-400/5 border-t border-amber-400/10 px-4 py-1.5 flex justify-between items-center text-[10px] font-mono text-slate-500 shrink-0">
+                <div class="flex items-center space-x-3">
+                    <span class="flex items-center space-x-1.5 text-cyber-emerald">
+                        <span class="w-1.5 h-1.5 rounded-full bg-cyber-emerald animate-pulse"></span>
+                        <span>Curso aprobado — evidencia documental</span>
+                    </span>
+                </div>
+                <span id="certificate-provider" class="text-slate-400 font-semibold tracking-wider truncate"></span>
+            </div>
+        </div>
+    </div>
+
     <!-- SECCIÓN TRAYECTORIA (Timeline) -->
     <section id="trayectoria" class="py-24 px-6 md:px-12 relative bg-slate-950/40 reveal">
         <div class="max-w-4xl mx-auto">
@@ -1013,10 +1094,10 @@
                             <span class="text-xs font-mono text-cyber-cyan tracking-wider">2024 - PRESENTE</span>
                             <span class="text-xs px-2.5 py-0.5 bg-cyber-cyan/10 text-cyber-cyan rounded-full border border-cyber-cyan/20 font-semibold mt-1 sm:mt-0">ACTUAL</span>
                         </div>
-                        <h3 class="font-orbitron font-bold text-xl text-slate-100">Ingeniero de Software Senior</h3>
-                        <p class="text-slate-400 font-semibold text-sm mb-4">TechInnova Solutions</p>
+                        <h3 class="font-orbitron font-bold text-xl text-slate-100">Desarrollador Web Junior</h3>
+                        <p class="text-slate-400 font-semibold text-sm mb-4">Freelance · Proyectos propios</p>
                         <p class="text-slate-300 text-sm leading-relaxed">
-                            Liderazgo técnico en el diseño e implementación de arquitecturas backend Cloud-Native y microservicios. Integración de pipelines CI/CD y despliegue automatizado con cero caídas del sistema.
+                            Desarrollo de aplicaciones web con HTML, CSS, Tailwind y JavaScript. 27 proyectos desplegados en Netlify con propósito real — educación, gestión, GIS y e-commerce. Integración de Supabase/PostgreSQL y desarrollo móvil con Capacitor y Flutter.
                         </p>
                     </div>
                 </div>
@@ -1028,12 +1109,12 @@
                     </div>
                     <div class="glass p-6 rounded-2xl border border-white/5 hover:border-cyber-purple/20 transition-all duration-300">
                         <div class="flex flex-col sm:flex-row sm:justify-between items-start sm:items-center mb-3">
-                            <span class="text-xs font-mono text-cyber-purple tracking-wider">2021 - 2024</span>
+                            <span class="text-xs font-mono text-cyber-purple tracking-wider">2022 - 2024</span>
                         </div>
-                        <h3 class="font-orbitron font-bold text-xl text-slate-100">Desarrollador Full Stack</h3>
-                        <p class="text-slate-400 font-semibold text-sm mb-4">CoreSystems Ltd.</p>
+                        <h3 class="font-orbitron font-bold text-xl text-slate-100">Formación Técnica Intensiva</h3>
+                        <p class="text-slate-400 font-semibold text-sm mb-4">INACAP · AWS Academy · Cisco Networking Academy</p>
                         <p class="text-slate-300 text-sm leading-relaxed">
-                            Desarrollo de portales web interactivos y paneles de analítica utilizando el stack MERN y AWS. Optimización de bases de datos logrando reducir tiempos de consulta en un 40%.
+                            Certificaciones en Arquitectura Cloud, Desarrollo de Aplicaciones, Ciberseguridad, Redes y Full Stack. Más de 21 cursos certificados combinando formación práctica y teórica con enfoque en tecnologías vigentes.
                         </p>
                     </div>
                 </div>
@@ -1045,12 +1126,12 @@
                     </div>
                     <div class="glass p-6 rounded-2xl border border-white/5 hover:border-slate-700/55 transition-all duration-300">
                         <div class="flex flex-col sm:flex-row sm:justify-between items-start sm:items-center mb-3">
-                            <span class="text-xs font-mono text-slate-500 tracking-wider">2017 - 2021</span>
+                            <span class="text-xs font-mono text-slate-500 tracking-wider">2022 - 2023</span>
                         </div>
-                        <h3 class="font-orbitron font-bold text-xl text-slate-100">Ingeniería Informática</h3>
-                        <p class="text-slate-400 font-semibold text-sm mb-4">Universidad Tecnológica</p>
+                        <h3 class="font-orbitron font-bold text-xl text-slate-100">Programa Técnico</h3>
+                        <p class="text-slate-400 font-semibold text-sm mb-4">Instituto Profesional INACAP</p>
                         <p class="text-slate-300 text-sm leading-relaxed">
-                            Formación integral en ciencias de la computación, ingeniería de software, arquitectura de sistemas, gestión de bases de datos, redes y metodologías ágiles.
+                            Estudios en desarrollo de aplicaciones, diseño ágil de sistemas, gestión de bases de datos, arquitectura cloud y soporte computacional. Base técnica que impulsó el ingreso al desarrollo web profesional.
                         </p>
                     </div>
                 </div>
@@ -1264,26 +1345,26 @@
                 accent: 'cyan',
                 provider: 'AWS Academy',
                 items: [
-                    { name: 'Desarrollo en la nube de AWS Academy',                 icon: 'fa-solid fa-code',          tag: 'Graduado', desc: 'Objetivo: diseñar, construir y desplegar aplicaciones nativas en la nube usando los servicios de AWS, aplicando buenas prácticas de desarrollo, automatización y escalabilidad.' },
-                    { name: 'Fundamentos de seguridad en la nube de AWS Academy',    icon: 'fa-solid fa-shield-halved', tag: 'Graduado', desc: 'Objetivo: dominar los principios de seguridad en la nube —gestión de identidades (IAM), cifrado, modelo de responsabilidad compartida y protección de datos— para entornos AWS seguros.' },
-                    { name: 'Fundamentos de aprendizaje automático de AWS Academy',  icon: 'fa-solid fa-robot',         tag: 'Graduado', desc: 'Objetivo: comprender los conceptos esenciales de Machine Learning e implementar modelos predictivos con los servicios de IA de AWS, desde el procesamiento de datos hasta la inferencia.' },
-                    { name: 'Arquitectura de la nube de AWS Academy',                icon: 'fa-solid fa-sitemap',       tag: 'Graduado', desc: 'Objetivo: diseñar arquitecturas en la nube resilientes, eficientes y de alta disponibilidad siguiendo el AWS Well-Architected Framework y optimizando costos.' }
+                    { name: 'Desarrollo en la nube de AWS Academy',                 icon: 'fa-solid fa-code',          tag: 'Graduado', desc: 'Objetivo: diseñar, construir y desplegar aplicaciones nativas en la nube usando los servicios de AWS, aplicando buenas prácticas de desarrollo, automatización y escalabilidad.', pdf: 'certificados/aws-cloud-developing.pdf' },
+                    { name: 'Fundamentos de seguridad en la nube de AWS Academy',    icon: 'fa-solid fa-shield-halved', tag: 'Graduado', desc: 'Objetivo: dominar los principios de seguridad en la nube —gestión de identidades (IAM), cifrado, modelo de responsabilidad compartida y protección de datos— para entornos AWS seguros.', pdf: 'certificados/aws-cloud-security.pdf' },
+                    { name: 'Fundamentos de aprendizaje automático de AWS Academy',  icon: 'fa-solid fa-robot',         tag: 'Graduado', desc: 'Objetivo: comprender los conceptos esenciales de Machine Learning e implementar modelos predictivos con los servicios de IA de AWS, desde el procesamiento de datos hasta la inferencia.', pdf: 'certificados/aws-machine-learning.pdf' },
+                    { name: 'Arquitectura de la nube de AWS Academy',                icon: 'fa-solid fa-sitemap',       tag: 'Graduado', desc: 'Objetivo: diseñar arquitecturas en la nube resilientes, eficientes y de alta disponibilidad siguiendo el AWS Well-Architected Framework y optimizando costos.', pdf: 'certificados/aws-cloud-architecting.pdf' }
                 ]
             },
             cisco: {
                 accent: 'purple',
                 provider: 'Cisco Networking Academy',
                 items: [
-                    { name: 'Trayectoria profesional de Analista de Ciberseguridad Júnior', icon: 'fa-solid fa-user-shield', tag: 'Insignia', desc: 'Objetivo: consolidar las competencias completas de un analista de ciberseguridad júnior —detección, análisis y respuesta a amenazas— integrando todos los cursos de la ruta profesional de Cisco.' },
-                    { name: 'CCNA: Introducción a las redes',                  icon: 'fa-solid fa-ethernet',         tag: 'Curso', desc: 'Objetivo: comprender el funcionamiento de las redes, los modelos OSI/TCP-IP, el direccionamiento IP y la configuración básica de routers y switches Cisco.' },
-                    { name: 'Introducción a la ciberseguridad',                icon: 'fa-solid fa-lock',             tag: 'Curso', desc: 'Objetivo: reconocer las principales amenazas, vulnerabilidades y ataques, y aplicar prácticas fundamentales para proteger información, dispositivos y redes.' },
-                    { name: 'Conceptos básicos de redes',                      icon: 'fa-solid fa-network-wired',    tag: 'Curso', desc: 'Objetivo: dominar los fundamentos de conectividad, protocolos, topologías y servicios de red necesarios para administrar infraestructura TI.' },
-                    { name: 'Dispositivos de red y configuración inicial',     icon: 'fa-solid fa-server',           tag: 'Curso', desc: 'Objetivo: instalar y realizar la configuración inicial de dispositivos de red (routers y switches), dejándolos operativos y seguros en un entorno real.' },
-                    { name: 'Linux Unhatched',                                 icon: 'fa-brands fa-linux',           tag: 'Curso', desc: 'Objetivo: adquirir las habilidades básicas del sistema operativo Linux —línea de comandos, archivos y permisos— como base para administración y ciberseguridad.' },
-                    { name: 'Introducción a IoT',                              icon: 'fa-solid fa-microchip',        tag: 'Curso', desc: 'Objetivo: entender cómo el Internet de las Cosas conecta dispositivos, datos y procesos, y su impacto en la transformación digital y la seguridad.' },
-                    { name: 'Fundamentos de JavaScript 1',                     icon: 'fa-brands fa-js',              tag: 'Curso', desc: 'Objetivo: aprender la sintaxis, variables, estructuras de control y funciones de JavaScript para crear lógica interactiva en aplicaciones web.' },
-                    { name: 'Inglés para TI 1',                                icon: 'fa-solid fa-language',         tag: 'Curso', desc: 'Objetivo: desarrollar vocabulario técnico y comprensión del inglés aplicado al área de tecnología en un nivel inicial.' },
-                    { name: 'Inglés para TI 2',                                icon: 'fa-solid fa-language',         tag: 'Curso', desc: 'Objetivo: ampliar la competencia comunicativa en inglés técnico para documentación, soporte y entornos profesionales de TI.' }
+                    { name: 'Trayectoria profesional de Analista de Ciberseguridad Júnior', icon: 'fa-solid fa-user-shield', tag: 'Insignia', desc: 'Objetivo: consolidar las competencias completas de un analista de ciberseguridad júnior —detección, análisis y respuesta a amenazas— integrando todos los cursos de la ruta profesional de Cisco.', pdf: 'certificados/cisco-analista-ciberseguridad-junior.pdf' },
+                    { name: 'CCNA: Introducción a las redes',                  icon: 'fa-solid fa-ethernet',         tag: 'Curso', desc: 'Objetivo: comprender el funcionamiento de las redes, los modelos OSI/TCP-IP, el direccionamiento IP y la configuración básica de routers y switches Cisco.', pdf: 'certificados/ccna-introduccion-redes.pdf' },
+                    { name: 'Introducción a la ciberseguridad',                icon: 'fa-solid fa-lock',             tag: 'Curso', desc: 'Objetivo: reconocer las principales amenazas, vulnerabilidades y ataques, y aplicar prácticas fundamentales para proteger información, dispositivos y redes.', pdf: 'certificados/cisco-introduccion-ciberseguridad.pdf' },
+                    { name: 'Conceptos básicos de redes',                      icon: 'fa-solid fa-network-wired',    tag: 'Curso', desc: 'Objetivo: dominar los fundamentos de conectividad, protocolos, topologías y servicios de red necesarios para administrar infraestructura TI.', pdf: 'certificados/cisco-conceptos-basicos-redes.pdf' },
+                    { name: 'Dispositivos de red y configuración inicial',     icon: 'fa-solid fa-server',           tag: 'Curso', desc: 'Objetivo: instalar y realizar la configuración inicial de dispositivos de red (routers y switches), dejándolos operativos y seguros en un entorno real.', pdf: 'certificados/cisco-dispositivos-red-configuracion.pdf' },
+                    { name: 'Linux Unhatched',                                 icon: 'fa-brands fa-linux',           tag: 'Curso', desc: 'Objetivo: adquirir las habilidades básicas del sistema operativo Linux —línea de comandos, archivos y permisos— como base para administración y ciberseguridad.', pdf: 'certificados/cisco-linux-unhatched.pdf' },
+                    { name: 'Introducción a IoT',                              icon: 'fa-solid fa-microchip',        tag: 'Curso', desc: 'Objetivo: entender cómo el Internet de las Cosas conecta dispositivos, datos y procesos, y su impacto en la transformación digital y la seguridad.', pdf: 'certificados/cisco-introduccion-iot.pdf' },
+                    { name: 'Fundamentos de JavaScript 1',                     icon: 'fa-brands fa-js',              tag: 'Curso', desc: 'Objetivo: aprender la sintaxis, variables, estructuras de control y funciones de JavaScript para crear lógica interactiva en aplicaciones web.', pdf: 'certificados/cisco-fundamentos-javascript1.pdf' },
+                    { name: 'Inglés para TI 1',                                icon: 'fa-solid fa-language',         tag: 'Curso', desc: 'Objetivo: desarrollar vocabulario técnico y comprensión del inglés aplicado al área de tecnología en un nivel inicial.', pdf: 'certificados/ingles-ti-1.pdf' },
+                    { name: 'Inglés para TI 2',                                icon: 'fa-solid fa-language',         tag: 'Curso', desc: 'Objetivo: ampliar la competencia comunicativa en inglés técnico para documentación, soporte y entornos profesionales de TI.', pdf: 'certificados/ingles-ti-2.pdf' }
                 ]
             },
             bootcamp: {
@@ -1293,6 +1374,19 @@
                     { name: 'Talleres, Bootcamps y Webinars de Formación en i+e para Estudiantes', icon: 'fa-solid fa-chalkboard-user', tag: 'Programa', desc: 'Objetivo: desarrollar habilidades de innovación y emprendimiento mediante talleres y bootcamps prácticos, aplicando métodos y herramientas i+e a proyectos reales.' },
                     { name: 'I+E+TT — Programa Fortalecimiento del Aprendizaje',                   icon: 'fa-solid fa-lightbulb',       tag: 'Programa', desc: 'Objetivo: instalar actitudes, habilidades y competencias de innovación, emprendimiento y transferencia tecnológica, fortaleciendo el aprendizaje a lo largo del año académico.' }
                 ]
+            },
+            inacap: {
+                accent: 'amber',
+                provider: 'Instituto Profesional INACAP',
+                items: [
+                    { name: 'Certificado en Arquitectura Cloud',                  icon: 'fa-solid fa-cloud',          tag: '198 hrs', desc: 'Objetivo: diseñar e implementar arquitecturas de infraestructura en la nube aplicando criterios de escalabilidad, disponibilidad y seguridad.', pdf: 'certificados/inacap-arquitectura-cloud.pdf' },
+                    { name: 'Certificado en Desarrollo de Aplicaciones Básicas',  icon: 'fa-solid fa-laptop-code',    tag: 'Certificado', desc: 'Objetivo: construir aplicaciones de software aplicando fundamentos de programación, lógica computacional y buenas prácticas de codificación.', pdf: 'certificados/inacap-desarrollo-apps-basicas.pdf' },
+                    { name: 'Certificado en Diseño Ágil de Sistemas',            icon: 'fa-solid fa-diagram-project', tag: 'Certificado', desc: 'Objetivo: modelar y diseñar sistemas de software utilizando metodologías ágiles y herramientas de levantamiento de requerimientos.', pdf: 'certificados/inacap-diseno-agil-sistemas.pdf' },
+                    { name: 'Certificado en Diseño y Gestión de Base de Datos',  icon: 'fa-solid fa-database',       tag: 'Certificado', desc: 'Objetivo: modelar, normalizar y administrar bases de datos relacionales aplicando SQL y criterios de integridad de datos.', pdf: 'certificados/inacap-diseno-gestion-bd.pdf' },
+                    { name: 'Certificado Full Stack',                            icon: 'fa-solid fa-layer-group',    tag: 'Certificado', desc: 'Objetivo: desarrollar aplicaciones web completas integrando frontend, backend y base de datos en un mismo proyecto funcional.', pdf: 'certificados/inacap-full-stack.pdf' },
+                    { name: 'Certificado en Innovación y Emprendimiento',        icon: 'fa-solid fa-lightbulb',      tag: '216 hrs', desc: 'Objetivo: aplicar metodologías de innovación y emprendimiento para transformar ideas en proyectos viables con impacto real.', pdf: 'certificados/inacap-innovacion-emprendimiento.pdf' },
+                    { name: 'Certificado en Soporte Computacional',              icon: 'fa-solid fa-screwdriver-wrench', tag: 'Certificado', desc: 'Objetivo: diagnosticar, mantener y dar soporte técnico a equipos computacionales, sistemas operativos y redes básicas.', pdf: 'certificados/inacap-soporte-computacional.pdf' }
+                ]
             }
         };
 
@@ -1300,7 +1394,8 @@
             const accentMap = {
                 cyan:    { border: 'hover:border-cyber-cyan/40',    icon: 'text-cyber-cyan',    iconBg: 'bg-cyber-cyan/10 border-cyber-cyan/30',    badge: 'bg-cyber-cyan/20 text-cyber-cyan border-cyber-cyan/40',    title: 'group-hover:text-cyber-cyan' },
                 purple:  { border: 'hover:border-cyber-purple/40',  icon: 'text-cyber-purple',  iconBg: 'bg-cyber-purple/10 border-cyber-purple/30',  badge: 'bg-cyber-purple/20 text-cyber-purple border-cyber-purple/40',  title: 'group-hover:text-cyber-purple' },
-                emerald: { border: 'hover:border-cyber-emerald/40', icon: 'text-cyber-emerald', iconBg: 'bg-cyber-emerald/10 border-cyber-emerald/30', badge: 'bg-cyber-emerald/20 text-cyber-emerald border-cyber-emerald/40', title: 'group-hover:text-cyber-emerald' }
+                emerald: { border: 'hover:border-cyber-emerald/40', icon: 'text-cyber-emerald', iconBg: 'bg-cyber-emerald/10 border-cyber-emerald/30', badge: 'bg-cyber-emerald/20 text-cyber-emerald border-cyber-emerald/40', title: 'group-hover:text-cyber-emerald' },
+                amber:   { border: 'hover:border-amber-400/40',     icon: 'text-amber-400',     iconBg: 'bg-amber-400/10 border-amber-400/30',         badge: 'bg-amber-400/20 text-amber-400 border-amber-400/40',          title: 'group-hover:text-amber-400' }
             };
 
             Object.entries(coursesData).forEach(([key, group]) => {
@@ -1315,7 +1410,15 @@
                             <span class="w-11 h-11 rounded-xl border ${a.iconBg} flex items-center justify-center shrink-0">
                                 <i class="${course.icon} ${a.icon} text-lg"></i>
                             </span>
-                            <span class="px-2.5 py-1 ${a.badge} text-[10px] font-mono rounded-full border">${course.tag}</span>
+                            <div class="flex items-center gap-2">
+                                ${course.pdf ? `
+                                <button onclick="openCertificate('${course.pdf}', '${course.name.replace(/'/g, "\\'")}', '${group.provider.replace(/'/g, "\\'")}')"
+                                        class="w-8 h-8 rounded-full border ${a.iconBg} ${a.icon} flex items-center justify-center hover:scale-110 transition-transform duration-200"
+                                        title="Ver certificado">
+                                    <i class="fa-solid fa-eye text-xs"></i>
+                                </button>` : ''}
+                                <span class="px-2.5 py-1 ${a.badge} text-[10px] font-mono rounded-full border">${course.tag}</span>
+                            </div>
                         </div>
                         <h4 class="font-orbitron font-bold text-sm text-slate-100 ${a.title} transition-colors duration-300 leading-snug mb-2">${course.name}</h4>
                         <p class="text-slate-400 text-xs leading-relaxed flex-grow">${course.desc}</p>
@@ -1336,6 +1439,12 @@
         // FUNCIONES DEL MODAL VISTA PREVIA (IFRAME BROWSER)
         // --------------------------------------------------
         let _activePreview = null;
+        // Contador de generación: cada apertura/cierre lo incrementa para invalidar
+        // temporizadores y callbacks de una vista previa anterior que aún no se habían resuelto.
+        let _previewGeneration = 0;
+        let _previewAbsoluteTimer = null;
+        let _previewSrcTimer = null;
+        let _previewCloseTimer = null;
 
         function _resetLoadingDiv(loadingDiv, proj) {
             loadingDiv.style.display = 'flex';
@@ -1372,9 +1481,56 @@
             `;
         }
 
+        // Cancela cualquier temporizador pendiente de una apertura/cierre anterior
+        // e invalida sus callbacks (evita que un timeout viejo "pise" la vista actual).
+        function _invalidatePendingPreview() {
+            _previewGeneration++;
+            clearTimeout(_previewAbsoluteTimer);
+            clearTimeout(_previewSrcTimer);
+            clearTimeout(_previewCloseTimer);
+        }
+
+        // Arma el watcher de carga del iframe (usado al abrir y al recargar).
+        // `myGeneration` liga los callbacks a la generación vigente en el momento de la llamada;
+        // si para cuando se disparan ya cambió (se cerró o se abrió otra vista previa), no hacen nada.
+        function _watchPreviewLoad(iframe, loadingDiv, proj, myGeneration) {
+            let _handled = false;
+            function accept() {
+                if (_handled || myGeneration !== _previewGeneration) return;
+                _handled = true;
+                loadingDiv.style.display = 'none';
+                iframe.style.display = 'block';
+            }
+            function reject() {
+                if (_handled || myGeneration !== _previewGeneration) return;
+                _handled = true;
+                _showFallback(proj, loadingDiv, iframe);
+            }
+
+            _previewAbsoluteTimer = setTimeout(reject, 11000);
+
+            iframe.onload = () => {
+                if (myGeneration !== _previewGeneration) return;
+                clearTimeout(_previewAbsoluteTimer);
+                setTimeout(() => {
+                    if (myGeneration !== _previewGeneration) return;
+                    try {
+                        const doc = iframe.contentDocument || iframe.contentWindow.document;
+                        if (doc && doc.body && doc.body.childElementCount > 0) { accept(); }
+                        else { reject(); }
+                    } catch(e) {
+                        accept();
+                    }
+                }, 400);
+            };
+        }
+
         function openPreview(projectId) {
             const proj = netlifyProjects.find(p => p.id === projectId);
             if (!proj) return;
+
+            _invalidatePendingPreview();
+            const myGeneration = _previewGeneration;
             _activePreview = proj;
 
             const modal      = document.getElementById('preview-modal');
@@ -1388,6 +1544,7 @@
             openBtn.href         = proj.url;
             siteName.textContent = proj.name.toUpperCase();
 
+            iframe.onload = null;
             iframe.style.display = 'block';
             iframe.src = 'about:blank';
             _resetLoadingDiv(loadingDiv, proj);
@@ -1395,25 +1552,9 @@
             modal.classList.remove('hidden');
             requestAnimationFrame(() => requestAnimationFrame(() => modal.classList.add('opacity-100')));
 
-            let _handled = false;
-            function accept() { if (_handled) return; _handled = true; loadingDiv.style.display = 'none'; iframe.style.display = 'block'; }
-            function reject() { if (_handled) return; _handled = true; _showFallback(proj, loadingDiv, iframe); }
-
-            const absoluteTimer = setTimeout(reject, 11000);
-
-            setTimeout(() => {
-                iframe.onload = () => {
-                    clearTimeout(absoluteTimer);
-                    setTimeout(() => {
-                        try {
-                            const doc = iframe.contentDocument || iframe.contentWindow.document;
-                            if (doc && doc.body && doc.body.childElementCount > 0) { accept(); }
-                            else { reject(); }
-                        } catch(e) {
-                            accept();
-                        }
-                    }, 400);
-                };
+            _previewSrcTimer = setTimeout(() => {
+                if (myGeneration !== _previewGeneration) return;
+                _watchPreviewLoad(iframe, loadingDiv, proj, myGeneration);
                 iframe.src = proj.url;
             }, 120);
         }
@@ -1422,7 +1563,13 @@
             const modal  = document.getElementById('preview-modal');
             const iframe = document.getElementById('preview-iframe');
             modal.classList.remove('opacity-100');
-            setTimeout(() => {
+
+            _invalidatePendingPreview();
+            const myGeneration = _previewGeneration;
+            iframe.onload = null;
+
+            _previewCloseTimer = setTimeout(() => {
+                if (myGeneration !== _previewGeneration) return;
                 modal.classList.add('hidden');
                 iframe.src = 'about:blank';
                 iframe.style.display = 'block';
@@ -1432,26 +1579,68 @@
 
         function reloadPreviewFrame() {
             if (!_activePreview) return;
+            const proj = _activePreview;
+
+            _invalidatePendingPreview();
+            const myGeneration = _previewGeneration;
+
             const iframe     = document.getElementById('preview-iframe');
             const loadingDiv = document.getElementById('preview-loading');
+            iframe.onload = null;
             iframe.style.display = 'block';
-            _resetLoadingDiv(loadingDiv, _activePreview);
+            _resetLoadingDiv(loadingDiv, proj);
 
-            let _handled = false;
-            function accept() { if (_handled) return; _handled = true; loadingDiv.style.display = 'none'; }
-            function reject() { if (_handled) return; _handled = true; _showFallback(_activePreview, loadingDiv, iframe); }
+            _watchPreviewLoad(iframe, loadingDiv, proj, myGeneration);
+            iframe.src = proj.url;
+        }
 
-            setTimeout(reject, 11000);
-            iframe.onload = () => {
-                setTimeout(() => {
-                    try {
-                        const doc = iframe.contentDocument || iframe.contentWindow.document;
-                        if (doc && doc.body && doc.body.childElementCount > 0) { accept(); }
-                        else { reject(); }
-                    } catch(e) { accept(); }
-                }, 400);
-            };
-            iframe.src = _activePreview.url;
+        // --------------------------------------------------
+        // MODAL CERTIFICADO (Visor de PDF de evidencia de curso)
+        // --------------------------------------------------
+        function openCertificate(pdfPath, courseName, provider) {
+            const modal       = document.getElementById('certificate-modal');
+            const iframe      = document.getElementById('certificate-iframe');
+            const title       = document.getElementById('certificate-title');
+            const openBtn     = document.getElementById('certificate-open-btn');
+            const providerEl  = document.getElementById('certificate-provider');
+            const loadingDiv  = document.getElementById('certificate-loading');
+            const loadingName = document.getElementById('certificate-loading-name');
+
+            title.textContent       = pdfPath.split('/').pop();
+            openBtn.href             = pdfPath;
+            providerEl.textContent   = (provider || '').toUpperCase();
+            loadingName.textContent  = courseName;
+
+            loadingDiv.style.display = 'flex';
+            iframe.style.opacity = '0';
+            iframe.src = 'about:blank';
+
+            modal.classList.remove('hidden');
+            requestAnimationFrame(() => requestAnimationFrame(() => modal.classList.add('opacity-100')));
+
+            let _revealed = false;
+            function reveal() {
+                if (_revealed) return;
+                _revealed = true;
+                loadingDiv.style.display = 'none';
+                iframe.style.opacity = '1';
+            }
+            // El evento "load" del iframe no es fiable para PDFs (visor nativo del navegador),
+            // así que se usa como aceleración y un timeout corto como respaldo garantizado.
+            iframe.onload = () => { if (iframe.src.includes(pdfPath)) reveal(); };
+            setTimeout(() => { iframe.src = pdfPath; }, 120);
+            setTimeout(reveal, 900);
+        }
+
+        function closeCertificate() {
+            const modal  = document.getElementById('certificate-modal');
+            const iframe = document.getElementById('certificate-iframe');
+            modal.classList.remove('opacity-100');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                iframe.src = 'about:blank';
+                iframe.onload = null;
+            }, 300);
         }
 
         // --------------------------------------------------
@@ -2190,10 +2379,14 @@ func main() {
             document.getElementById('preview-modal').addEventListener('click', (e) => {
                 if (e.target === e.currentTarget) closePreview();
             });
+            document.getElementById('certificate-modal').addEventListener('click', (e) => {
+                if (e.target === e.currentTarget) closeCertificate();
+            });
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape') {
                     if (!document.getElementById('preview-modal').classList.contains('hidden')) closePreview();
                     if (!document.getElementById('explorer-modal').classList.contains('hidden')) closeExplorer();
+                    if (!document.getElementById('certificate-modal').classList.contains('hidden')) closeCertificate();
                 }
             });
         }
