@@ -12,7 +12,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@400;600;800;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
     <!-- FontAwesome para Iconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+    <!-- PDF.js: renderiza los certificados en canvas para que se vean igual en móvil que en escritorio (el navegador móvil no tiene visor de PDF nativo y descarga el archivo en su lugar) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script>
+        if (window.pdfjsLib) {
+            pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+        }
+    </script>
+
     <script>
         tailwind.config = {
             theme: {
@@ -1039,11 +1046,9 @@
 
             <!-- Contenedor del visor PDF -->
             <div class="flex-1 relative bg-slate-200 overflow-hidden">
-                <iframe id="certificate-iframe"
-                        src="about:blank"
-                        class="w-full h-full border-0 absolute inset-0 transition-opacity duration-300"
-                        title="Certificado del curso">
-                </iframe>
+                <div id="certificate-viewer"
+                     class="w-full h-full absolute inset-0 overflow-y-auto overflow-x-hidden transition-opacity duration-300 flex flex-col items-center gap-4 py-4">
+                </div>
 
                 <!-- Overlay de carga -->
                 <div id="certificate-loading" class="absolute inset-0 bg-cyber-darker flex flex-col items-center justify-center space-y-5 z-10">
@@ -1263,7 +1268,7 @@
             { id: 'paeslen',                     name: 'PAES LEN',                 url: 'https://paeslen.netlify.app',                     screenshot: 'https://d33wubrfki0l68.cloudfront.net/69951f2ffbd8900008bbad74/screenshot_2026-02-18-02-09-07-0000.webp', category: 'edu', updated: '05 Abr 2026', desc: 'Preparación interactiva para la PAES de Lenguaje con ejercicios y simulacros.' },
             { id: 'dragonfiree',                 name: 'Dragon Fire',              url: 'https://dragonfiree.netlify.app',                 screenshot: 'https://d33wubrfki0l68.cloudfront.net/6987c5b743e2bb0008e77a36/screenshot_2026-02-07-23-07-48-0000.webp', category: 'web', updated: '05 Abr 2026', desc: 'Juego interactivo de vocabulario y lenguaje en TypeScript: practica cientos de palabras contra el reloj.' },
             { id: 'surgitaskpro',                name: 'SurgiTask Pro',            url: 'https://surgitaskpro.netlify.app',                screenshot: 'https://d33wubrfki0l68.cloudfront.net/6a1e4a12defd43b4c804fa57/screenshot_2026-06-02-03-13-06-0000.webp', category: 'web', updated: '02 Jun 2026', desc: 'Sistema profesional de gestión de tareas y agenda quirúrgica para pabellones, con seguimiento de procedimientos en tiempo real.' },
-            { id: 'grammanual',                  name: 'Grammanual',               url: 'https://grammanual.netlify.app',                  screenshot: 'https://d33wubrfki0l68.cloudfront.net/69b3613ad489c3000873688d/screenshot_2026-03-13-00-58-54-0000.webp', category: 'edu', updated: '13 Mar 2026', desc: 'Manual interactivo de gramática y ortografía en español con ejercicios prácticos, reglas y guías de estudio.' },
+            { id: 'grammanual',                  name: 'Grammanual',               url: 'https://grammanual.netlify.app',                  screenshot: 'https://d33wubrfki0l68.cloudfront.net/69b3613ad489c3000873688d/screenshot_2026-03-13-00-58-54-0000.webp', category: 'edu', updated: '13 Mar 2026', desc: 'Manual interactivo de gramática y ortografía en español con ejercicios prácticos, reglas y guías de estudio.', embeddable: false },
             { id: 'datamathapp',                 name: 'DataMath',                 url: 'https://datamathapp.netlify.app',                 screenshot: 'https://d33wubrfki0l68.cloudfront.net/6979594b8c5d130007ce366a/screenshot_2026-01-28-00-33-39-0000.webp', category: 'edu', updated: '05 Abr 2026', desc: 'Aplicación educativa de matemáticas con análisis de datos, visualizaciones estadísticas y ejercicios de cálculo interactivos.' }
         ];
 
@@ -1552,6 +1557,14 @@
             modal.classList.remove('hidden');
             requestAnimationFrame(() => requestAnimationFrame(() => modal.classList.add('opacity-100')));
 
+            // Algunos proyectos bloquean el embebido en iframe desde su propio servidor
+            // (X-Frame-Options / CSP frame-ancestors): se salta el intento y se va directo
+            // a la vista de respaldo en vez de dejar el modal cargando en blanco.
+            if (proj.embeddable === false) {
+                _showFallback(proj, loadingDiv, iframe);
+                return;
+            }
+
             _previewSrcTimer = setTimeout(() => {
                 if (myGeneration !== _previewGeneration) return;
                 _watchPreviewLoad(iframe, loadingDiv, proj, myGeneration);
@@ -1590,6 +1603,11 @@
             iframe.style.display = 'block';
             _resetLoadingDiv(loadingDiv, proj);
 
+            if (proj.embeddable === false) {
+                _showFallback(proj, loadingDiv, iframe);
+                return;
+            }
+
             _watchPreviewLoad(iframe, loadingDiv, proj, myGeneration);
             iframe.src = proj.url;
         }
@@ -1597,9 +1615,26 @@
         // --------------------------------------------------
         // MODAL CERTIFICADO (Visor de PDF de evidencia de curso)
         // --------------------------------------------------
-        function openCertificate(pdfPath, courseName, provider) {
+        let _certRenderToken = 0;
+
+        function _certificateErrorView(pdfPath) {
+            return `
+                <div class="flex flex-col items-center justify-center h-full text-center space-y-4 p-6">
+                    <i class="fa-solid fa-file-pdf text-5xl text-amber-400"></i>
+                    <p class="text-slate-300 font-rajdhani font-bold">No se pudo previsualizar el certificado.</p>
+                    <a href="${pdfPath}" target="_blank" rel="noopener noreferrer"
+                       class="inline-flex items-center space-x-2 px-5 py-2.5 bg-amber-400 text-cyber-darker font-rajdhani font-bold text-sm rounded-lg hover:bg-white transition-colors">
+                        <i class="fa-solid fa-up-right-from-square"></i><span>ABRIR PDF</span>
+                    </a>
+                </div>`;
+        }
+
+        // Renderiza el PDF a canvas con PDF.js en vez de usar un <iframe>: los navegadores
+        // móviles no traen visor de PDF integrado y en su lugar descargan el archivo,
+        // mientras que renderizado a canvas se ve igual en escritorio y en móvil.
+        async function openCertificate(pdfPath, courseName, provider) {
             const modal       = document.getElementById('certificate-modal');
-            const iframe      = document.getElementById('certificate-iframe');
+            const viewer      = document.getElementById('certificate-viewer');
             const title       = document.getElementById('certificate-title');
             const openBtn     = document.getElementById('certificate-open-btn');
             const providerEl  = document.getElementById('certificate-provider');
@@ -1612,34 +1647,60 @@
             loadingName.textContent  = courseName;
 
             loadingDiv.style.display = 'flex';
-            iframe.style.opacity = '0';
-            iframe.src = 'about:blank';
+            viewer.style.opacity = '0';
+            viewer.innerHTML = '';
 
             modal.classList.remove('hidden');
             requestAnimationFrame(() => requestAnimationFrame(() => modal.classList.add('opacity-100')));
 
-            let _revealed = false;
-            function reveal() {
-                if (_revealed) return;
-                _revealed = true;
+            const myToken = ++_certRenderToken;
+
+            try {
+                if (!window.pdfjsLib) throw new Error('pdfjsLib no disponible');
+
+                const pdf = await pdfjsLib.getDocument(pdfPath).promise;
+                if (myToken !== _certRenderToken) return;
+
+                for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+                    const page = await pdf.getPage(pageNum);
+                    if (myToken !== _certRenderToken) return;
+
+                    const targetWidth   = Math.max(240, (viewer.clientWidth || 800) - 32);
+                    const baseViewport  = page.getViewport({ scale: 1 });
+                    const cssScale      = targetWidth / baseViewport.width;
+                    const outputScale   = cssScale * (window.devicePixelRatio || 1);
+                    const viewport      = page.getViewport({ scale: outputScale });
+
+                    const canvas = document.createElement('canvas');
+                    canvas.className = 'shadow-xl rounded bg-white shrink-0';
+                    canvas.width  = Math.floor(viewport.width);
+                    canvas.height = Math.floor(viewport.height);
+                    canvas.style.width  = `${Math.floor(targetWidth)}px`;
+                    canvas.style.height = `${Math.floor(baseViewport.height * cssScale)}px`;
+
+                    await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
+                    if (myToken !== _certRenderToken) return;
+                    viewer.appendChild(canvas);
+                }
+
                 loadingDiv.style.display = 'none';
-                iframe.style.opacity = '1';
+                viewer.style.opacity = '1';
+            } catch (err) {
+                if (myToken !== _certRenderToken) return;
+                loadingDiv.style.display = 'none';
+                viewer.style.opacity = '1';
+                viewer.innerHTML = _certificateErrorView(pdfPath);
             }
-            // El evento "load" del iframe no es fiable para PDFs (visor nativo del navegador),
-            // así que se usa como aceleración y un timeout corto como respaldo garantizado.
-            iframe.onload = () => { if (iframe.src.includes(pdfPath)) reveal(); };
-            setTimeout(() => { iframe.src = pdfPath; }, 120);
-            setTimeout(reveal, 900);
         }
 
         function closeCertificate() {
             const modal  = document.getElementById('certificate-modal');
-            const iframe = document.getElementById('certificate-iframe');
+            const viewer = document.getElementById('certificate-viewer');
             modal.classList.remove('opacity-100');
+            _certRenderToken++;
             setTimeout(() => {
                 modal.classList.add('hidden');
-                iframe.src = 'about:blank';
-                iframe.onload = null;
+                viewer.innerHTML = '';
             }, 300);
         }
 
