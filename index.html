@@ -813,7 +813,7 @@
             </div>
 
             <!-- PARTE 4 — INACAP -->
-            <div>
+            <div class="mb-16">
                 <div class="flex items-center gap-3 mb-6">
                     <span class="w-9 h-9 rounded-lg bg-amber-400/10 border border-amber-400/30 flex items-center justify-center shrink-0">
                         <i class="fa-solid fa-graduation-cap text-amber-400 text-lg"></i>
@@ -825,6 +825,21 @@
                     <span id="count-inacap" class="ml-auto text-[10px] font-mono text-slate-500"></span>
                 </div>
                 <div id="courses-inacap" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+            </div>
+
+            <!-- PARTE 5 — SANTANDER OPEN ACADEMY -->
+            <div>
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="w-9 h-9 rounded-lg bg-rose-500/10 border border-rose-500/30 flex items-center justify-center shrink-0">
+                        <i class="fa-solid fa-chart-column text-rose-500 text-lg"></i>
+                    </span>
+                    <div>
+                        <span class="text-[10px] font-mono text-slate-500 uppercase tracking-wider">// Parte 5</span>
+                        <h3 class="font-orbitron font-bold text-xl text-slate-100 leading-none">Santander Open Academy</h3>
+                    </div>
+                    <span id="count-santander" class="ml-auto text-[10px] font-mono text-slate-500"></span>
+                </div>
+                <div id="courses-santander" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
             </div>
         </div>
     </section>
@@ -1392,6 +1407,14 @@
                     { name: 'Certificado en Innovación y Emprendimiento',        icon: 'fa-solid fa-lightbulb',      tag: '216 hrs', desc: 'Objetivo: aplicar metodologías de innovación y emprendimiento para transformar ideas en proyectos viables con impacto real.', pdf: 'certificados/inacap-innovacion-emprendimiento.pdf' },
                     { name: 'Certificado en Soporte Computacional',              icon: 'fa-solid fa-screwdriver-wrench', tag: 'Certificado', desc: 'Objetivo: diagnosticar, mantener y dar soporte técnico a equipos computacionales, sistemas operativos y redes básicas.', pdf: 'certificados/inacap-soporte-computacional.pdf' }
                 ]
+            },
+            santander: {
+                accent: 'rose',
+                provider: 'Santander Open Academy',
+                items: [
+                    { name: 'Fundamentos de Power BI',  icon: 'fa-solid fa-chart-column', tag: 'Certificado', desc: 'Objetivo: conectar, modelar y visualizar datos con Power BI, creando informes y paneles interactivos que faciliten la toma de decisiones basada en datos.', pdf: 'certificados/santander-fundamentos-power-bi.pdf' },
+                    { name: 'Fundamentos de Excel',     icon: 'fa-solid fa-file-excel',   tag: 'Certificado', desc: 'Objetivo: dominar las funciones esenciales de Excel —fórmulas, tablas, gráficos y análisis de datos— para organizar información y potenciar la productividad.', pdf: 'certificados/santander-fundamentos-excel.pdf' }
+                ]
             }
         };
 
@@ -1400,7 +1423,8 @@
                 cyan:    { border: 'hover:border-cyber-cyan/40',    icon: 'text-cyber-cyan',    iconBg: 'bg-cyber-cyan/10 border-cyber-cyan/30',    badge: 'bg-cyber-cyan/20 text-cyber-cyan border-cyber-cyan/40',    title: 'group-hover:text-cyber-cyan' },
                 purple:  { border: 'hover:border-cyber-purple/40',  icon: 'text-cyber-purple',  iconBg: 'bg-cyber-purple/10 border-cyber-purple/30',  badge: 'bg-cyber-purple/20 text-cyber-purple border-cyber-purple/40',  title: 'group-hover:text-cyber-purple' },
                 emerald: { border: 'hover:border-cyber-emerald/40', icon: 'text-cyber-emerald', iconBg: 'bg-cyber-emerald/10 border-cyber-emerald/30', badge: 'bg-cyber-emerald/20 text-cyber-emerald border-cyber-emerald/40', title: 'group-hover:text-cyber-emerald' },
-                amber:   { border: 'hover:border-amber-400/40',     icon: 'text-amber-400',     iconBg: 'bg-amber-400/10 border-amber-400/30',         badge: 'bg-amber-400/20 text-amber-400 border-amber-400/40',          title: 'group-hover:text-amber-400' }
+                amber:   { border: 'hover:border-amber-400/40',     icon: 'text-amber-400',     iconBg: 'bg-amber-400/10 border-amber-400/30',         badge: 'bg-amber-400/20 text-amber-400 border-amber-400/40',          title: 'group-hover:text-amber-400' },
+                rose:    { border: 'hover:border-rose-500/40',      icon: 'text-rose-500',      iconBg: 'bg-rose-500/10 border-rose-500/30',           badge: 'bg-rose-500/20 text-rose-500 border-rose-500/40',             title: 'group-hover:text-rose-500' }
             };
 
             Object.entries(coursesData).forEach(([key, group]) => {
