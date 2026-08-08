@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-08T23:28:32.776Z",
+  "generatedAt": "2026-08-08T23:33:03.683Z",
   "source": {
     "github": true,
     "netlify": false,
@@ -8,7 +8,7 @@
   "stats": {
     "repos": 33,
     "sites": 27,
-    "published": 20
+    "published": 21
   },
   "projects": [
     {
@@ -117,6 +117,29 @@
       "updatedAt": "2026-07-08T19:10:17.000Z",
       "stars": 0,
       "archived": false
+    },
+    {
+      "id": "hostelapp",
+      "url": "https://hostelapp-beta.vercel.app",
+      "name": "Hostelapp",
+      "desc": "una pagina para poder cotizar y reservar tu hospedaje en el hostal scorpius",
+      "repo": "https://github.com/diegoroman666/hostelapp",
+      "repoName": "hostelapp",
+      "language": "JavaScript",
+      "languages": [
+        "JavaScript",
+        "CSS",
+        "PLpgSQL",
+        "Java",
+        "TypeScript",
+        "HTML"
+      ],
+      "stars": 0,
+      "archived": false,
+      "updatedAt": "2026-07-08T19:10:17.000Z",
+      "updated": "08 Jul 2026",
+      "screenshot": "https://image.thum.io/get/width/1200/crop/675/noanimate/https://hostelapp-beta.vercel.app?v=2026-07-08",
+      "category": "web"
     },
     {
       "id": "barley-bar",
