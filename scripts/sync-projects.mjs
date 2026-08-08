@@ -221,6 +221,26 @@ function repoDeSitio(sitio, repos) {
   return repos.find(r => normalizar(r.name) === sub) || null;
 }
 
+/**
+ * ¿Son el mismo proyecto dos nombres que no coinciden letra por letra?
+ *
+ * Los repos y los subdominios de Netlify rara vez son idénticos: sobra un
+ * sufijo numérico o una letra repetida ("hostelapp" vs "hostelapp1",
+ * "cvcreator" vs "cvcreatorr"). Se acepta que uno sea prefijo del otro con
+ * hasta dos caracteres de diferencia; más margen empezaría a unir proyectos
+ * distintos.
+ */
+function parecidos(a, b) {
+  const x = normalizar(a);
+  const y = normalizar(b);
+  if (!x || !y) return false;
+  if (x === y) return true;
+
+  const [corto, largo] = x.length <= y.length ? [x, y] : [y, x];
+  if (corto.length < 4) return false; // nombres muy cortos dan falsos positivos
+  return largo.startsWith(corto) && largo.length - corto.length <= 2;
+}
+
 function inferirCategoria(fuentes) {
   const texto = normalizar(fuentes.filter(Boolean).join(' '));
   return PISTAS_EDU.some(pista => texto.includes(normalizar(pista))) ? 'edu' : 'web';
@@ -313,14 +333,31 @@ function construir({ repos, utiles, sitios, previo, overrides }) {
     }
   }
 
-  // --- 2. Repos con homepage que Netlify no cubrió --------------------------
+  // --- 2. Sin datos de Netlify, se parte de lo que ya había -----------------
+  // Tiene que ir ANTES de emparejar repos: si no, las fases siguientes no
+  // tendrían con qué cruzar y darían de alta duplicados en vez de enriquecer.
+  // Con datos de Netlify no se restaura nada: su lista manda sobre qué existe.
+  if (!sitios) {
+    for (const [id, proyecto] of anteriores) {
+      if (!salida.has(id) && !ocultos.has(normalizar(id))) salida.set(id, { ...proyecto });
+    }
+  }
+
+  // --- 3. Repos con homepage que Netlify no cubrió --------------------------
   for (const repo of utiles) {
     if (reposUsados.has(repo.id)) continue;
     if (ocultos.has(normalizar(repo.name))) continue;
     if (!repo.homepage) continue;
 
-    const id = subdominio(repo.homepage) || normalizar(repo.name);
-    if (!id || ocultos.has(normalizar(id))) continue;
+    const propuesto = subdominio(repo.homepage) || normalizar(repo.name);
+    if (!propuesto || ocultos.has(normalizar(propuesto))) continue;
+
+    // Antes de dar de alta un proyecto nuevo se busca uno ya existente que sea
+    // el mismo con otro nombre, para no duplicar la tarjeta.
+    const gemelo = [...salida.values()].find(
+      p => !p.repo && (parecidos(p.id, propuesto) || parecidos(p.id, repo.name))
+    );
+    const id = gemelo ? gemelo.id : propuesto;
 
     // Si Netlify ya publicó este id, solo completamos lo que falte.
     const proyecto = registrar(id, {});
@@ -346,14 +383,26 @@ function construir({ repos, utiles, sitios, previo, overrides }) {
       proyecto.category || inferirCategoria([repo.name, repo.description, ...(repo.topics || [])]);
   }
 
-  // --- 3. Repos sin homepage: enriquecen proyectos ya conocidos -------------
-  // Cubre el caso de un repo renombrado o recién enlazado a un sitio existente.
+  // --- 4. Enlazar los repos que quedaron sueltos ----------------------------
+  // Sin token de Netlify no existe el cruce exacto por build, así que aquí se
+  // emparejan por nombre los repos que todavía no se asociaron a ningún
+  // proyecto. Es lo que da lenguaje y enlace al código a la mayoría de las
+  // tarjetas cuando solo hay datos de GitHub.
   for (const repo of utiles) {
-    if (reposUsados.has(repo.id) || repo.homepage) continue;
+    if (reposUsados.has(repo.id)) continue;
+    if (ocultos.has(normalizar(repo.name))) continue;
+
+    const candidatos = [...salida.values()];
     const objetivo =
-      [...salida.values()].find(p => normalizar(p.repoName) === normalizar(repo.name)) ||
-      [...salida.values()].find(p => !p.repo && normalizar(p.id) === normalizar(repo.name));
+      // 1. El repo que ya teníamos anotado para ese proyecto (sobrevive a renombres).
+      candidatos.find(p => p.repoName && normalizar(p.repoName) === normalizar(repo.name)) ||
+      // 2. Coincidencia exacta con el id del proyecto.
+      candidatos.find(p => !p.repo && normalizar(p.id) === normalizar(repo.name)) ||
+      // 3. Variantes de nombre: sufijos numéricos, letras repetidas, etc.
+      candidatos.find(p => !p.repo && parecidos(p.id, repo.name));
     if (!objetivo) continue;
+
+    reposUsados.add(repo.id);
 
     enriquecer(objetivo, 'repo', repo.html_url);
     enriquecer(objetivo, 'repoName', repo.name);
@@ -361,18 +410,13 @@ function construir({ repos, utiles, sitios, previo, overrides }) {
     enriquecer(objetivo, 'languages', repo._languages);
     enriquecer(objetivo, 'topics', repo.topics);
     enriquecer(objetivo, 'desc', repo.description);
+    const selloPrevio = objetivo.updatedAt;
     const empujado = aISO(repo.pushed_at);
     if (empujado) {
       objetivo.updatedAt = empujado;
       objetivo.updated = fechaLegible(empujado);
     }
-  }
-
-  // --- 4. Sin datos de Netlify, no se borra nada de lo que ya había ---------
-  if (!sitios) {
-    for (const [id, proyecto] of anteriores) {
-      if (!salida.has(id) && !ocultos.has(normalizar(id))) salida.set(id, { ...proyecto });
-    }
+    enriquecer(objetivo, 'screenshot', resolverScreenshot({ proyecto: objetivo, sitio: null, selloPrevio }));
   }
 
   // --- 5. Curaduría manual: siempre gana ------------------------------------
@@ -385,6 +429,19 @@ function construir({ repos, utiles, sitios, previo, overrides }) {
   const proyectos = [...salida.values()]
     .filter(p => p.url)
     .sort((a, b) => String(b.updatedAt || '').localeCompare(String(a.updatedAt || '')));
+
+  // --- Diagnóstico: qué quedó sin cruzar ------------------------------------
+  const sinRepo = proyectos.filter(p => !p.repo).map(p => p.id);
+  const reposSueltos = utiles
+    .filter(r => !reposUsados.has(r.id) && !ocultos.has(normalizar(r.name)))
+    .map(r => r.name);
+
+  if (sinRepo.length) log(`proyectos sin repo enlazado (${sinRepo.length}): ${sinRepo.join(', ')}`);
+  if (reposSueltos.length) log(`repos sin proyecto (${reposSueltos.length}): ${reposSueltos.join(', ')}`);
+  if (!sitios && (sinRepo.length || reposSueltos.length)) {
+    log('sugerencia: configura NETLIFY_AUTH_TOKEN para cruzar por el repo del build,');
+    log('            o define el campo "homepage" en esos repos de GitHub.');
+  }
 
   return {
     generatedAt: new Date().toISOString(),

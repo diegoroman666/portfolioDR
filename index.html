@@ -1329,6 +1329,22 @@
             return String(texto || '').toLowerCase().replace(/[^a-z0-9]/g, '');
         }
 
+        /**
+         * ¿Son el mismo proyecto dos nombres que no coinciden letra por letra?
+         * Los repos y los subdominios rara vez son idénticos: sobra un sufijo
+         * numérico o una letra repetida ("hostelapp" vs "hostelapp1").
+         * Misma regla que scripts/sync-projects.mjs, para no descuadrar capas.
+         */
+        function nombresParecidos(a, b) {
+            const x = normalizarClave(a);
+            const y = normalizarClave(b);
+            if (!x || !y) return false;
+            if (x === y) return true;
+            const [corto, largo] = x.length <= y.length ? [x, y] : [y, x];
+            if (corto.length < 4) return false;
+            return largo.startsWith(corto) && largo.length - corto.length <= 2;
+        }
+
         function subdominioNetlify(url) {
             try {
                 const host = new URL(url).hostname;
@@ -1431,7 +1447,9 @@
                 const sub = repo.homepage ? subdominioNetlify(repo.homepage) : '';
                 const objetivo =
                     porClave.get(normalizarClave(repo.name)) ||
-                    (sub ? porClave.get(normalizarClave(sub)) : null);
+                    (sub ? porClave.get(normalizarClave(sub)) : null) ||
+                    // Último recurso: variantes de nombre, igual que en el sincronizador.
+                    proyectos.find(p => !p.repo && nombresParecidos(p.id, repo.name));
 
                 if (!objetivo) return;
 
@@ -1440,6 +1458,8 @@
                 if (repo.name) objetivo.repoName = repo.name;
                 if (repo.language) objetivo.language = repo.language;
                 if (repo.description) objetivo.desc = repo.description;
+                // La URL viva (Netlify) manda sobre el homepage del repo, que a
+                // veces apunta a otro despliegue distinto del que se muestra.
                 if (repo.homepage && !objetivo.url) objetivo.url = repo.homepage;
                 if (repo.pushed_at) {
                     const legible = fechaLegible(repo.pushed_at);
