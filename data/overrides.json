@@ -1,9 +1,8 @@
 {
   "_readme": [
-    "Curaduria manual: TODO lo que definas aqui gana por sobre GitHub y Netlify.",
-    "Borra un campo (o el proyecto entero) para que vuelva a sincronizarse solo.",
-    "La clave es el id del proyecto: el subdominio de Netlify.",
-    "Campos utiles: name, desc, category (web|edu), screenshot, url, embeddable."
+    "Curaduría manual. Todo lo que definas aquí SIEMPRE gana por sobre lo que llega",
+    "de GitHub o Netlify. Borra un campo para que vuelva a sincronizarse solo.",
+    "La clave es el id del proyecto (el subdominio de Netlify o el nombre del repo)."
   ],
   "hidden": [
     "portfoliodr",
@@ -13,64 +12,83 @@
   ],
   "projects": {
     "hostelapp1": {
+      "name": "Hostel App",
       "category": "web"
     },
     "matepro4u": {
+      "name": "MatePro 4U",
       "category": "edu"
     },
     "probabia": {
+      "name": "Probabia",
       "category": "edu"
     },
     "phonky-4-u": {
+      "name": "Phonky 4U",
       "category": "web"
     },
     "temapeo-gispro": {
+      "name": "Temapeo GIS",
       "category": "web"
     },
     "cvcreatorr": {
+      "name": "CV Creator",
       "category": "web"
     },
     "agenda-school": {
+      "name": "Agenda School",
       "category": "edu"
     },
     "pizarra-virtual-matematico": {
+      "name": "Pizarra Virtual Mat.",
       "category": "edu"
     },
     "photos-lpr-media": {
+      "name": "Photos LPR Media",
       "category": "web"
     },
     "diccionario-sw": {
+      "name": "Diccionario SW",
       "category": "web"
     },
     "insta-sw": {
+      "name": "Insta SW",
       "category": "web"
     },
     "mantencion-sw": {
+      "name": "Mantención SW",
       "category": "web"
     },
     "config-redes": {
+      "name": "Config Redes",
       "category": "web"
     },
     "planner4tendaysit": {
+      "name": "Planner 4 Ten Days",
       "category": "web"
     },
     "paeslen": {
+      "name": "PAES LEN",
       "category": "edu"
     },
     "dragonfiree": {
+      "name": "Dragon Fire",
       "category": "web"
     },
     "surgitaskpro": {
+      "name": "SurgiTask Pro",
       "category": "web"
     },
     "grammanual": {
-      "category": "edu",
-      "screenshot": "assets/grammanual.jpg"
+      "name": "Grammanual",
+      "category": "edu"
     },
     "datamathapp": {
+      "name": "DataMath",
       "category": "edu"
     },
     "barley-bar": {
+      "name": "Barley",
       "category": "web"
     }
   }
