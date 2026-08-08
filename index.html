@@ -1456,7 +1456,14 @@
                 // Solo se pisa lo que GitHub sí sabe; nunca se borra información.
                 if (repo.html_url) objetivo.repo = repo.html_url;
                 if (repo.name) objetivo.repoName = repo.name;
-                if (repo.language) objetivo.language = repo.language;
+                if (repo.language) {
+                    objetivo.language = repo.language;
+                    // El desglose completo solo lo trae el sincronizador, pero el
+                    // lenguaje principal debe encabezarlo o el modal seguiría
+                    // mostrando el stack anterior tras reescribir un proyecto.
+                    const resto = (objetivo.languages || []).filter(l => l !== repo.language);
+                    objetivo.languages = [repo.language, ...resto];
+                }
                 if (repo.description) objetivo.desc = repo.description;
                 // La URL viva (Netlify) manda sobre el homepage del repo, que a
                 // veces apunta a otro despliegue distinto del que se muestra.

@@ -291,6 +291,33 @@ function construir({ repos, utiles, sitios, previo, overrides }) {
 
   const reposUsados = new Set();
 
+  // Mapeo explícito declarado en overrides.json: repoName -> id del proyecto.
+  // Es la salida para los casos que ningún parecido de nombre puede resolver,
+  // como un sitio "surgitaskpro" cuyo repositorio se llama "agenda-quirurgica".
+  const mapaManual = new Map();
+  for (const [id, campos] of Object.entries(overrides.projects || {})) {
+    if (campos?.repoName) mapaManual.set(normalizar(campos.repoName), id);
+  }
+
+  /**
+   * ¿A qué proyecto pertenece este repo, entre los que ya conocemos?
+   *
+   * El orden importa: un repo ya asociado a un proyecto tiene que reencontrarlo
+   * en la siguiente sincronización, o se daría de alta como proyecto nuevo y
+   * acabaríamos con la tarjeta duplicada.
+   */
+  function proyectoDeRepo(repo, { incluirParecidos = true } = {}) {
+    const candidatos = [...salida.values()];
+    const idManual = mapaManual.get(normalizar(repo.name));
+    return (
+      (idManual && salida.get(idManual)) ||
+      candidatos.find(p => p.repoName && normalizar(p.repoName) === normalizar(repo.name)) ||
+      candidatos.find(p => !p.repo && normalizar(p.id) === normalizar(repo.name)) ||
+      (incluirParecidos ? candidatos.find(p => !p.repo && parecidos(p.id, repo.name)) : null) ||
+      null
+    );
+  }
+
   // --- 1. Sitios de Netlify (fuente de la URL en vivo y el screenshot) -------
   if (sitios) {
     for (const sitio of sitios) {
@@ -354,9 +381,9 @@ function construir({ repos, utiles, sitios, previo, overrides }) {
 
     // Antes de dar de alta un proyecto nuevo se busca uno ya existente que sea
     // el mismo con otro nombre, para no duplicar la tarjeta.
-    const gemelo = [...salida.values()].find(
-      p => !p.repo && (parecidos(p.id, propuesto) || parecidos(p.id, repo.name))
-    );
+    const gemelo =
+      proyectoDeRepo(repo) ||
+      [...salida.values()].find(p => !p.repo && parecidos(p.id, propuesto));
     const id = gemelo ? gemelo.id : propuesto;
 
     // Si Netlify ya publicó este id, solo completamos lo que falte.
@@ -388,29 +415,11 @@ function construir({ repos, utiles, sitios, previo, overrides }) {
   // emparejan por nombre los repos que todavía no se asociaron a ningún
   // proyecto. Es lo que da lenguaje y enlace al código a la mayoría de las
   // tarjetas cuando solo hay datos de GitHub.
-  // Mapeo explícito declarado en overrides.json: repoName -> id del proyecto.
-  // Es la salida para los casos que ningún parecido de nombre puede resolver,
-  // como un sitio "surgitaskpro" cuyo repositorio se llama "agenda-quirurgica".
-  const mapaManual = new Map();
-  for (const [id, campos] of Object.entries(overrides.projects || {})) {
-    if (campos?.repoName) mapaManual.set(normalizar(campos.repoName), id);
-  }
-
   for (const repo of utiles) {
     if (reposUsados.has(repo.id)) continue;
     if (ocultos.has(normalizar(repo.name))) continue;
 
-    const candidatos = [...salida.values()];
-    const idManual = mapaManual.get(normalizar(repo.name));
-    const objetivo =
-      // 1. Mapeo manual: gana sobre cualquier heurística.
-      (idManual && salida.get(idManual)) ||
-      // 2. El repo que ya teníamos anotado para ese proyecto (sobrevive a renombres).
-      candidatos.find(p => p.repoName && normalizar(p.repoName) === normalizar(repo.name)) ||
-      // 3. Coincidencia exacta con el id del proyecto.
-      candidatos.find(p => !p.repo && normalizar(p.id) === normalizar(repo.name)) ||
-      // 4. Variantes de nombre: sufijos numéricos, letras repetidas, etc.
-      candidatos.find(p => !p.repo && parecidos(p.id, repo.name));
+    const objetivo = proyectoDeRepo(repo);
     if (!objetivo) continue;
 
     reposUsados.add(repo.id);
