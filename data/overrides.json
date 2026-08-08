@@ -1,0 +1,76 @@
+{
+  "_readme": [
+    "Curaduria manual: TODO lo que definas aqui gana por sobre GitHub y Netlify.",
+    "Borra un campo (o el proyecto entero) para que vuelva a sincronizarse solo.",
+    "La clave es el id del proyecto: el subdominio de Netlify.",
+    "Campos utiles: name, desc, category (web|edu), screenshot, url, embeddable."
+  ],
+  "hidden": [
+    "portfoliodr",
+    "portfolio",
+    "diegoroman666"
+  ],
+  "projects": {
+    "hostelapp1": {
+      "category": "web"
+    },
+    "matepro4u": {
+      "category": "edu"
+    },
+    "probabia": {
+      "category": "edu"
+    },
+    "phonky-4-u": {
+      "category": "web"
+    },
+    "temapeo-gispro": {
+      "category": "web"
+    },
+    "cvcreatorr": {
+      "category": "web"
+    },
+    "agenda-school": {
+      "category": "edu"
+    },
+    "pizarra-virtual-matematico": {
+      "category": "edu"
+    },
+    "photos-lpr-media": {
+      "category": "web"
+    },
+    "diccionario-sw": {
+      "category": "web"
+    },
+    "insta-sw": {
+      "category": "web"
+    },
+    "mantencion-sw": {
+      "category": "web"
+    },
+    "config-redes": {
+      "category": "web"
+    },
+    "planner4tendaysit": {
+      "category": "web"
+    },
+    "paeslen": {
+      "category": "edu"
+    },
+    "dragonfiree": {
+      "category": "web"
+    },
+    "surgitaskpro": {
+      "category": "web"
+    },
+    "grammanual": {
+      "category": "edu",
+      "screenshot": "assets/grammanual.jpg"
+    },
+    "datamathapp": {
+      "category": "edu"
+    },
+    "barley-bar": {
+      "category": "web"
+    }
+  }
+}

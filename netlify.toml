@@ -1,0 +1,8 @@
+# Solo cabeceras: la configuración de build sigue siendo la del panel de Netlify.
+
+# Los datos de proyectos deben revalidarse siempre, para que el redespliegue
+# posterior a una sincronización se vea de inmediato y no quede caché vieja.
+[[headers]]
+  for = "/data/*"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"

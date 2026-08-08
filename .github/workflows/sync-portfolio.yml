@@ -1,0 +1,91 @@
+name: Sincronizar proyectos
+
+# Mantiene data/projects.json al día con GitHub y Netlify.
+# Al commitear el archivo, Netlify redespliega el portafolio automáticamente.
+
+on:
+  schedule:
+    # Cada 3 horas (UTC). GitHub puede atrasar los cron unos minutos.
+    - cron: '0 */3 * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/sync-projects.mjs'
+      - 'data/overrides.json'
+      - '.github/workflows/sync-portfolio.yml'
+  # Permite disparar la sincronización desde fuera:
+  #   curl -X POST -H "Authorization: Bearer $TOKEN" \
+  #        -H "Accept: application/vnd.github+json" \
+  #        https://api.github.com/repos/diegoroman666/portfolioDR/dispatches \
+  #        -d '{"event_type":"sync-projects"}'
+  repository_dispatch:
+    types: [sync-projects]
+
+concurrency:
+  group: sync-portfolio
+  cancel-in-progress: false
+
+jobs:
+  sincronizar:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Clonar el repositorio
+        uses: actions/checkout@v4
+
+      - name: Preparar Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Sincronizar con GitHub y Netlify
+        env:
+          GITHUB_USER: ${{ github.repository_owner }}
+          # GITHUB_TOKEN solo sube el límite de peticiones; los repos son públicos.
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Opcional: si lo configuras, se usan los screenshots oficiales de Netlify
+          # y la lista de sitios publicados pasa a ser la fuente de verdad.
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+        run: node scripts/sync-projects.mjs
+
+      - name: Commitear si hubo cambios
+        id: commit
+        run: |
+          if git diff --quiet -- data/projects.json; then
+            echo "Sin cambios en data/projects.json"
+            echo "cambio=no" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/projects.json
+          git commit -m "Sincronizar proyectos con GitHub y Netlify"
+
+          for intento in 1 2 3 4; do
+            if git push origin HEAD:main; then
+              echo "cambio=si" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            echo "Push fallido, reintentando..."
+            sleep $((2 ** intento))
+            git pull --rebase origin main || true
+          done
+          echo "No se pudo pushear tras 4 intentos" >&2
+          exit 1
+
+      - name: Avisar a Netlify
+        # Solo hace falta si Netlify NO está conectado al repo por Git.
+        # Guarda la URL del build hook en el secret NETLIFY_BUILD_HOOK.
+        if: steps.commit.outputs.cambio == 'si'
+        env:
+          HOOK: ${{ secrets.NETLIFY_BUILD_HOOK }}
+        run: |
+          if [ -z "$HOOK" ]; then
+            echo "Sin NETLIFY_BUILD_HOOK: Netlify ya redespliega solo al detectar el push."
+            exit 0
+          fi
+          curl -fsS -X POST -d '{}' "$HOOK"

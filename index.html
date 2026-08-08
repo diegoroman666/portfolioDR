@@ -463,7 +463,7 @@
                     <h2 class="font-orbitron font-extrabold text-3xl md:text-5xl mt-1">PERFIL PROFESIONAL</h2>
                 </div>
                 <p class="text-slate-400 max-w-md mt-4 md:mt-0 font-light">
-                    Diagnóstico honesto basado en 29 repositorios públicos y 27 proyectos desplegados en producción.
+                    Diagnóstico honesto basado en <span data-sync="repos">29</span> repositorios públicos y <span data-sync="sites">27</span> proyectos desplegados en producción.
                 </p>
             </div>
 
@@ -501,11 +501,11 @@
                 <div class="flex-1 text-center md:text-left">
                     <h3 class="font-orbitron font-bold text-xl text-white mb-2">Junior Avanzado <span class="text-cyber-cyan">(Junior+)</span></h3>
                     <p class="text-slate-300 text-sm leading-relaxed mb-4 max-w-2xl">
-                        Con <strong class="text-white">29 repositorios en GitHub</strong> y <strong class="text-white">27 proyectos en producción en Netlify</strong> (cuenta activa desde junio 2024), el nivel corresponde a <strong class="text-cyber-cyan">Junior Avanzado</strong>. Se domina el stack frontend completo — HTML/CSS/Tailwind/JavaScript — con integración de backend-as-a-service mediante <strong class="text-white">Supabase</strong>, construcción de aplicaciones con propósito real (educación, gestión, GIS, e-commerce), y desarrollo móvil con <strong class="text-white">Capacitor + Flutter/Dart</strong>. El salto a Mid requiere profundizar en backend propio y testing.
+                        Con <strong class="text-white"><span data-sync="repos">29</span> repositorios en GitHub</strong> y <strong class="text-white"><span data-sync="sites">27</span> proyectos en producción en Netlify</strong> (cuenta activa desde junio 2024), el nivel corresponde a <strong class="text-cyber-cyan">Junior Avanzado</strong>. Se domina el stack frontend completo — HTML/CSS/Tailwind/JavaScript — con integración de backend-as-a-service mediante <strong class="text-white">Supabase</strong>, construcción de aplicaciones con propósito real (educación, gestión, GIS, e-commerce), y desarrollo móvil con <strong class="text-white">Capacitor + Flutter/Dart</strong>. El salto a Mid requiere profundizar en backend propio y testing.
                     </p>
                     <div class="flex flex-wrap gap-2 justify-center md:justify-start">
                         <span class="px-2.5 py-1 bg-cyber-cyan/10 text-cyber-cyan border border-cyber-cyan/20 rounded-full text-[11px] font-mono">✓ Frontend sólido</span>
-                        <span class="px-2.5 py-1 bg-cyber-cyan/10 text-cyber-cyan border border-cyber-cyan/20 rounded-full text-[11px] font-mono">✓ 27 deploys en producción</span>
+                        <span class="px-2.5 py-1 bg-cyber-cyan/10 text-cyber-cyan border border-cyber-cyan/20 rounded-full text-[11px] font-mono">✓ <span data-sync="sites">27</span> deploys en producción</span>
                         <span class="px-2.5 py-1 bg-cyber-cyan/10 text-cyber-cyan border border-cyber-cyan/20 rounded-full text-[11px] font-mono">✓ Supabase / PostgreSQL</span>
                         <span class="px-2.5 py-1 bg-cyber-cyan/10 text-cyber-cyan border border-cyber-cyan/20 rounded-full text-[11px] font-mono">✓ Proyectos con impacto real</span>
                         <span class="px-2.5 py-1 bg-amber-500/10 text-amber-400 border border-amber-500/20 rounded-full text-[11px] font-mono">→ Creciendo en TypeScript</span>
@@ -680,7 +680,7 @@
                         <i class="fa-solid fa-briefcase text-lg"></i>
                     </div>
                     <h3 class="font-orbitron font-bold text-base">Tipos de Proyectos Construidos</h3>
-                    <span class="ml-auto text-[10px] font-mono text-slate-500">27 proyectos reales</span>
+                    <span class="ml-auto text-[10px] font-mono text-slate-500"><span data-sync="sites">27</span> proyectos reales</span>
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 text-sm">
                     <div class="flex items-start space-x-3 p-3 bg-slate-900/40 rounded-xl border border-white/5">
@@ -738,6 +738,11 @@
                 <div>
                     <span class="text-cyber-cyan font-mono text-sm tracking-wider uppercase">// DESARROLLO REALIZADO</span>
                     <h2 class="font-orbitron font-extrabold text-3xl md:text-5xl mt-1">PROYECTOS</h2>
+                    <!-- Lo rellena sincronizarProyectos() con la fecha real de la última sync -->
+                    <p id="sync-stamp" class="hidden mt-2 text-[10px] font-mono text-slate-500 items-center gap-1.5">
+                        <span class="w-1.5 h-1.5 rounded-full bg-cyber-emerald animate-pulse shrink-0"></span>
+                        <span id="sync-stamp-text"></span>
+                    </p>
                 </div>
                 <!-- Filtros Interactivos -->
                 <div class="flex flex-wrap gap-2 mt-6 md:mt-0 font-rajdhani font-semibold text-sm">
@@ -981,6 +986,13 @@
                     <i class="fa-solid fa-lock text-cyber-emerald text-[10px] shrink-0"></i>
                     <span id="preview-url-bar" class="text-slate-300 truncate">...</span>
                 </div>
+                <!-- Código fuente (se muestra solo si el proyecto tiene repo enlazado) -->
+                <a id="preview-repo-btn" href="#" target="_blank" rel="noopener noreferrer"
+                   class="hidden shrink-0 px-2.5 py-1.5 bg-slate-800/60 hover:bg-slate-700 text-slate-400 hover:text-white border border-white/10 hover:border-white/20 rounded-lg transition-all duration-300 items-center space-x-1.5"
+                   title="Ver código en GitHub">
+                    <i class="fa-brands fa-github text-sm"></i>
+                    <span class="hidden sm:inline font-rajdhani font-bold text-xs">CÓDIGO</span>
+                </a>
                 <!-- Botón abrir en la web -->
                 <a id="preview-open-btn" href="#" target="_blank" rel="noopener noreferrer"
                    class="shrink-0 px-2.5 sm:px-4 py-1.5 bg-cyber-cyan/15 hover:bg-cyber-cyan text-cyber-cyan hover:text-cyber-darker border border-cyber-cyan/30 font-rajdhani font-bold text-xs sm:text-sm rounded-lg transition-all duration-300 flex items-center space-x-1.5">
@@ -1021,6 +1033,7 @@
                         <span>Netlify Deploy</span>
                     </span>
                     <span>SSL / TLS Activo</span>
+                    <span id="preview-stack" class="hidden text-slate-400"></span>
                 </div>
                 <span id="preview-site-name" class="text-slate-400 font-semibold tracking-wider truncate"></span>
             </div>
@@ -1263,9 +1276,14 @@
     <!-- JAVASCRIPT: Lógica de Partículas, Filtros e IDE Interactivo -->
     <script>
         // ----------------------------------------------------
-        // PROYECTOS REALES DE NETLIFY (18 sitios desplegados)
+        // PROYECTOS
         // ----------------------------------------------------
-        const netlifyProjects = [
+        // OJO: esta lista es solo el RESPALDO que se muestra si no se puede leer
+        // data/projects.json (por ejemplo al abrir el archivo con file://).
+        // La fuente de verdad es data/projects.json, que se regenera solo con
+        // scripts/sync-projects.mjs desde GitHub y Netlify. No edites esto a mano:
+        // para ajustar un proyecto usa data/overrides.json.
+        const PROYECTOS_RESPALDO = [
             { id: 'hostelapp1',                  name: 'Hostel App',               url: 'https://hostelapp1.netlify.app',                  screenshot: 'https://image.thum.io/get/width/1200/crop/675/noanimate/https://hostelapp1.netlify.app', category: 'web', updated: '06 Jul 2026', desc: 'Aplicación de gestión para hostel o alojamiento con control de reservas y administración.' },
             { id: 'matepro4u',                   name: 'MatePro 4U',               url: 'https://matepro4u.netlify.app',                   screenshot: 'https://d33wubrfki0l68.cloudfront.net/6a1a3f7059fbdf54fd8c6a4d/screenshot_2026-05-30-01-37-57-0000.webp', category: 'edu', updated: '30 May 2026', desc: 'Plataforma interactiva de matemáticas con ejercicios y práctica para estudiantes.' },
             { id: 'probabia',                    name: 'Probabia',                 url: 'https://probabia.netlify.app',                    screenshot: 'https://d33wubrfki0l68.cloudfront.net/6a0f64d28aa9df000866ee76/screenshot_2026-05-21-20-02-38-0000.webp', category: 'edu', updated: '21 May 2026', desc: 'Herramienta educativa de estadística y probabilidad para análisis y aprendizaje.' },
@@ -1288,12 +1306,205 @@
             { id: 'barley-bar',                  name: 'Barley',                   url: 'https://barley-bar.netlify.app',                  screenshot: 'https://image.thum.io/get/width/1200/crop/675/noanimate/https://barley-bar.netlify.app', category: 'web', updated: '04 Jul 2026', desc: 'Sistema de reservas de comidas del menú que ofrece Barley Terraza Restobar.' }
         ];
 
+        // Lista viva que consumen las tarjetas y el modal de vista previa.
+        let netlifyProjects = PROYECTOS_RESPALDO;
+
+        // ====================================================
+        // SINCRONIZACIÓN AUTOMÁTICA CON GITHUB Y NETLIFY
+        // ====================================================
+        // Dos capas, de más lenta y completa a más rápida y ligera:
+        //   1. data/projects.json — lo regenera GitHub Actions cada 3 horas
+        //      cruzando la API de GitHub con la de Netlify (incluye screenshots).
+        //   2. API pública de GitHub desde el navegador — refresca al instante
+        //      lenguaje, URL del repo, descripción y fecha, sin esperar al workflow.
+        // Si ambas fallan, queda el respaldo embebido de arriba.
+        const SYNC = {
+            usuarioGitHub: 'diegoroman666',
+            archivoDatos: 'data/projects.json',
+            claveCache: 'portfolioDR:github',
+            minutosCache: 30
+        };
+
+        function normalizarClave(texto) {
+            return String(texto || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+        }
+
+        function subdominioNetlify(url) {
+            try {
+                const host = new URL(url).hostname;
+                return host.endsWith('.netlify.app') ? host.slice(0, -'.netlify.app'.length) : '';
+            } catch {
+                return '';
+            }
+        }
+
+        const MESES_ES = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+
+        function fechaLegible(iso) {
+            const d = new Date(iso);
+            if (Number.isNaN(d.getTime())) return null;
+            return `${String(d.getUTCDate()).padStart(2, '0')} ${MESES_ES[d.getUTCMonth()]} ${d.getUTCFullYear()}`;
+        }
+
+        /** Refleja en el texto de la página los contadores reales. */
+        function pintarContadores(stats) {
+            if (!stats) return;
+            document.querySelectorAll('[data-sync]').forEach(el => {
+                const valor = stats[el.getAttribute('data-sync')];
+                if (Number.isFinite(valor) && valor > 0) el.textContent = valor;
+            });
+        }
+
+        /** Marca en la sección de proyectos cuándo fue la última sincronización. */
+        function pintarSelloSync(iso, origen) {
+            const sello = document.getElementById('sync-stamp');
+            const texto = document.getElementById('sync-stamp-text');
+            if (!sello || !texto) return;
+            const fecha = fechaLegible(iso);
+            texto.textContent = fecha
+                ? `Sincronizado con ${origen} · ${fecha}`
+                : 'Datos locales de respaldo';
+            sello.classList.remove('hidden');
+            sello.classList.add('flex');
+        }
+
+        /** Capa 1: el JSON que genera el workflow. */
+        async function cargarDatosPublicados() {
+            try {
+                const res = await fetch(`${SYNC.archivoDatos}?t=${Date.now()}`, { cache: 'no-store' });
+                if (!res.ok) return null;
+                const doc = await res.json();
+                if (!doc || !Array.isArray(doc.projects) || doc.projects.length === 0) return null;
+                return doc;
+            } catch {
+                return null;
+            }
+        }
+
+        /** Capa 2: la API pública de GitHub, con caché en el navegador. */
+        async function cargarReposGitHub() {
+            try {
+                const guardado = JSON.parse(localStorage.getItem(SYNC.claveCache) || 'null');
+                if (guardado && Date.now() - guardado.ts < SYNC.minutosCache * 60000) {
+                    return guardado.repos;
+                }
+            } catch { /* caché corrupta: se ignora */ }
+
+            try {
+                const res = await fetch(
+                    `https://api.github.com/users/${SYNC.usuarioGitHub}/repos?per_page=100&sort=pushed`,
+                    { headers: { Accept: 'application/vnd.github+json' } }
+                );
+                // Sin token el límite es de 60 peticiones por hora e IP: si se
+                // agota, simplemente nos quedamos con los datos del JSON.
+                if (!res.ok) return null;
+                const crudo = await res.json();
+                if (!Array.isArray(crudo)) return null;
+
+                // Se guarda solo lo que se usa: la respuesta completa son cientos de KB.
+                const repos = crudo
+                    .filter(r => !r.fork && !r.private)
+                    .map(({ name, html_url, homepage, language, description, pushed_at }) =>
+                        ({ name, html_url, homepage, language, description, pushed_at }));
+
+                try {
+                    localStorage.setItem(SYNC.claveCache, JSON.stringify({ ts: Date.now(), repos }));
+                } catch { /* almacenamiento lleno o bloqueado */ }
+                return repos;
+            } catch {
+                return null;
+            }
+        }
+
+        /**
+         * Superpone los datos vivos de GitHub sobre la lista de proyectos.
+         * Cruza repo y sitio por: nombre de repo guardado > homepage > nombre.
+         */
+        function fusionarConGitHub(proyectos, repos) {
+            const porClave = new Map();
+            proyectos.forEach(p => {
+                porClave.set(normalizarClave(p.id), p);
+                if (p.repoName) porClave.set(normalizarClave(p.repoName), p);
+            });
+
+            repos.forEach(repo => {
+                const sub = repo.homepage ? subdominioNetlify(repo.homepage) : '';
+                const objetivo =
+                    porClave.get(normalizarClave(repo.name)) ||
+                    (sub ? porClave.get(normalizarClave(sub)) : null);
+
+                if (!objetivo) return;
+
+                // Solo se pisa lo que GitHub sí sabe; nunca se borra información.
+                if (repo.html_url) objetivo.repo = repo.html_url;
+                if (repo.name) objetivo.repoName = repo.name;
+                if (repo.language) objetivo.language = repo.language;
+                if (repo.description) objetivo.desc = repo.description;
+                if (repo.homepage && !objetivo.url) objetivo.url = repo.homepage;
+                if (repo.pushed_at) {
+                    const legible = fechaLegible(repo.pushed_at);
+                    if (legible) {
+                        objetivo.updated = legible;
+                        objetivo.updatedAt = new Date(repo.pushed_at).toISOString();
+                    }
+                }
+            });
+
+            return proyectos;
+        }
+
+        /** Orquesta ambas capas y repinta la grilla en cuanto hay datos nuevos. */
+        async function sincronizarProyectos() {
+            const doc = await cargarDatosPublicados();
+            if (doc) {
+                netlifyProjects = doc.projects;
+                pintarContadores(doc.stats);
+                pintarSelloSync(doc.generatedAt, doc.source?.netlify ? 'GitHub y Netlify' : 'GitHub');
+                renderProjectCards();
+            }
+
+            const repos = await cargarReposGitHub();
+            if (!repos) return;
+
+            netlifyProjects = fusionarConGitHub(netlifyProjects, repos);
+            // `repos` ya viene sin forks ni privados desde cargarReposGitHub().
+            pintarContadores({ repos: repos.length, sites: netlifyProjects.length });
+            pintarSelloSync(new Date().toISOString(), 'GitHub en vivo');
+            renderProjectCards();
+        }
+
         // --------------------------------------------------
         // RENDERIZAR TARJETAS REALES DE NETLIFY
         // --------------------------------------------------
         function handleImgError(img) {
             img.style.display = 'none';
         }
+
+        /** Reaplica el filtro activo después de repintar la grilla. */
+        function reaplicarFiltro() {
+            const activo = document.querySelector('.filter-btn.active');
+            const filtro = activo ? activo.getAttribute('data-filter') : 'all';
+            document.querySelectorAll('.project-card').forEach(card => {
+                const visible = filtro === 'all' || card.getAttribute('data-category') === filtro;
+                card.style.display = visible ? 'flex' : 'none';
+                card.style.opacity = visible ? '1' : '0';
+            });
+        }
+
+        /** Escapa texto que viene de las APIs antes de inyectarlo en el HTML. */
+        function esc(texto) {
+            return String(texto ?? '').replace(/[&<>"']/g, c => (
+                { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]
+            ));
+        }
+
+        // Colores de los lenguajes más habituales del portafolio.
+        const COLOR_LENGUAJE = {
+            javascript: '#f1e05a', typescript: '#3178c6', html:   '#e34c26',
+            css:        '#563d7c', python:     '#3572A5', dart:   '#00B4AB',
+            java:       '#b07219', php:        '#4F5D95', vue:    '#41b883',
+            'c#':       '#178600', shell:      '#89e051', svelte: '#ff3e00'
+        };
 
         function renderProjectCards() {
             const grid = document.getElementById('projects-grid');
@@ -1312,10 +1523,31 @@
                 const titleHover    = isEdu ? 'group-hover:text-cyber-purple' : 'group-hover:text-cyber-cyan';
                 const playRing      = isEdu ? 'bg-cyber-purple/90 border-cyber-purple' : 'bg-cyber-cyan/90 border-cyber-cyan';
                 const imgTag        = proj.screenshot
-                    ? `<img src="${proj.screenshot}" alt="${proj.name}" class="absolute inset-0 w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700" loading="lazy" onerror="handleImgError(this)">`
+                    ? `<img src="${esc(proj.screenshot)}" alt="${esc(proj.name)}" class="absolute inset-0 w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700" loading="lazy" onerror="handleImgError(this)">`
                     : '';
 
-                return `<div class="project-card glass rounded-2xl overflow-hidden border border-white/5 ${accentHover} transition-all duration-300 flex flex-col h-full group" data-category="${proj.category}">
+                // El dominio se lee de la URL real: si el sitio cambia, la tarjeta lo refleja.
+                let dominio = `${proj.id}.netlify.app`;
+                try { dominio = new URL(proj.url).hostname; } catch { /* URL rara: se deja el id */ }
+
+                // Chip del lenguaje: llega solo desde GitHub y cambia si el proyecto se reescribe.
+                const color         = COLOR_LENGUAJE[String(proj.language || '').toLowerCase()] || '#94a3b8';
+                const langTag       = proj.language
+                    ? `<span class="inline-flex items-center gap-1.5 text-[10px] font-mono text-slate-400">
+                           <span class="w-2 h-2 rounded-full shrink-0" style="background:${color}"></span>${esc(proj.language)}
+                       </span>`
+                    : '';
+
+                // Enlace al código: solo si el repo está enlazado.
+                const repoTag       = proj.repo
+                    ? `<a href="${esc(proj.repo)}" target="_blank" rel="noopener noreferrer"
+                           class="py-2 px-3 bg-slate-800/60 hover:bg-slate-700 text-slate-400 hover:text-white border border-white/10 hover:border-white/20 rounded-lg text-sm transition-all duration-300 flex items-center justify-center"
+                           title="Ver código en GitHub">
+                            <i class="fa-brands fa-github text-xs"></i>
+                        </a>`
+                    : '';
+
+                return `<div class="project-card glass rounded-2xl overflow-hidden border border-white/5 ${accentHover} transition-all duration-300 flex flex-col h-full group" data-category="${esc(proj.category)}">
                     <div class="relative h-44 overflow-hidden cursor-pointer bg-slate-900 shrink-0" onclick="openPreview('${proj.id}')">
                         <div class="absolute inset-0 bg-gradient-to-tr from-slate-800 to-slate-900 flex items-center justify-center pointer-events-none">
                             <i class="fa-solid fa-globe text-5xl text-slate-700"></i>
@@ -1331,23 +1563,27 @@
                     </div>
                     <div class="p-5 flex flex-col flex-grow space-y-3">
                         <div class="flex items-center justify-between">
-                            <span class="text-[10px] font-mono text-slate-500 truncate max-w-[70%]">${proj.id}.netlify.app</span>
+                            <span class="text-[10px] font-mono text-slate-500 truncate max-w-[70%]">${esc(dominio)}</span>
                             <span class="text-[10px] text-cyber-emerald flex items-center shrink-0">
                                 <span class="w-1.5 h-1.5 bg-cyber-emerald rounded-full animate-ping mr-1"></span>LIVE
                             </span>
                         </div>
-                        <h3 class="font-orbitron font-bold text-base text-slate-100 ${titleHover} transition-colors duration-300 leading-snug">${proj.name}</h3>
-                        <p class="text-slate-400 text-xs leading-relaxed flex-grow">${proj.desc}</p>
-                        <div class="text-[10px] font-mono text-slate-600 flex items-center space-x-1">
-                            <i class="fa-regular fa-clock text-[9px]"></i>
-                            <span>Actualizado: ${proj.updated}</span>
+                        <h3 class="font-orbitron font-bold text-base text-slate-100 ${titleHover} transition-colors duration-300 leading-snug">${esc(proj.name)}</h3>
+                        <p class="text-slate-400 text-xs leading-relaxed flex-grow">${esc(proj.desc)}</p>
+                        <div class="flex items-center justify-between gap-2 text-[10px] font-mono text-slate-600">
+                            <span class="flex items-center space-x-1 shrink-0">
+                                <i class="fa-regular fa-clock text-[9px]"></i>
+                                <span>${esc(proj.updated || 'sin fecha')}</span>
+                            </span>
+                            ${langTag}
                         </div>
                         <div class="flex gap-2 pt-3 border-t border-white/5">
                             <button onclick="openPreview('${proj.id}')" class="flex-1 py-2 ${btnClass} border font-rajdhani font-bold rounded-lg text-xs transition-all duration-300 flex items-center justify-center space-x-1.5">
                                 <i class="fa-solid fa-eye text-xs"></i>
                                 <span>VISTA PREVIA</span>
                             </button>
-                            <a href="${proj.url}" target="_blank" rel="noopener noreferrer"
+                            ${repoTag}
+                            <a href="${esc(proj.url)}" target="_blank" rel="noopener noreferrer"
                                class="py-2 px-3 bg-slate-800/60 hover:bg-slate-700 text-slate-400 hover:text-white border border-white/10 hover:border-white/20 rounded-lg text-sm transition-all duration-300 flex items-center justify-center"
                                title="Abrir en nueva pestaña">
                                 <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
@@ -1356,6 +1592,8 @@
                     </div>
                 </div>`;
             }).join('');
+
+            reaplicarFiltro();
         }
 
         // --------------------------------------------------
@@ -1575,6 +1813,19 @@
             urlBar.textContent   = proj.url.replace('https://', '');
             openBtn.href         = proj.url;
             siteName.textContent = proj.name.toUpperCase();
+
+            // Enlace al repositorio y stack: aparecen solo si la sincronización los trajo.
+            const repoBtn = document.getElementById('preview-repo-btn');
+            repoBtn.classList.toggle('hidden', !proj.repo);
+            repoBtn.classList.toggle('flex', Boolean(proj.repo));
+            if (proj.repo) repoBtn.href = proj.repo;
+
+            const stack = document.getElementById('preview-stack');
+            const lenguajes = (proj.languages && proj.languages.length)
+                ? proj.languages.slice(0, 3).join(' · ')
+                : proj.language;
+            stack.textContent = lenguajes || '';
+            stack.classList.toggle('hidden', !lenguajes);
 
             iframe.onload = null;
             iframe.style.display = 'block';
@@ -2461,7 +2712,8 @@ func main() {
             resizeCanvas();
             animate();
             setTimeout(typeEffect, 1000);
-            renderProjectCards();
+            renderProjectCards();   // pinta el respaldo al instante
+            sincronizarProyectos(); // y lo reemplaza con los datos vivos
             renderCourseCards();
 
             // Cerrar modal preview con clic en backdrop o tecla Escape
