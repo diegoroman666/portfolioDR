@@ -388,17 +388,28 @@ function construir({ repos, utiles, sitios, previo, overrides }) {
   // emparejan por nombre los repos que todavía no se asociaron a ningún
   // proyecto. Es lo que da lenguaje y enlace al código a la mayoría de las
   // tarjetas cuando solo hay datos de GitHub.
+  // Mapeo explícito declarado en overrides.json: repoName -> id del proyecto.
+  // Es la salida para los casos que ningún parecido de nombre puede resolver,
+  // como un sitio "surgitaskpro" cuyo repositorio se llama "agenda-quirurgica".
+  const mapaManual = new Map();
+  for (const [id, campos] of Object.entries(overrides.projects || {})) {
+    if (campos?.repoName) mapaManual.set(normalizar(campos.repoName), id);
+  }
+
   for (const repo of utiles) {
     if (reposUsados.has(repo.id)) continue;
     if (ocultos.has(normalizar(repo.name))) continue;
 
     const candidatos = [...salida.values()];
+    const idManual = mapaManual.get(normalizar(repo.name));
     const objetivo =
-      // 1. El repo que ya teníamos anotado para ese proyecto (sobrevive a renombres).
+      // 1. Mapeo manual: gana sobre cualquier heurística.
+      (idManual && salida.get(idManual)) ||
+      // 2. El repo que ya teníamos anotado para ese proyecto (sobrevive a renombres).
       candidatos.find(p => p.repoName && normalizar(p.repoName) === normalizar(repo.name)) ||
-      // 2. Coincidencia exacta con el id del proyecto.
+      // 3. Coincidencia exacta con el id del proyecto.
       candidatos.find(p => !p.repo && normalizar(p.id) === normalizar(repo.name)) ||
-      // 3. Variantes de nombre: sufijos numéricos, letras repetidas, etc.
+      // 4. Variantes de nombre: sufijos numéricos, letras repetidas, etc.
       candidatos.find(p => !p.repo && parecidos(p.id, repo.name));
     if (!objetivo) continue;
 
