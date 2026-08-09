@@ -65,6 +65,30 @@ Campos disponibles: `name`, `desc`, `category` (`web` o `edu`), `screenshot`,
 iframe). Borra un campo para que vuelva a sincronizarse solo. `hidden` excluye
 repos o sitios de la grilla.
 
+## Añadir un proyecto que no aparece solo
+
+Sin token de Netlify, un sitio publicado que ningún repositorio declara en su
+`homepage` no puede descubrirse solo. Para esos casos basta con declararlo en
+`overrides.json` con su `url`: se da de alta como un proyecto más y a partir de
+ahí recibe con normalidad su repositorio, lenguaje y fecha cuando se enlace.
+
+```json
+{
+  "projects": {
+    "data-analysta": {
+      "url": "https://data-analysta.netlify.app",
+      "name": "Data Analysta",
+      "desc": "Aplicación de análisis de datos.",
+      "category": "web"
+    }
+  }
+}
+```
+
+La clave (`data-analysta`) es el subdominio de Netlify. Con
+`NETLIFY_AUTH_TOKEN` configurado esto tampoco hace falta: los sitios publicados
+se descubren solos.
+
 ## Enlazar un proyecto cuyo repo se llama distinto
 
 El sincronizador cruza repositorio y sitio por el nombre, tolerando variantes

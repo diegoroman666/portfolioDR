@@ -1557,6 +1557,14 @@
                 let dominio = `${proj.id}.netlify.app`;
                 try { dominio = new URL(proj.url).hostname; } catch { /* URL rara: se deja el id */ }
 
+                // La fecha se omite mientras no se conozca, en vez de mostrar un hueco.
+                const fechaTag      = proj.updated
+                    ? `<span class="flex items-center space-x-1 shrink-0">
+                           <i class="fa-regular fa-clock text-[9px]"></i>
+                           <span>${esc(proj.updated)}</span>
+                       </span>`
+                    : '<span></span>';
+
                 // Chip del lenguaje: llega solo desde GitHub y cambia si el proyecto se reescribe.
                 const color         = COLOR_LENGUAJE[String(proj.language || '').toLowerCase()] || '#94a3b8';
                 const langTag       = proj.language
@@ -1598,10 +1606,7 @@
                         <h3 class="font-orbitron font-bold text-base text-slate-100 ${titleHover} transition-colors duration-300 leading-snug">${esc(proj.name)}</h3>
                         <p class="text-slate-400 text-xs leading-relaxed flex-grow">${esc(proj.desc)}</p>
                         <div class="flex items-center justify-between gap-2 text-[10px] font-mono text-slate-600">
-                            <span class="flex items-center space-x-1 shrink-0">
-                                <i class="fa-regular fa-clock text-[9px]"></i>
-                                <span>${esc(proj.updated || 'sin fecha')}</span>
-                            </span>
+                            ${fechaTag}
                             ${langTag}
                         </div>
                         <div class="flex gap-2 pt-3 border-t border-white/5">

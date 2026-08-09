@@ -90,6 +90,12 @@
     "barley-bar": {
       "name": "Barley",
       "category": "web"
+    },
+    "data-analysta": {
+      "url": "https://data-analysta.netlify.app",
+      "name": "Data Analysta",
+      "desc": "Aplicación de análisis de datos con visualizaciones e informes interactivos.",
+      "category": "web"
     }
   }
 }

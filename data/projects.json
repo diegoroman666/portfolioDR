@@ -8,7 +8,7 @@
   "stats": {
     "repos": 33,
     "sites": 27,
-    "published": 20
+    "published": 21
   },
   "projects": [
     {
@@ -391,6 +391,21 @@
       "screenshot": "https://d33wubrfki0l68.cloudfront.net/686875e129134600080b9314/screenshot_2025-07-05-00-46-42-0000.webp",
       "updated": "05 Jul 2025",
       "updatedAt": "2025-07-05T00:00:00.000Z",
+      "stars": 0,
+      "archived": false
+    },
+    {
+      "id": "data-analysta",
+      "url": "https://data-analysta.netlify.app",
+      "name": "Data Analysta",
+      "desc": "Aplicación de análisis de datos con visualizaciones e informes interactivos.",
+      "category": "web",
+      "repo": null,
+      "repoName": null,
+      "language": null,
+      "languages": [],
+      "topics": [],
+      "screenshot": "https://image.thum.io/get/width/1200/crop/675/noanimate/https://data-analysta.netlify.app",
       "stars": 0,
       "archived": false
     }
