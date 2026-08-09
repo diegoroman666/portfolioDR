@@ -370,6 +370,21 @@ function construir({ repos, utiles, sitios, previo, overrides }) {
     }
   }
 
+  // --- 2b. Proyectos declarados a mano en overrides.json --------------------
+  // overrides puede dar de alta un proyecto, no solo ajustar uno existente. Es
+  // la forma de publicar un sitio que Netlify no expone (cuando no hay token) y
+  // que ningún repositorio declara en su homepage. Se registran aquí, antes de
+  // emparejar, para que también reciban su repositorio y su lenguaje.
+  for (const [id, campos] of Object.entries(overrides.projects || {})) {
+    if (!campos?.url || salida.has(id) || ocultos.has(normalizar(id))) continue;
+
+    const proyecto = { ...(anteriores.get(id) || {}), id, ...campos };
+    proyecto.name = proyecto.name || titular(id);
+    proyecto.category = proyecto.category || inferirCategoria([id, campos.name, campos.desc]);
+    enriquecer(proyecto, 'screenshot', proyecto.screenshot || miniaturaAutomatica(proyecto.url, proyecto.updatedAt));
+    salida.set(id, proyecto);
+  }
+
   // --- 3. Repos con homepage que Netlify no cubrió --------------------------
   for (const repo of utiles) {
     if (reposUsados.has(repo.id)) continue;
