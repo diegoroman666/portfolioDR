@@ -127,7 +127,26 @@
       "url": "https://data-analysta.netlify.app",
       "name": "Data Analysta",
       "desc": "Aplicación de análisis de datos con visualizaciones e informes interactivos.",
-      "category": "web"
+      "category": "web",
+      "repoName": "sciencekit"
+    },
+    "excelviewanddownloadtopdf": {
+      "url": "https://excelviewanddownloadtopdf.netlify.app",
+      "name": "Excel a PDF",
+      "category": "web",
+      "repoName": "import_excel_download_pdf"
+    },
+    "workinapp": {
+      "url": "https://workinapp.netlify.app",
+      "name": "Work In App",
+      "category": "web",
+      "repoName": "workapp"
+    },
+    "sci-quest": {
+      "url": "https://sci-quest.netlify.app",
+      "name": "Sci Quest",
+      "category": "edu",
+      "repoName": "sci-questt"
     }
   }
 }
