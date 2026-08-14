@@ -15,7 +15,10 @@
     "portfoliodr",
     "portfolio",
     "diegoroman666",
-    "testproyectof"
+    "testproyectof",
+    "vocal-chebakia-c1ab47",
+    "apishowcats",
+    "mansagenda"
   ],
   "projects": {
     "hostelapp1": {
@@ -147,6 +150,15 @@
       "name": "Sci Quest",
       "category": "edu",
       "repoName": "sci-questt"
+    },
+    "mansaagenda": {
+      "name": "Mansa Agenda",
+      "desc": "una agenda perfecta para el experto",
+      "category": "web",
+      "language": "JavaScript",
+      "languages": [
+        "JavaScript"
+      ]
     }
   }
 }

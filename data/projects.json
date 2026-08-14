@@ -8,7 +8,7 @@
   "stats": {
     "repos": 33,
     "sites": 32,
-    "published": 32
+    "published": 29
   },
   "projects": [
     {
@@ -33,24 +33,18 @@
     {
       "id": "mansaagenda",
       "url": "https://mansaagenda.netlify.app",
-      "name": "Mansaagenda",
+      "name": "Mansa Agenda",
       "stars": 0,
       "archived": false,
       "updatedAt": "2026-08-14T04:06:03.230Z",
       "updated": "14 Ago 2026",
       "screenshot": "https://d33wubrfki0l68.cloudfront.net/6a7e94133a3b820008fea292/screenshot_2026-08-14-04-06-04-0000.webp",
-      "category": "web"
-    },
-    {
-      "id": "mansagenda",
-      "url": "https://mansagenda.netlify.app",
-      "name": "Mansagenda",
-      "stars": 0,
-      "archived": false,
-      "updatedAt": "2026-08-14T04:05:39.546Z",
-      "updated": "14 Ago 2026",
-      "screenshot": "https://image.thum.io/get/width/1200/crop/675/noanimate/https://mansagenda.netlify.app?v=2026-08-14",
-      "category": "web"
+      "category": "web",
+      "desc": "una agenda perfecta para el experto",
+      "language": "JavaScript",
+      "languages": [
+        "JavaScript"
+      ]
     },
     {
       "id": "excelviewanddownloadtopdf",
@@ -589,36 +583,6 @@
       "updatedAt": "2025-07-05T00:46:24.000Z",
       "stars": 0,
       "archived": false
-    },
-    {
-      "id": "apishowcats",
-      "url": "https://apishowcats.netlify.app",
-      "name": "Apishowcats",
-      "repo": "https://github.com/diegoroman666/apiShowCats",
-      "repoName": "apiShowCats",
-      "language": "JavaScript",
-      "languages": [
-        "JavaScript",
-        "HTML",
-        "CSS"
-      ],
-      "stars": 0,
-      "archived": false,
-      "updatedAt": "2025-05-23T15:21:26.000Z",
-      "updated": "23 May 2025",
-      "screenshot": "https://d33wubrfki0l68.cloudfront.net/68309277af98400008f8e312/screenshot_2025-05-23-15-21-53-0000.webp",
-      "category": "web"
-    },
-    {
-      "id": "vocal-chebakia-c1ab47",
-      "url": "https://vocal-chebakia-c1ab47.netlify.app",
-      "name": "Vocal Chebakia C1ab47",
-      "stars": 0,
-      "archived": false,
-      "updatedAt": "2025-05-21T21:35:14.349Z",
-      "updated": "21 May 2025",
-      "screenshot": "https://d33wubrfki0l68.cloudfront.net/682e47110e4fc8ffc1926ee7/screenshot_2025-05-21-21-35-14-0000.webp",
-      "category": "web"
     }
   ]
 }
