@@ -305,15 +305,21 @@ function construir({ repos, utiles, sitios, previo, overrides }) {
    * El orden importa: un repo ya asociado a un proyecto tiene que reencontrarlo
    * en la siguiente sincronización, o se daría de alta como proyecto nuevo y
    * acabaríamos con la tarjeta duplicada.
+   *
+   * Los dos últimos criterios son solo para proyectos que todavía no saben de
+   * qué repositorio salen: en cuanto uno declara su repoName, únicamente ese
+   * repositorio puede reclamarlo. Si no, el repo "sci-quest" (vacío) le quitaría
+   * el sitio sci-quest.netlify.app a "sci-questt", que es quien lo publica.
    */
   function proyectoDeRepo(repo, { incluirParecidos = true } = {}) {
     const candidatos = [...salida.values()];
     const idManual = mapaManual.get(normalizar(repo.name));
+    const libre = p => !p.repo && !p.repoName;
     return (
       (idManual && salida.get(idManual)) ||
       candidatos.find(p => p.repoName && normalizar(p.repoName) === normalizar(repo.name)) ||
-      candidatos.find(p => !p.repo && normalizar(p.id) === normalizar(repo.name)) ||
-      (incluirParecidos ? candidatos.find(p => !p.repo && parecidos(p.id, repo.name)) : null) ||
+      candidatos.find(p => libre(p) && normalizar(p.id) === normalizar(repo.name)) ||
+      (incluirParecidos ? candidatos.find(p => libre(p) && parecidos(p.id, repo.name)) : null) ||
       null
     );
   }
