@@ -54,11 +54,7 @@
     "temapeo-gispro": {
       "name": "Temapeo GIS",
       "category": "web",
-      "repoName": "tmapeopro",
-      "language": "HTML",
-      "languages": [
-        "HTML"
-      ]
+      "repoName": "temapeo-cotiza"
     },
     "cvcreatorr": {
       "name": "CV Creator",

@@ -286,18 +286,18 @@
       "id": "temapeo-gispro",
       "name": "Temapeo GIS",
       "url": "https://temapeo-gispro.netlify.app",
-      "repo": null,
-      "repoName": "tmapeopro",
-      "language": "HTML",
+      "repo": "https://github.com/diegoroman666/temapeo-cotiza",
+      "repoName": "temapeo-cotiza",
+      "language": "JavaScript",
       "languages": [
-        "HTML"
+        "JavaScript"
       ],
       "topics": [],
       "category": "web",
-      "desc": "Sistema GIS para visualización y análisis de datos geoespaciales en el territorio.",
-      "screenshot": "https://d33wubrfki0l68.cloudfront.net/6a180810e5e9911f1f09e0ea/screenshot_2026-05-28-09-17-10-0000.webp",
+      "desc": "Un sitio en donde puedes simular el costo de mapear un terreno y donde puedes realizar un presupuesto para poder cotizar de forma previa",
+      "screenshot": "https://image.thum.io/get/width/1200/crop/675/noanimate/https://temapeo-gispro.netlify.app?v=2026-05-28",
       "updated": "28 May 2026",
-      "updatedAt": "2026-05-28T09:17:10.209Z",
+      "updatedAt": "2026-05-28T09:16:34.000Z",
       "stars": 0,
       "archived": false
     },
