@@ -8,28 +8,9 @@
   "stats": {
     "repos": 33,
     "sites": 32,
-    "published": 27
+    "published": 26
   },
   "projects": [
-    {
-      "id": "portafolio-diegoroman",
-      "url": "https://portafolio-diegoroman.netlify.app",
-      "name": "Portafolio Diegoroman",
-      "desc": "Portafolio virtual para visualizar proyectos realizados por Diego Román como ingeniero informatico realizado con el objetivo de poder complementar el curriculum vitae",
-      "repo": "https://github.com/diegoroman666/portfolioDR",
-      "repoName": "portfolioDR",
-      "language": "HTML",
-      "languages": [
-        "HTML",
-        "JavaScript"
-      ],
-      "stars": 0,
-      "archived": false,
-      "updatedAt": "2026-08-14T14:02:55.000Z",
-      "updated": "14 Ago 2026",
-      "screenshot": "https://d33wubrfki0l68.cloudfront.net/6a7f1f5e59fca80008fceaf6/screenshot_2026-08-14-14-00-27-0000.webp",
-      "category": "web"
-    },
     {
       "id": "mansaagenda",
       "url": "https://mansaagenda.netlify.app",
