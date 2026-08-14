@@ -8,7 +8,7 @@
   "stats": {
     "repos": 33,
     "sites": 32,
-    "published": 29
+    "published": 27
   },
   "projects": [
     {
@@ -361,17 +361,6 @@
       "archived": false
     },
     {
-      "id": "tmapeopro",
-      "url": "https://tmapeopro.netlify.app",
-      "name": "Tmapeopro",
-      "stars": 0,
-      "archived": false,
-      "updatedAt": "2026-05-20T18:28:38.032Z",
-      "updated": "20 May 2026",
-      "screenshot": "https://image.thum.io/get/width/1200/crop/675/noanimate/https://tmapeopro.netlify.app?v=2026-05-20",
-      "category": "web"
-    },
-    {
       "id": "agenda-school",
       "name": "Agenda School",
       "url": "https://agenda-school.netlify.app",
@@ -446,17 +435,6 @@
       "updatedAt": "2026-04-20T01:50:43.000Z",
       "stars": 0,
       "archived": false
-    },
-    {
-      "id": "resplendent-basbousa-e274ab",
-      "url": "https://resplendent-basbousa-e274ab.netlify.app",
-      "name": "Resplendent Basbousa E274ab",
-      "stars": 0,
-      "archived": false,
-      "updatedAt": "2026-04-15T01:33:17.470Z",
-      "updated": "15 Abr 2026",
-      "screenshot": "https://d33wubrfki0l68.cloudfront.net/69deead63de0d5be244ed2f1/screenshot_2026-04-15-01-33-17-0000.webp",
-      "category": "web"
     },
     {
       "id": "paeslen",
