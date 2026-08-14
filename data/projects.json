@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-08-14T02:44:36.000Z",
+  "generatedAt": "2026-08-14T13:26:47.243Z",
   "source": {
     "github": true,
     "netlify": false,
     "seed": false
   },
   "stats": {
-    "repos": 39,
+    "repos": 33,
     "sites": 27,
     "published": 24
   },
@@ -19,7 +19,11 @@
       "repoName": "import_excel_download_pdf",
       "language": "JavaScript",
       "languages": [
-        "JavaScript"
+        "JavaScript",
+        "Python",
+        "CSS",
+        "Dockerfile",
+        "Shell"
       ],
       "topics": [],
       "category": "web",
@@ -40,7 +44,10 @@
       "repoName": "sciencekit",
       "language": "Python",
       "languages": [
-        "Python"
+        "Python",
+        "JavaScript",
+        "HTML",
+        "CSS"
       ],
       "topics": [],
       "screenshot": "https://image.thum.io/get/width/1200/crop/675/noanimate/https://data-analysta.netlify.app?v=2026-08-08",
@@ -57,7 +64,8 @@
       "repoName": "virtual-board-math",
       "language": "HTML",
       "languages": [
-        "HTML"
+        "HTML",
+        "JavaScript"
       ],
       "topics": [],
       "category": "edu",
@@ -204,7 +212,8 @@
       "repoName": "workapp",
       "language": "JavaScript",
       "languages": [
-        "JavaScript"
+        "JavaScript",
+        "CSS"
       ],
       "topics": [],
       "category": "web",
@@ -223,7 +232,11 @@
       "repoName": "agenda-quirurgica",
       "language": "JavaScript",
       "languages": [
-        "JavaScript"
+        "JavaScript",
+        "CSS",
+        "HTML",
+        "TypeScript",
+        "PLpgSQL"
       ],
       "topics": [],
       "category": "web",
@@ -280,7 +293,9 @@
       "repoName": "phonky_site_music",
       "language": "HTML",
       "languages": [
-        "HTML"
+        "HTML",
+        "TypeScript",
+        "PLpgSQL"
       ],
       "topics": [],
       "category": "web",
@@ -435,7 +450,9 @@
       "repoName": "sci-questt",
       "language": "TypeScript",
       "languages": [
-        "TypeScript"
+        "TypeScript",
+        "Java",
+        "HTML"
       ],
       "topics": [],
       "category": "edu",
@@ -477,7 +494,9 @@
       "repoName": "creador_cv_react_vite-",
       "language": "JavaScript",
       "languages": [
-        "JavaScript"
+        "JavaScript",
+        "CSS",
+        "HTML"
       ],
       "topics": [],
       "category": "web",
