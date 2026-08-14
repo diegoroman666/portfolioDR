@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-14T14:03:07.723Z",
+  "generatedAt": "2026-08-14T14:43:06.506Z",
   "source": {
     "github": true,
     "netlify": true,
@@ -290,7 +290,10 @@
       "repoName": "temapeo-cotiza",
       "language": "JavaScript",
       "languages": [
-        "JavaScript"
+        "JavaScript",
+        "HTML",
+        "Python",
+        "CSS"
       ],
       "topics": [],
       "category": "web",
