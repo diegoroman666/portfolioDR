@@ -2,7 +2,14 @@
   "_readme": [
     "Curaduría manual. Todo lo que definas aquí SIEMPRE gana por sobre lo que llega",
     "de GitHub o Netlify. Borra un campo para que vuelva a sincronizarse solo.",
-    "La clave es el id del proyecto (el subdominio de Netlify o el nombre del repo)."
+    "La clave es el id del proyecto (el subdominio de Netlify o el nombre del repo).",
+    "",
+    "repoName  enlaza a mano un sitio con su repositorio cuando los nombres no se",
+    "          parecen (surgitaskpro <- agenda-quirurgica). Con eso la tarjeta recibe",
+    "          lenguaje, descripción, fecha y enlace al código en cada sincronización.",
+    "language  solo hace falta cuando el repositorio es privado: la API pública no lo",
+    "          expone, así que el lenguaje se declara aquí para que la tarjeta no quede",
+    "          sin stack. Si el repo se hace público, borra este campo."
   ],
   "hidden": [
     "portfoliodr",
@@ -17,23 +24,40 @@
     },
     "matepro4u": {
       "name": "MatePro 4U",
-      "category": "edu"
+      "category": "edu",
+      "repoName": "matepro4u",
+      "language": "JavaScript",
+      "languages": [
+        "JavaScript"
+      ]
     },
     "probabia": {
       "name": "Probabia",
-      "category": "edu"
+      "category": "edu",
+      "repoName": "probabia",
+      "language": "JavaScript",
+      "languages": [
+        "JavaScript"
+      ]
     },
     "phonky-4-u": {
       "name": "Phonky 4U",
-      "category": "web"
+      "category": "web",
+      "repoName": "phonky_site_music"
     },
     "temapeo-gispro": {
       "name": "Temapeo GIS",
-      "category": "web"
+      "category": "web",
+      "repoName": "tmapeopro",
+      "language": "HTML",
+      "languages": [
+        "HTML"
+      ]
     },
     "cvcreatorr": {
       "name": "CV Creator",
-      "category": "web"
+      "category": "web",
+      "repoName": "creador_cv_react_vite-"
     },
     "agenda-school": {
       "name": "Agenda School",
@@ -41,7 +65,8 @@
     },
     "pizarra-virtual-matematico": {
       "name": "Pizarra Virtual Mat.",
-      "category": "edu"
+      "category": "edu",
+      "repoName": "virtual-board-math"
     },
     "photos-lpr-media": {
       "name": "Photos LPR Media",
@@ -65,7 +90,8 @@
     },
     "planner4tendaysit": {
       "name": "Planner 4 Ten Days",
-      "category": "web"
+      "category": "web",
+      "repoName": "planner10days"
     },
     "paeslen": {
       "name": "PAES LEN",
@@ -77,7 +103,8 @@
     },
     "surgitaskpro": {
       "name": "SurgiTask Pro",
-      "category": "web"
+      "category": "web",
+      "repoName": "agenda-quirurgica"
     },
     "grammanual": {
       "name": "Grammanual",
@@ -85,7 +112,12 @@
     },
     "datamathapp": {
       "name": "DataMath",
-      "category": "edu"
+      "category": "edu",
+      "repoName": "datamath",
+      "language": "TypeScript",
+      "languages": [
+        "TypeScript"
+      ]
     },
     "barley-bar": {
       "name": "Barley",

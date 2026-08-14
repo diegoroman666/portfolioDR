@@ -1284,26 +1284,27 @@
         // scripts/sync-projects.mjs desde GitHub y Netlify. No edites esto a mano:
         // para ajustar un proyecto usa data/overrides.json.
         const PROYECTOS_RESPALDO = [
-            { id: 'hostelapp1',                  name: 'Hostel App',               url: 'https://hostelapp1.netlify.app',                  screenshot: 'https://image.thum.io/get/width/1200/crop/675/noanimate/https://hostelapp1.netlify.app', category: 'web', updated: '06 Jul 2026', desc: 'Aplicación de gestión para hostel o alojamiento con control de reservas y administración.' },
-            { id: 'matepro4u',                   name: 'MatePro 4U',               url: 'https://matepro4u.netlify.app',                   screenshot: 'https://d33wubrfki0l68.cloudfront.net/6a1a3f7059fbdf54fd8c6a4d/screenshot_2026-05-30-01-37-57-0000.webp', category: 'edu', updated: '30 May 2026', desc: 'Plataforma interactiva de matemáticas con ejercicios y práctica para estudiantes.' },
-            { id: 'probabia',                    name: 'Probabia',                 url: 'https://probabia.netlify.app',                    screenshot: 'https://d33wubrfki0l68.cloudfront.net/6a0f64d28aa9df000866ee76/screenshot_2026-05-21-20-02-38-0000.webp', category: 'edu', updated: '21 May 2026', desc: 'Herramienta educativa de estadística y probabilidad para análisis y aprendizaje.' },
-            { id: 'phonky-4-u',                  name: 'Phonky 4U',                url: 'https://phonky-4-u.netlify.app',                  screenshot: 'https://image.thum.io/get/width/800/crop/600/https://phonky-4-u.netlify.app', category: 'web', updated: '23 May 2026', desc: 'Aplicación musical para descubrir y compartir sonidos y playlists personalizadas.' },
-            { id: 'temapeo-gispro',              name: 'Temapeo GIS',              url: 'https://temapeo-gispro.netlify.app',              screenshot: 'https://d33wubrfki0l68.cloudfront.net/6a180810e5e9911f1f09e0ea/screenshot_2026-05-28-09-17-10-0000.webp', category: 'web', updated: '28 May 2026', desc: 'Sistema GIS para visualización y análisis de datos geoespaciales en el territorio.' },
-            { id: 'cvcreatorr',                  name: 'CV Creator',               url: 'https://cvcreatorr.netlify.app',                  screenshot: 'https://d33wubrfki0l68.cloudfront.net/686875e129134600080b9314/screenshot_2025-07-05-00-46-42-0000.webp', category: 'web', updated: '05 Jul 2025', desc: 'Creador de currículum vitae interactivo construido con React + Vite, con vista previa en tiempo real y exportación.' },
-            { id: 'agenda-school',               name: 'Agenda School',            url: 'https://agenda-school.netlify.app',               screenshot: 'https://d33wubrfki0l68.cloudfront.net/6a01dc2f2ef64d000817f5ec/screenshot_2026-05-11-13-41-12-0000.webp', category: 'edu', updated: '11 May 2026', desc: 'Agenda escolar digital para organizar tareas, eventos y el calendario académico.' },
-            { id: 'pizarra-virtual-matematico',  name: 'Pizarra Virtual Mat.',     url: 'https://pizarra-virtual-matematico.netlify.app',  screenshot: 'https://d33wubrfki0l68.cloudfront.net/69fc149e4e55a50008cdff1e/screenshot_2026-05-07-04-27-18-0000.webp', category: 'edu', updated: '07 May 2026', desc: 'Pizarra virtual interactiva para resolver y visualizar problemas matemáticos paso a paso.' },
-            { id: 'photos-lpr-media',            name: 'Photos LPR Media',         url: 'https://photos-lpr-media.netlify.app',            screenshot: 'https://d33wubrfki0l68.cloudfront.net/69f3a8c751da6c0008979c0d/screenshot_2026-04-30-19-09-28-0000.webp', category: 'web', updated: '30 Abr 2026', desc: 'Galería multimedia con reconocimiento de placas (LPR) y gestión de imágenes.' },
-            { id: 'diccionario-sw',              name: 'Diccionario SW',           url: 'https://diccionario-sw.netlify.app',              screenshot: 'https://d33wubrfki0l68.cloudfront.net/69ef82ba12418e000834c42e/screenshot_2026-04-27-15-37-40-0000.webp', category: 'web', updated: '27 Abr 2026', desc: 'Diccionario de términos de software y tecnología con búsqueda rápida y definiciones.' },
-            { id: 'insta-sw',                    name: 'Insta SW',                 url: 'https://insta-sw.netlify.app',                    screenshot: 'https://d33wubrfki0l68.cloudfront.net/69e9241c57659244c1922dec/screenshot_2026-04-22-19-40-14-0000.webp', category: 'web', updated: '22 Abr 2026', desc: 'Simulador didáctico del proceso de instalación paso a paso de una ISO de Windows, con guía visual de cada etapa del sistema.' },
-            { id: 'mantencion-sw',               name: 'Mantención SW',            url: 'https://mantencion-sw.netlify.app',               screenshot: 'https://d33wubrfki0l68.cloudfront.net/69e84c8a0e1bd33583e91847/screenshot_2026-04-22-04-20-28-0000.webp', category: 'web', updated: '22 Abr 2026', desc: 'Sistema de gestión y seguimiento de mantenciones de software y equipos TI.' },
-            { id: 'config-redes',                name: 'Config Redes',             url: 'https://config-redes.netlify.app',                screenshot: 'https://d33wubrfki0l68.cloudfront.net/69e84d40213401389273fef7/screenshot_2026-04-22-04-23-32-0000.webp', category: 'web', updated: '22 Abr 2026', desc: 'Configurador visual de redes informáticas y topologías de infraestructura TI.' },
-            { id: 'planner4tendaysit',           name: 'Planner 4 Ten Days',       url: 'https://planner4tendaysit.netlify.app',           screenshot: 'https://d33wubrfki0l68.cloudfront.net/69e58c54aaf3e858d5e4c56a/screenshot_2026-04-20-02-15-50-0000.webp', category: 'web', updated: '20 Abr 2026', desc: 'Planificador de tareas y objetivos para gestionar proyectos en 10 días.' },
-            { id: 'paeslen',                     name: 'PAES LEN',                 url: 'https://paeslen.netlify.app',                     screenshot: 'https://d33wubrfki0l68.cloudfront.net/69951f2ffbd8900008bbad74/screenshot_2026-02-18-02-09-07-0000.webp', category: 'edu', updated: '05 Abr 2026', desc: 'Preparación interactiva para la PAES de Lenguaje con ejercicios y simulacros.' },
-            { id: 'dragonfiree',                 name: 'Dragon Fire',              url: 'https://dragonfiree.netlify.app',                 screenshot: 'https://d33wubrfki0l68.cloudfront.net/6987c5b743e2bb0008e77a36/screenshot_2026-02-07-23-07-48-0000.webp', category: 'web', updated: '05 Abr 2026', desc: 'Juego interactivo de vocabulario y lenguaje en TypeScript: practica cientos de palabras contra el reloj.' },
-            { id: 'surgitaskpro',                name: 'SurgiTask Pro',            url: 'https://surgitaskpro.netlify.app',                screenshot: 'https://d33wubrfki0l68.cloudfront.net/6a1e4a12defd43b4c804fa57/screenshot_2026-06-02-03-13-06-0000.webp', category: 'web', updated: '02 Jun 2026', desc: 'Sistema profesional de gestión de tareas y agenda quirúrgica para pabellones, con seguimiento de procedimientos en tiempo real.' },
-            { id: 'grammanual',                  name: 'Grammanual',               url: 'https://grammanual.netlify.app',                  screenshot: 'assets/grammanual.jpg', category: 'edu', updated: '04 Jul 2026', desc: 'Manual interactivo de gramática y ortografía en español con ejercicios prácticos, reglas y guías de estudio.' },
-            { id: 'datamathapp',                 name: 'DataMath',                 url: 'https://datamathapp.netlify.app',                 screenshot: 'https://d33wubrfki0l68.cloudfront.net/6979594b8c5d130007ce366a/screenshot_2026-01-28-00-33-39-0000.webp', category: 'edu', updated: '05 Abr 2026', desc: 'Aplicación educativa de matemáticas con análisis de datos, visualizaciones estadísticas y ejercicios de cálculo interactivos.' },
-            { id: 'barley-bar',                  name: 'Barley',                   url: 'https://barley-bar.netlify.app',                  screenshot: 'https://image.thum.io/get/width/1200/crop/675/noanimate/https://barley-bar.netlify.app', category: 'web', updated: '04 Jul 2026', desc: 'Sistema de reservas de comidas del menú que ofrece Barley Terraza Restobar.' }
+            { id: 'pizarra-virtual-matematico', name: 'Pizarra Virtual Mat.', url: 'https://pizarra-virtual-matematico.netlify.app', screenshot: 'https://image.thum.io/get/width/1200/crop/675/noanimate/https://pizarra-virtual-matematico.netlify.app?v=2026-08-05', category: 'edu', updated: '05 Ago 2026', language: 'HTML', languages: ['HTML'], repo: 'https://github.com/diegoroman666/virtual-board-math', repoName: 'virtual-board-math', desc: 'una pizarra virtual que permite que escribas el ejercicio y que te resuelva paso a paso los calculos para operar matematicamente' },
+            { id: 'config-redes',               name: 'Config Redes',         url: 'https://config-redes.netlify.app',               screenshot: 'https://image.thum.io/get/width/1200/crop/675/noanimate/https://config-redes.netlify.app?v=2026-08-03', category: 'web', updated: '03 Ago 2026', language: 'HTML', languages: ['HTML'], repo: 'https://github.com/diegoroman666/config-redes', repoName: 'config-redes', desc: 'manual didactico de redes de datos' },
+            { id: 'grammanual',                 name: 'Grammanual',           url: 'https://grammanual.netlify.app',                 screenshot: 'assets/grammanual.jpg', category: 'edu', updated: '27 Jul 2026', language: 'JavaScript', languages: ['JavaScript', 'CSS', 'Python', 'Java', 'HTML'], repo: 'https://github.com/diegoroman666/grammanual', repoName: 'grammanual', desc: 'Manual interactivo de gramática y ortografía en español con ejercicios prácticos, reglas y guías de estudio.' },
+            { id: 'diccionario-sw',             name: 'Diccionario SW',       url: 'https://diccionario-sw.netlify.app',             screenshot: 'https://image.thum.io/get/width/1200/crop/675/noanimate/https://diccionario-sw.netlify.app?v=2026-07-17', category: 'web', updated: '17 Jul 2026', language: 'HTML', languages: ['HTML', 'JavaScript', 'CSS'], repo: 'https://github.com/diegoroman666/diccionario-sw', repoName: 'diccionario-sw', desc: 'diccionario con conceptos de direccionamiento ip y todo lo relacionado a configuracion de redes ' },
+            { id: 'photos-lpr-media',           name: 'Photos LPR Media',     url: 'https://photos-lpr-media.netlify.app',           screenshot: 'https://image.thum.io/get/width/1200/crop/675/noanimate/https://photos-lpr-media.netlify.app?v=2026-07-13', category: 'web', updated: '13 Jul 2026', language: 'HTML', languages: ['HTML', 'JavaScript'], repo: 'https://github.com/diegoroman666/photos-lpr-media', repoName: 'photos-lpr-media', desc: 'fotos de alumnos de media de 1ero a 4to medio ' },
+            { id: 'hostelapp1',                 name: 'Hostel App',           url: 'https://hostelapp1.netlify.app',                 screenshot: 'https://image.thum.io/get/width/1200/crop/675/noanimate/https://hostelapp1.netlify.app?v=2026-07-08', category: 'web', updated: '08 Jul 2026', language: 'JavaScript', languages: ['JavaScript', 'CSS', 'PLpgSQL', 'Java', 'TypeScript', 'HTML'], repo: 'https://github.com/diegoroman666/hostelapp', repoName: 'hostelapp', desc: 'una pagina para poder cotizar y reservar tu hospedaje en el hostal scorpius' },
+            { id: 'barley-bar',                 name: 'Barley',               url: 'https://barley-bar.netlify.app',                 screenshot: 'https://image.thum.io/get/width/1200/crop/675/noanimate/https://barley-bar.netlify.app?v=2026-07-05', category: 'web', updated: '05 Jul 2026', language: 'JavaScript', languages: ['JavaScript', 'HTML', 'CSS'], repo: 'https://github.com/diegoroman666/barley-bar', repoName: 'barley-bar', desc: 'Sistema de reservas de comidas del menú que ofrece Barley Terraza Restobar.' },
+            { id: 'surgitaskpro',               name: 'SurgiTask Pro',        url: 'https://surgitaskpro.netlify.app',               screenshot: 'https://image.thum.io/get/width/1200/crop/675/noanimate/https://surgitaskpro.netlify.app?v=2026-06-02', category: 'web', updated: '02 Jun 2026', language: 'JavaScript', languages: ['JavaScript'], repo: 'https://github.com/diegoroman666/agenda-quirurgica', repoName: 'agenda-quirurgica', desc: 'Sistema profesional de gestión de tareas y agenda quirúrgica para pabellones, con seguimiento de procedimientos en tiempo real.' },
+            { id: 'matepro4u',                  name: 'MatePro 4U',           url: 'https://matepro4u.netlify.app',                  screenshot: 'https://d33wubrfki0l68.cloudfront.net/6a1a3f7059fbdf54fd8c6a4d/screenshot_2026-05-30-01-37-57-0000.webp', category: 'edu', updated: '30 May 2026', language: 'JavaScript', languages: ['JavaScript'], repo: null, repoName: 'matepro4u', desc: 'Plataforma interactiva de matemáticas con ejercicios y práctica para estudiantes.' },
+            { id: 'temapeo-gispro',             name: 'Temapeo GIS',          url: 'https://temapeo-gispro.netlify.app',             screenshot: 'https://d33wubrfki0l68.cloudfront.net/6a180810e5e9911f1f09e0ea/screenshot_2026-05-28-09-17-10-0000.webp', category: 'web', updated: '28 May 2026', language: 'HTML', languages: ['HTML'], repo: null, repoName: 'tmapeopro', desc: 'Sistema GIS para visualización y análisis de datos geoespaciales en el territorio.' },
+            { id: 'phonky-4-u',                 name: 'Phonky 4U',            url: 'https://phonky-4-u.netlify.app',                 screenshot: 'https://image.thum.io/get/width/1200/crop/675/noanimate/https://phonky-4-u.netlify.app?v=2026-05-23', category: 'web', updated: '23 May 2026', language: 'HTML', languages: ['HTML'], repo: 'https://github.com/diegoroman666/phonky_site_music', repoName: 'phonky_site_music', desc: 'Un lugar donde suena el phonky' },
+            { id: 'probabia',                   name: 'Probabia',             url: 'https://probabia.netlify.app',                   screenshot: 'https://d33wubrfki0l68.cloudfront.net/6a0f64d28aa9df000866ee76/screenshot_2026-05-21-20-02-38-0000.webp', category: 'edu', updated: '21 May 2026', language: 'JavaScript', languages: ['JavaScript'], repo: null, repoName: 'probabia', desc: 'Herramienta educativa de estadística y probabilidad para análisis y aprendizaje.' },
+            { id: 'agenda-school',              name: 'Agenda School',        url: 'https://agenda-school.netlify.app',              screenshot: 'https://image.thum.io/get/width/1200/crop/675/noanimate/https://agenda-school.netlify.app?v=2026-05-11', category: 'edu', updated: '11 May 2026', language: 'HTML', languages: ['HTML'], repo: 'https://github.com/diegoroman666/agenda-school', repoName: 'agenda-school', desc: 'Agenda para que organices tus pruebas , tus clases , tus tareas, etc' },
+            { id: 'insta-sw',                   name: 'Insta SW',             url: 'https://insta-sw.netlify.app',                   screenshot: 'https://image.thum.io/get/width/1200/crop/675/noanimate/https://insta-sw.netlify.app?v=2026-04-22', category: 'web', updated: '22 Abr 2026', language: 'HTML', languages: ['HTML'], repo: 'https://github.com/diegoroman666/insta-sw', repoName: 'insta-sw', desc: 'clase teorica de instalacion de sw  , instalando el sistema operativo windows 10' },
+            { id: 'mantencion-sw',              name: 'Mantención SW',        url: 'https://mantencion-sw.netlify.app',              screenshot: 'https://image.thum.io/get/width/1200/crop/675/noanimate/https://mantencion-sw.netlify.app?v=2026-04-22', category: 'web', updated: '22 Abr 2026', language: 'HTML', languages: ['HTML'], repo: 'https://github.com/diegoroman666/mantencion-sw', repoName: 'mantencion-sw', desc: 'Sistema de gestión y seguimiento de mantenciones de software y equipos TI.' },
+            { id: 'planner4tendaysit',          name: 'Planner 4 Ten Days',   url: 'https://planner4tendaysit.netlify.app',          screenshot: 'https://image.thum.io/get/width/1200/crop/675/noanimate/https://planner4tendaysit.netlify.app?v=2026-04-20', category: 'web', updated: '20 Abr 2026', language: 'HTML', languages: ['HTML'], repo: 'https://github.com/diegoroman666/planner10days', repoName: 'planner10days', desc: 'planner de 10 dias de asignaturas de tecnologias informaticas' },
+            { id: 'datamathapp',                name: 'DataMath',             url: 'https://datamathapp.netlify.app',                screenshot: 'https://d33wubrfki0l68.cloudfront.net/6979594b8c5d130007ce366a/screenshot_2026-01-28-00-33-39-0000.webp', category: 'edu', updated: '05 Abr 2026', language: 'TypeScript', languages: ['TypeScript'], repo: null, repoName: 'datamath', desc: 'Aplicación educativa de matemáticas con análisis de datos, visualizaciones estadísticas y ejercicios de cálculo interactivos.' },
+            { id: 'paeslen',                    name: 'PAES LEN',             url: 'https://paeslen.netlify.app',                    screenshot: 'https://image.thum.io/get/width/1200/crop/675/noanimate/https://paeslen.netlify.app?v=2026-02-18', category: 'edu', updated: '18 Feb 2026', language: 'JavaScript', languages: ['JavaScript', 'CSS', 'Java', 'HTML'], repo: 'https://github.com/diegoroman666/paeslen', repoName: 'paeslen', desc: 'un mapa mental de la paes de lenguaje para que puedas entender el mapa de ruta de la prueba de lenguaje ' },
+            { id: 'dragonfiree',                name: 'Dragon Fire',          url: 'https://dragonfiree.netlify.app',                screenshot: 'https://image.thum.io/get/width/1200/crop/675/noanimate/https://dragonfiree.netlify.app?v=2026-02-07', category: 'web', updated: '07 Feb 2026', language: 'TypeScript', languages: ['TypeScript', 'CSS', 'Batchfile', 'JavaScript', 'HTML'], repo: 'https://github.com/diegoroman666/dragOn-fire', repoName: 'dragOn-fire', desc: 'Juega y practica lenguaje cientos de palabras y contrareloj para desarrollar agilidad' },
+            { id: 'cvcreatorr',                 name: 'CV Creator',           url: 'https://cvcreatorr.netlify.app',                 screenshot: 'https://image.thum.io/get/width/1200/crop/675/noanimate/https://cvcreatorr.netlify.app?v=2025-07-05', category: 'web', updated: '05 Jul 2025', language: 'JavaScript', languages: ['JavaScript'], repo: 'https://github.com/diegoroman666/creador_cv_react_vite-', repoName: 'creador_cv_react_vite-', desc: 'Creador de currículum vitae interactivo construido con React + Vite, con vista previa en tiempo real y exportación.' },
+            { id: 'data-analysta',              name: 'Data Analysta',        url: 'https://data-analysta.netlify.app',              screenshot: 'https://image.thum.io/get/width/1200/crop/675/noanimate/https://data-analysta.netlify.app', category: 'web', updated: null, language: null, languages: [], repo: null, repoName: null, desc: 'Aplicación de análisis de datos con visualizaciones e informes interactivos.' }
         ];
 
         // Lista viva que consumen las tarjetas y el modal de vista previa.
@@ -1526,12 +1527,42 @@
         }
 
         // Colores de los lenguajes más habituales del portafolio.
+        // Son los mismos tonos con los que GitHub identifica cada lenguaje, así el
+        // punto de color de la tarjeta se reconoce sin tener que leer la etiqueta.
         const COLOR_LENGUAJE = {
-            javascript: '#f1e05a', typescript: '#3178c6', html:   '#e34c26',
-            css:        '#563d7c', python:     '#3572A5', dart:   '#00B4AB',
-            java:       '#b07219', php:        '#4F5D95', vue:    '#41b883',
-            'c#':       '#178600', shell:      '#89e051', svelte: '#ff3e00'
+            javascript: '#f1e05a', typescript: '#3178c6', html:      '#e34c26',
+            css:        '#563d7c', python:     '#3572A5', dart:      '#00B4AB',
+            java:       '#b07219', php:        '#4F5D95', vue:       '#41b883',
+            'c#':       '#178600', shell:      '#89e051', svelte:    '#ff3e00',
+            kotlin:     '#A97BFF', ruby:       '#701516', go:        '#00ADD8',
+            plpgsql:    '#336790', batchfile:  '#C1F12E', powershell:'#012456',
+            scss:       '#c6538c', sql:        '#e38c00', c:         '#555555',
+            'c++':      '#f34b7d', astro:      '#ff5a03', jupyter:   '#DA5B0B'
         };
+
+        const COLOR_SIN_LENGUAJE = '#94a3b8';
+
+        function colorLenguaje(nombre) {
+            return COLOR_LENGUAJE[String(nombre || '').toLowerCase()] || COLOR_SIN_LENGUAJE;
+        }
+
+        /**
+         * Stack de un proyecto, del principal al secundario y sin repetidos.
+         * `language` es el lenguaje dominante que declara GitHub y `languages` el
+         * desglose completo; el sincronizador puede traer uno, el otro o ninguno
+         * (repositorio privado sin curar), así que aquí se unifican en una lista.
+         */
+        function stackDeProyecto(proj, maximo = 3) {
+            const lista = [proj.language, ...(proj.languages || [])].filter(Boolean);
+            return [...new Set(lista)].slice(0, maximo);
+        }
+
+        /** Punto de color + nombre del lenguaje. */
+        function chipLenguaje(nombre, clases = '') {
+            return `<span class="inline-flex items-center gap-1.5 ${clases}">
+                        <span class="w-2 h-2 rounded-full shrink-0" style="background:${colorLenguaje(nombre)}"></span>${esc(nombre)}
+                    </span>`;
+        }
 
         function renderProjectCards() {
             const grid = document.getElementById('projects-grid');
@@ -1565,11 +1596,20 @@
                        </span>`
                     : '<span></span>';
 
-                // Chip del lenguaje: llega solo desde GitHub y cambia si el proyecto se reescribe.
-                const color         = COLOR_LENGUAJE[String(proj.language || '').toLowerCase()] || '#94a3b8';
-                const langTag       = proj.language
-                    ? `<span class="inline-flex items-center gap-1.5 text-[10px] font-mono text-slate-400">
-                           <span class="w-2 h-2 rounded-full shrink-0" style="background:${color}"></span>${esc(proj.language)}
+                // Lenguaje: llega desde GitHub y cambia solo si el proyecto se reescribe.
+                // La insignia sobre la miniatura contesta "¿con qué está hecho?" sin abrir
+                // la vista previa; el pie de la tarjeta añade el resto del stack.
+                const stack         = stackDeProyecto(proj);
+                const principal     = stack[0];
+                const tituloLang    = principal
+                    ? `Construido con ${principal}`
+                    : 'Lenguaje aún no sincronizado desde GitHub';
+                const langBadge     = `<span class="absolute top-3 left-3 px-2.5 py-1 bg-slate-950/75 text-slate-200 text-[10px] font-mono rounded-full border border-white/10 backdrop-blur-sm flex items-center gap-1.5" title="${esc(tituloLang)}">
+                            <span class="w-2 h-2 rounded-full shrink-0" style="background:${colorLenguaje(principal)}"></span>${esc(principal || 'Sin datos')}
+                        </span>`;
+                const langTag       = stack.length > 1
+                    ? `<span class="flex items-center gap-1.5 text-[10px] font-mono text-slate-400 min-w-0">
+                           ${stack.slice(1).map(l => chipLenguaje(l, 'shrink-0')).join('')}
                        </span>`
                     : '';
 
@@ -1589,6 +1629,7 @@
                         </div>
                         ${imgTag}
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/10 to-transparent pointer-events-none"></div>
+                        ${langBadge}
                         <span class="absolute top-3 right-3 px-2.5 py-1 ${badgeClass} text-[10px] font-mono rounded-full border backdrop-blur-sm">${badgeLabel}</span>
                         <div class="absolute inset-0 bg-slate-950/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                             <div class="w-14 h-14 rounded-full ${playRing} border-2 flex items-center justify-center transform scale-90 group-hover:scale-100 transition-transform duration-300 shadow-lg">
@@ -1605,7 +1646,7 @@
                         </div>
                         <h3 class="font-orbitron font-bold text-base text-slate-100 ${titleHover} transition-colors duration-300 leading-snug">${esc(proj.name)}</h3>
                         <p class="text-slate-400 text-xs leading-relaxed flex-grow">${esc(proj.desc)}</p>
-                        <div class="flex items-center justify-between gap-2 text-[10px] font-mono text-slate-600">
+                        <div class="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 text-[10px] font-mono text-slate-600">
                             ${fechaTag}
                             ${langTag}
                         </div>
@@ -1646,7 +1687,7 @@
                 accent: 'purple',
                 provider: 'Cisco Networking Academy',
                 items: [
-                    { name: 'Trayectoria profesional de Analista de Ciberseguridad Júnior', icon: 'fa-solid fa-user-shield', tag: 'Insignia', desc: 'Objetivo: consolidar las competencias completas de un analista de ciberseguridad júnior —detección, análisis y respuesta a amenazas— integrando todos los cursos de la ruta profesional de Cisco.', pdf: 'certificados/cisco-analista-ciberseguridad-junior.pdf' },
+                    { name: 'Trayectoria profesional de Analista de Ciberseguridad Júnior', icon: 'fa-solid fa-user-shield', tag: 'Certificado', fecha: 'Ago 2026', desc: 'Objetivo: recomendar controles de ciberseguridad que refuercen la seguridad de la red y de la información, mitigar amenazas de red y de sistemas, evaluar la postura de seguridad de una organización con herramientas de análisis de vulnerabilidades y de riesgos, y proponer las actividades de gestión de incidentes de un plan de respuesta.', pdf: 'certificados/cisco-analista-ciberseguridad-junior.pdf' },
                     { name: 'CCNA: Introducción a las redes',                  icon: 'fa-solid fa-ethernet',         tag: 'Curso', desc: 'Objetivo: comprender el funcionamiento de las redes, los modelos OSI/TCP-IP, el direccionamiento IP y la configuración básica de routers y switches Cisco.', pdf: 'certificados/ccna-introduccion-redes.pdf' },
                     { name: 'Introducción a la ciberseguridad',                icon: 'fa-solid fa-lock',             tag: 'Curso', desc: 'Objetivo: reconocer las principales amenazas, vulnerabilidades y ataques, y aplicar prácticas fundamentales para proteger información, dispositivos y redes.', pdf: 'certificados/cisco-introduccion-ciberseguridad.pdf' },
                     { name: 'Conceptos básicos de redes',                      icon: 'fa-solid fa-network-wired',    tag: 'Curso', desc: 'Objetivo: dominar los fundamentos de conectividad, protocolos, topologías y servicios de red necesarios para administrar infraestructura TI.', pdf: 'certificados/cisco-conceptos-basicos-redes.pdf' },
@@ -1725,7 +1766,7 @@
                         <h4 class="font-orbitron font-bold text-sm text-slate-100 ${a.title} transition-colors duration-300 leading-snug mb-2">${course.name}</h4>
                         <p class="text-slate-400 text-xs leading-relaxed flex-grow">${course.desc}</p>
                         <div class="flex items-center justify-between pt-4 mt-4 border-t border-white/5">
-                            <span class="text-[10px] font-mono text-slate-500 truncate max-w-[70%]">${group.provider}</span>
+                            <span class="text-[10px] font-mono text-slate-500 truncate max-w-[70%]">${group.provider}${course.fecha ? ` · ${course.fecha}` : ''}</span>
                             <span class="text-[10px] text-cyber-emerald flex items-center shrink-0">
                                 <i class="fa-solid fa-circle-check mr-1 text-[9px]"></i>COMPLETADO
                             </span>
@@ -1852,12 +1893,16 @@
             repoBtn.classList.toggle('flex', Boolean(proj.repo));
             if (proj.repo) repoBtn.href = proj.repo;
 
-            const stack = document.getElementById('preview-stack');
-            const lenguajes = (proj.languages && proj.languages.length)
-                ? proj.languages.slice(0, 3).join(' · ')
-                : proj.language;
-            stack.textContent = lenguajes || '';
-            stack.classList.toggle('hidden', !lenguajes);
+            // El stack se arma con el mismo criterio que las tarjetas, para que la
+            // grilla y la vista previa nunca digan cosas distintas del mismo proyecto.
+            const stackEl   = document.getElementById('preview-stack');
+            const lenguajes = stackDeProyecto(proj);
+            stackEl.innerHTML = lenguajes
+                .map(l => chipLenguaje(l))
+                .join('<span class="text-slate-700 mx-1.5">·</span>');
+            stackEl.className = lenguajes.length
+                ? 'text-slate-400 flex items-center'
+                : 'hidden';
 
             iframe.onload = null;
             iframe.style.display = 'block';
