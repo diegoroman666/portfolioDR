@@ -1072,6 +1072,11 @@
                 </a>
             </div>
 
+            <!-- Pestañas: un mismo curso puede acreditarse con el certificado de
+                 Cisco Networking Academy y con el que emite la institución que lo
+                 impartió. Se ocultan cuando el curso trae un solo documento. -->
+            <div id="certificate-tabs" class="hidden shrink-0 bg-slate-950/80 border-b border-white/5 px-3 sm:px-4 py-2 items-center gap-2 overflow-x-auto"></div>
+
             <!-- Contenedor del visor PDF -->
             <div class="flex-1 relative bg-slate-200 overflow-hidden">
                 <div id="certificate-viewer"
@@ -1696,7 +1701,10 @@
                 accent: 'purple',
                 provider: 'Cisco Networking Academy',
                 items: [
-                    { name: 'Trayectoria profesional de Analista de Ciberseguridad Júnior', icon: 'fa-solid fa-user-shield', tag: 'Certificado', fecha: 'Ago 2026', desc: 'Objetivo: recomendar controles de ciberseguridad que refuercen la seguridad de la red y de la información, mitigar amenazas de red y de sistemas, evaluar la postura de seguridad de una organización con herramientas de análisis de vulnerabilidades y de riesgos, y proponer las actividades de gestión de incidentes de un plan de respuesta.', pdf: 'certificados/cisco-analista-ciberseguridad-junior.pdf' },
+                    { name: 'Analista de Ciberseguridad Júnior', icon: 'fa-solid fa-user-shield', tag: '2 certificados', fecha: 'Ago 2026', desc: 'Objetivo: recomendar controles de ciberseguridad que refuercen la seguridad de la red y de la información, mitigar amenazas de red y de sistemas, evaluar la postura de seguridad de una organización con herramientas de análisis de vulnerabilidades y de riesgos, y proponer las actividades de gestión de incidentes de un plan de respuesta. La formación está acreditada por los dos certificados que emitió cada institución.', docs: [
+                        { label: 'Cisco Networking Academy', pdf: 'certificados/cisco-analista-ciberseguridad-junior.pdf' },
+                        { label: 'INACAP · Fundamentos', pdf: 'certificados/cisco-fundamentos-ciberseguridad.pdf' }
+                    ] },
                     { name: 'CCNA: Introducción a las redes',                  icon: 'fa-solid fa-ethernet',         tag: 'Curso', desc: 'Objetivo: comprender el funcionamiento de las redes, los modelos OSI/TCP-IP, el direccionamiento IP y la configuración básica de routers y switches Cisco.', pdf: 'certificados/ccna-introduccion-redes.pdf' },
                     { name: 'Introducción a la ciberseguridad',                icon: 'fa-solid fa-lock',             tag: 'Curso', desc: 'Objetivo: reconocer las principales amenazas, vulnerabilidades y ataques, y aplicar prácticas fundamentales para proteger información, dispositivos y redes.', pdf: 'certificados/cisco-introduccion-ciberseguridad.pdf' },
                     { name: 'Conceptos básicos de redes',                      icon: 'fa-solid fa-network-wired',    tag: 'Curso', desc: 'Objetivo: dominar los fundamentos de conectividad, protocolos, topologías y servicios de red necesarios para administrar infraestructura TI.', pdf: 'certificados/cisco-conceptos-basicos-redes.pdf' },
@@ -1756,17 +1764,17 @@
                 if (!grid) return;
                 const a = accentMap[group.accent];
 
-                grid.innerHTML = group.items.map(course => `
+                grid.innerHTML = group.items.map((course, idx) => `
                     <div class="glass rounded-2xl p-5 border border-white/5 ${a.border} transition-all duration-300 flex flex-col h-full group">
                         <div class="flex items-start justify-between mb-4">
                             <span class="w-11 h-11 rounded-xl border ${a.iconBg} flex items-center justify-center shrink-0">
                                 <i class="${course.icon} ${a.icon} text-lg"></i>
                             </span>
                             <div class="flex items-center gap-2">
-                                ${course.pdf ? `
-                                <button onclick="openCertificate('${course.pdf}', '${course.name.replace(/'/g, "\\'")}', '${group.provider.replace(/'/g, "\\'")}')"
+                                ${certificateDocs(course).length ? `
+                                <button onclick="openCourseCertificate('${key}', ${idx})"
                                         class="w-8 h-8 rounded-full border ${a.iconBg} ${a.icon} flex items-center justify-center hover:scale-110 transition-transform duration-200"
-                                        title="Ver certificado">
+                                        title="${certificateDocs(course).length > 1 ? 'Ver los ' + certificateDocs(course).length + ' certificados' : 'Ver certificado'}">
                                     <i class="fa-solid fa-eye text-xs"></i>
                                 </button>` : ''}
                                 <span class="px-2.5 py-1 ${a.badge} text-[10px] font-mono rounded-full border">${course.tag}</span>
@@ -1980,6 +1988,32 @@
         // MODAL CERTIFICADO (Visor de PDF de evidencia de curso)
         // --------------------------------------------------
         let _certRenderToken = 0;
+        // Documentos que se están viendo ({ label, pdf }), cuál está activo y de
+        // qué curso salieron. El modal admite más de uno: un mismo curso puede
+        // tener el certificado de Cisco y el de la institución que lo impartió.
+        let _certDocs      = [];
+        let _certActivo    = 0;
+        let _certCurso     = '';
+        let _certProveedor = '';
+
+        // Normaliza la evidencia de un curso a una lista de { label, pdf }, venga
+        // como un solo `pdf` o como una lista `docs`.
+        function certificateDocs(course) {
+            const bruto = Array.isArray(course.docs) && course.docs.length
+                ? course.docs
+                : (course.pdf ? [course.pdf] : []);
+            return bruto
+                .map(doc => (typeof doc === 'string' ? { label: '', pdf: doc } : doc))
+                .filter(doc => doc && doc.pdf);
+        }
+
+        // Abre el modal con todos los certificados de un curso de coursesData.
+        function openCourseCertificate(groupKey, idx) {
+            const group  = coursesData[groupKey];
+            const course = group && group.items[idx];
+            if (!course) return;
+            openCertificate(certificateDocs(course), course.name, group.provider);
+        }
 
         function _certificateErrorView(pdfPath) {
             return `
@@ -1996,8 +2030,63 @@
         // Renderiza el PDF a canvas con PDF.js en vez de usar un <iframe>: los navegadores
         // móviles no traen visor de PDF integrado y en su lugar descargan el archivo,
         // mientras que renderizado a canvas se ve igual en escritorio y en móvil.
-        async function openCertificate(pdfPath, courseName, provider) {
-            const modal       = document.getElementById('certificate-modal');
+        // `docs` puede ser la ruta de un PDF o una lista de { label, pdf }: con dos o
+        // más documentos el modal muestra una pestaña por cada uno y solo cambia el
+        // documento visible, sin cerrarse.
+        async function openCertificate(docs, courseName, provider) {
+            const modal = document.getElementById('certificate-modal');
+
+            _certDocs = (Array.isArray(docs) ? docs : [docs])
+                .map(doc => (typeof doc === 'string' ? { label: '', pdf: doc } : doc))
+                .filter(doc => doc && doc.pdf);
+            if (!_certDocs.length) return;
+
+            _certCurso     = courseName || '';
+            _certProveedor = provider || '';
+            _certActivo    = 0;
+
+            modal.classList.remove('hidden');
+            requestAnimationFrame(() => requestAnimationFrame(() => modal.classList.add('opacity-100')));
+
+            _renderCertificateTabs();
+            await showCertificateDoc(0);
+        }
+
+        // Una pestaña por documento; con uno solo la barra se queda oculta.
+        function _renderCertificateTabs() {
+            const tabs = document.getElementById('certificate-tabs');
+            if (!tabs) return;
+
+            if (_certDocs.length < 2) {
+                tabs.classList.add('hidden');
+                tabs.classList.remove('flex');
+                tabs.innerHTML = '';
+                return;
+            }
+
+            tabs.classList.remove('hidden');
+            tabs.classList.add('flex');
+            tabs.innerHTML = _certDocs.map((doc, i) => {
+                const activo = i === _certActivo;
+                const estilo = activo
+                    ? 'bg-amber-400/15 text-amber-400 border-amber-400/40'
+                    : 'bg-slate-900/70 text-slate-400 border-white/10 hover:text-slate-200 hover:border-white/20';
+                return `
+                    <button onclick="showCertificateDoc(${i})"
+                            class="shrink-0 px-3 py-1.5 rounded-lg border font-rajdhani font-bold text-[11px] sm:text-xs tracking-wide transition-all duration-300 flex items-center gap-1.5 ${estilo}">
+                        <i class="fa-solid fa-certificate text-[9px]"></i>
+                        <span>${esc(doc.label || doc.pdf.split('/').pop())}</span>
+                    </button>`;
+            }).join('');
+
+            // En móvil la barra se desplaza: la pestaña activa se trae a la vista
+            // para que no quede cortada al cambiar de documento.
+            const activo = tabs.children[_certActivo];
+            if (activo) activo.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+        }
+
+        // Pinta en el visor el documento `indice` de los que trae el modal.
+        async function showCertificateDoc(indice) {
             const viewer      = document.getElementById('certificate-viewer');
             const title       = document.getElementById('certificate-title');
             const openBtn     = document.getElementById('certificate-open-btn');
@@ -2005,17 +2094,24 @@
             const loadingDiv  = document.getElementById('certificate-loading');
             const loadingName = document.getElementById('certificate-loading-name');
 
+            const doc = _certDocs[indice];
+            if (!doc) return;
+
+            _certActivo = indice;
+            _renderCertificateTabs();
+
+            const pdfPath = doc.pdf;
             title.textContent       = pdfPath.split('/').pop();
-            openBtn.href             = pdfPath;
-            providerEl.textContent   = (provider || '').toUpperCase();
-            loadingName.textContent  = courseName;
+            openBtn.href            = pdfPath;
+            providerEl.textContent  = (doc.label || _certProveedor).toUpperCase();
+            loadingName.textContent = _certDocs.length > 1 && doc.label
+                ? `${_certCurso} · ${doc.label}`
+                : _certCurso;
 
             loadingDiv.style.display = 'flex';
             viewer.style.opacity = '0';
             viewer.innerHTML = '';
-
-            modal.classList.remove('hidden');
-            requestAnimationFrame(() => requestAnimationFrame(() => modal.classList.add('opacity-100')));
+            viewer.scrollTop = 0;
 
             const myToken = ++_certRenderToken;
 
@@ -2060,11 +2156,19 @@
         function closeCertificate() {
             const modal  = document.getElementById('certificate-modal');
             const viewer = document.getElementById('certificate-viewer');
+            const tabs   = document.getElementById('certificate-tabs');
             modal.classList.remove('opacity-100');
             _certRenderToken++;
             setTimeout(() => {
                 modal.classList.add('hidden');
                 viewer.innerHTML = '';
+                _certDocs   = [];
+                _certActivo = 0;
+                if (tabs) {
+                    tabs.innerHTML = '';
+                    tabs.classList.add('hidden');
+                    tabs.classList.remove('flex');
+                }
             }, 300);
         }
 
