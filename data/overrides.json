@@ -158,6 +158,13 @@
       "languages": [
         "JavaScript"
       ]
+    },
+    "tp-proyecto": {
+      "url": "https://tp-proyecto.netlify.app",
+      "name": "Proyecto TP",
+      "desc": "Sitio de la Semana TP del Liceo Industrial de Rengo: evaluación y gestión de proyectos, con flujo de caja, VAN, TIR y Carta Gantt.",
+      "category": "edu",
+      "repoName": "proyecto-tp"
     }
   }
 }
