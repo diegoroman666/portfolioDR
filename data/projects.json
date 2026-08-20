@@ -14,8 +14,8 @@
     {
       "id": "tp-proyecto",
       "url": "https://tp-proyecto.netlify.app",
-      "name": "Tp Proyecto",
-      "desc": "Presentación para el stand de la semana TP en liceo industrial de Rengo Chile",
+      "name": "Proyecto TP",
+      "desc": "Sitio de la Semana TP del Liceo Industrial de Rengo: evaluación y gestión de proyectos, con flujo de caja, VAN, TIR y Carta Gantt.",
       "repo": "https://github.com/diegoroman666/proyecto-tp",
       "repoName": "proyecto-tp",
       "language": "HTML",
@@ -27,7 +27,7 @@
       "updatedAt": "2026-08-18T07:01:46.000Z",
       "updated": "18 Ago 2026",
       "screenshot": "https://image.thum.io/get/width/1200/crop/675/noanimate/https://tp-proyecto.netlify.app?v=2026-08-18",
-      "category": "web"
+      "category": "edu"
     },
     {
       "id": "mansaagenda",
