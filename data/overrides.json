@@ -165,6 +165,13 @@
       "desc": "Sitio de la Semana TP del Liceo Industrial de Rengo: evaluación y gestión de proyectos, con flujo de caja, VAN, TIR y Carta Gantt.",
       "category": "edu",
       "repoName": "proyecto-tp"
+    },
+    "fao-tasks-management": {
+      "url": "https://fao-tasks-management.netlify.app",
+      "name": "FAO Tasks Management",
+      "desc": "Gestor de tareas con CRUD completo: el frontend en React (Vite) consume una API REST hecha con Django, que resuelve el alta, la edición y el borrado sobre la base de datos.",
+      "category": "web",
+      "repoName": "TasksManagement"
     }
   }
 }
