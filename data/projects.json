@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-18T09:26:26.577Z",
+  "generatedAt": "2026-08-20T05:47:14.883Z",
   "source": {
     "github": true,
     "netlify": true,
@@ -7,7 +7,7 @@
   },
   "stats": {
     "repos": 34,
-    "sites": 33,
+    "sites": 34,
     "published": 28
   },
   "projects": [
@@ -18,18 +18,21 @@
       "desc": "Gestor de tareas con CRUD completo: el frontend en React (Vite) consume una API REST hecha con Django, que resuelve el alta, la edición y el borrado sobre la base de datos.",
       "repo": "https://github.com/diegoroman666/TasksManagement",
       "repoName": "TasksManagement",
-      "language": "JavaScript",
+      "language": "Python",
       "languages": [
-        "JavaScript",
         "Python",
+        "HTML",
+        "JavaScript",
         "CSS",
-        "HTML"
+        "PowerShell",
+        "C",
+        "Batchfile"
       ],
       "stars": 0,
       "archived": false,
       "updatedAt": "2026-08-20T05:34:25.000Z",
       "updated": "20 Ago 2026",
-      "screenshot": "https://image.thum.io/get/width/1200/crop/675/noanimate/https://fao-tasks-management.netlify.app?v=2026-08-20",
+      "screenshot": "https://d33wubrfki0l68.cloudfront.net/6a8691e2a3387a0008f355c9/screenshot_2026-08-20-05-34-42-0000.webp",
       "category": "web"
     },
     {
