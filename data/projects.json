@@ -8,9 +8,30 @@
   "stats": {
     "repos": 34,
     "sites": 33,
-    "published": 27
+    "published": 28
   },
   "projects": [
+    {
+      "id": "fao-tasks-management",
+      "url": "https://fao-tasks-management.netlify.app",
+      "name": "FAO Tasks Management",
+      "desc": "Gestor de tareas con CRUD completo: el frontend en React (Vite) consume una API REST hecha con Django, que resuelve el alta, la edición y el borrado sobre la base de datos.",
+      "repo": "https://github.com/diegoroman666/TasksManagement",
+      "repoName": "TasksManagement",
+      "language": "JavaScript",
+      "languages": [
+        "JavaScript",
+        "Python",
+        "CSS",
+        "HTML"
+      ],
+      "stars": 0,
+      "archived": false,
+      "updatedAt": "2026-08-20T05:34:25.000Z",
+      "updated": "20 Ago 2026",
+      "screenshot": "https://image.thum.io/get/width/1200/crop/675/noanimate/https://fao-tasks-management.netlify.app?v=2026-08-20",
+      "category": "web"
+    },
     {
       "id": "tp-proyecto",
       "url": "https://tp-proyecto.netlify.app",
