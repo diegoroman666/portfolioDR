@@ -8,9 +8,30 @@
   "stats": {
     "repos": 34,
     "sites": 34,
-    "published": 28
+    "published": 29
   },
   "projects": [
+    {
+      "id": "apishowcats",
+      "name": "Api Show Cats",
+      "url": "https://apishowcats.netlify.app",
+      "repo": "https://github.com/diegoroman666/apiShowCats",
+      "repoName": "apiShowCats",
+      "language": "JavaScript",
+      "languages": [
+        "JavaScript",
+        "CSS",
+        "HTML"
+      ],
+      "topics": [],
+      "category": "web",
+      "desc": "Generador de memes de gatos en React + Vite: consume la API REST pública de Cataas, superpone el texto con soporte de emojis, permite descargar el resultado y guarda el historial en el navegador.",
+      "screenshot": "https://image.thum.io/get/width/1200/crop/675/noanimate/https://apishowcats.netlify.app?v=2026-08-22",
+      "updated": "22 Ago 2026",
+      "updatedAt": "2026-08-22T23:23:18.000Z",
+      "stars": 0,
+      "archived": false
+    },
     {
       "id": "fao-tasks-management",
       "url": "https://fao-tasks-management.netlify.app",

@@ -17,7 +17,6 @@
     "diegoroman666",
     "testproyectof",
     "vocal-chebakia-c1ab47",
-    "apishowcats",
     "mansagenda",
     "tmapeopro",
     "resplendent-basbousa-e274ab",
@@ -172,6 +171,11 @@
       "desc": "Gestor de tareas con CRUD completo: el frontend en React (Vite) consume una API REST hecha con Django, que resuelve el alta, la edición y el borrado sobre la base de datos.",
       "category": "web",
       "repoName": "TasksManagement"
+    },
+    "apishowcats": {
+      "name": "Api Show Cats",
+      "desc": "Generador de memes de gatos en React + Vite: consume la API REST pública de Cataas, superpone el texto con soporte de emojis, permite descargar el resultado y guarda el historial en el navegador.",
+      "category": "web"
     }
   }
 }
