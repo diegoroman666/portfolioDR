@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-20T05:47:14.883Z",
+  "generatedAt": "2026-08-22T23:40:34.289Z",
   "source": {
     "github": true,
     "netlify": true,
@@ -26,9 +26,9 @@
       "topics": [],
       "category": "web",
       "desc": "Generador de memes de gatos en React + Vite: consume la API REST pública de Cataas, superpone el texto con soporte de emojis, permite descargar el resultado y guarda el historial en el navegador.",
-      "screenshot": "https://image.thum.io/get/width/1200/crop/675/noanimate/https://apishowcats.netlify.app?v=2026-08-22",
+      "screenshot": "https://d33wubrfki0l68.cloudfront.net/6a8a2fb3ac20fb0008368fe6/screenshot_2026-08-22-23-24-50-0000.webp",
       "updated": "22 Ago 2026",
-      "updatedAt": "2026-08-22T23:23:18.000Z",
+      "updatedAt": "2026-08-22T23:24:34.000Z",
       "stars": 0,
       "archived": false
     },
