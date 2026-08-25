@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-22T23:40:34.289Z",
+  "generatedAt": "2026-08-25T18:32:29.606Z",
   "source": {
     "github": true,
     "netlify": true,
@@ -11,6 +11,24 @@
     "published": 29
   },
   "projects": [
+    {
+      "id": "tp-proyecto",
+      "url": "https://tp-proyecto.netlify.app",
+      "name": "Proyecto TP",
+      "desc": "Sitio de la Semana TP del Liceo Industrial de Rengo: evaluación y gestión de proyectos, con flujo de caja, VAN, TIR y Carta Gantt.",
+      "repo": "https://github.com/diegoroman666/proyecto-tp",
+      "repoName": "proyecto-tp",
+      "language": "HTML",
+      "languages": [
+        "HTML"
+      ],
+      "stars": 0,
+      "archived": false,
+      "updatedAt": "2026-08-25T18:15:02.000Z",
+      "updated": "25 Ago 2026",
+      "screenshot": "https://image.thum.io/get/width/1200/crop/675/noanimate/https://tp-proyecto.netlify.app?v=2026-08-25",
+      "category": "edu"
+    },
     {
       "id": "apishowcats",
       "name": "Api Show Cats",
@@ -55,24 +73,6 @@
       "updated": "20 Ago 2026",
       "screenshot": "https://d33wubrfki0l68.cloudfront.net/6a8691e2a3387a0008f355c9/screenshot_2026-08-20-05-34-42-0000.webp",
       "category": "web"
-    },
-    {
-      "id": "tp-proyecto",
-      "url": "https://tp-proyecto.netlify.app",
-      "name": "Proyecto TP",
-      "desc": "Sitio de la Semana TP del Liceo Industrial de Rengo: evaluación y gestión de proyectos, con flujo de caja, VAN, TIR y Carta Gantt.",
-      "repo": "https://github.com/diegoroman666/proyecto-tp",
-      "repoName": "proyecto-tp",
-      "language": "HTML",
-      "languages": [
-        "HTML"
-      ],
-      "stars": 0,
-      "archived": false,
-      "updatedAt": "2026-08-18T07:01:46.000Z",
-      "updated": "18 Ago 2026",
-      "screenshot": "https://image.thum.io/get/width/1200/crop/675/noanimate/https://tp-proyecto.netlify.app?v=2026-08-18",
-      "category": "edu"
     },
     {
       "id": "mansaagenda",
