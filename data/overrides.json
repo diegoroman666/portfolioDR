@@ -9,7 +9,12 @@
     "          lenguaje, descripción, fecha y enlace al código en cada sincronización.",
     "language  solo hace falta cuando el repositorio es privado: la API pública no lo",
     "          expone, así que el lenguaje se declara aquí para que la tarjeta no quede",
-    "          sin stack. Si el repo se hace público, borra este campo."
+    "          sin stack. Si el repo se hace público, borra este campo.",
+    "embeddable  ponlo en false cuando el sitio no se deje mostrar dentro del modal",
+    "            (cabecera X-Frame-Options o CSP frame-ancestors). La vista previa",
+    "            enseña entonces su captura al instante, en vez de esperar a que el",
+    "            navegador falle. Bórralo si el sitio deja de bloquear el embebido.",
+    "notaPreview texto que explica ese caso concreto en la vista de respaldo."
   ],
   "hidden": [
     "portfoliodr",
@@ -170,12 +175,15 @@
       "name": "FAO Tasks Management",
       "desc": "Gestor de tareas con CRUD completo: el frontend en React (Vite) consume una API REST hecha con Django, que resuelve el alta, la edición y el borrado sobre la base de datos.",
       "category": "web",
-      "repoName": "TasksManagement"
+      "repoName": "TasksManagement",
+      "embeddable": false,
+      "notaPreview": "Necesita su API de Django corriendo en local, así que fuera de ese entorno la vista previa no carga."
     },
     "apishowcats": {
       "name": "Api Show Cats",
       "desc": "Generador de memes de gatos en React + Vite: consume la API REST pública de Cataas, superpone el texto con soporte de emojis, permite descargar el resultado y guarda el historial en el navegador.",
-      "category": "web"
+      "category": "web",
+      "embeddable": false
     }
   }
 }

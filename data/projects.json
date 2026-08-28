@@ -48,7 +48,8 @@
       "updated": "22 Ago 2026",
       "updatedAt": "2026-08-22T23:24:34.000Z",
       "stars": 0,
-      "archived": false
+      "archived": false,
+      "embeddable": false
     },
     {
       "id": "fao-tasks-management",
@@ -72,7 +73,9 @@
       "updatedAt": "2026-08-20T05:34:25.000Z",
       "updated": "20 Ago 2026",
       "screenshot": "https://d33wubrfki0l68.cloudfront.net/6a8691e2a3387a0008f355c9/screenshot_2026-08-20-05-34-42-0000.webp",
-      "category": "web"
+      "category": "web",
+      "embeddable": false,
+      "notaPreview": "Necesita su API de Django corriendo en local, así que fuera de ese entorno la vista previa no carga."
     },
     {
       "id": "mansaagenda",
